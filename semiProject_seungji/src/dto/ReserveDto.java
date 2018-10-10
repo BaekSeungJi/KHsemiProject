@@ -34,5 +34,96 @@ REFERENCES HOTEL(HOTELNAME);
 */
 
 public class ReserveDto implements Serializable {
+	
+	private int seq;
+	
+	private String id;
+	private String hotelname;
+	private String request;
+	private String realdate;
+	
+	private String regdate;
+	private int del;
+	
+	public ReserveDto() {
+	}
+	
+	public ReserveDto(int seq, String id, String hotelname, String request, String realdate, String regdate, int del) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.hotelname = hotelname;
+		this.request = request;
+		this.realdate = realdate;
+		this.regdate = regdate;
+		this.del = del;
+	}
+	
+	// 입력받는것만 있는 생성자(예약내역 추가할때)
+	public ReserveDto(String id, String hotelname, String request, String realdate) {
+		super();
+		this.id = id;
+		this.hotelname = hotelname;
+		this.request = request;
+		this.realdate = realdate;
+	}
+
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getHotelname() {
+		return hotelname;
+	}
+
+	public void setHotelname(String hotelname) {
+		this.hotelname = hotelname;
+	}
+
+	public String getRequest() {
+		return request;
+	}
+
+	public void setRequest(String request) {
+		this.request = request;
+	}
+
+	public String getRealdate() {
+		return realdate;
+	}
+
+	public void setRealdate(String realdate) {
+		this.realdate = realdate;
+	}
+
+	public String getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
+	}
+
+	public int getDel() {
+		return del;
+	}
+
+	public void setDel(int del) {
+		this.del = del;
+	}
+	
+	
 
 }

@@ -19,5 +19,46 @@ REFERENCES PDS(SEQ);
 */
 
 public class FileDto implements Serializable {
+	
+	private int num;
+	private String filename;
+	private String realname;
+	
+	public FileDto() {
+	}
+
+	public FileDto(int num, String filename, String realname) {
+		super();
+		this.num = num;
+		this.filename = filename;
+		this.realname = realname;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public String getRealname() {
+		return realname;
+	}
+
+	public void setRealname(String realname) {
+		this.realname = realname;
+	}
+	
+	
+	
 
 }
