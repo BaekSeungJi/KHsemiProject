@@ -3,7 +3,7 @@
 //Added theming
 
 $(function() {
-
+ 
 	var mapSeries = {
 		"AF": 16.63,
 		"AL": 11.58,

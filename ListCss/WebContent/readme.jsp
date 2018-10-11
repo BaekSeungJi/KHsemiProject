@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 
 <!-- 이거 추가하시면 됩니다 -->
-<link rel="stylesheet" type="text/css" href="CSS/main.css">
+<link rel="stylesheet" type="text/css" href="CSS/main.css"> 
 <link rel="stylesheet" type="text/css" href="JS/main.js">
 
 
