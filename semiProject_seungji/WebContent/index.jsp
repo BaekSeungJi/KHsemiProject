@@ -32,7 +32,7 @@
 
   <div class="cover">
     <h1>Discover your house of today.</h1>
-    <form  action="index1.jsp">
+    <form class="flex-form" action="mainBbs.jsp">
       <label for="from">
         <i class="ion-location"></i>
       </label>
@@ -42,7 +42,7 @@
     </form>
     <div id="madeby">
       <span>
-        Photo by <a href="http://www.iei.or.kr/main/main.kh" target="_blank">KH CLASS_3 semi project 6조</a>
+        Design by <a href="http://www.iei.or.kr/main/main.kh" target="_blank">KH CLASS_3 semi project 6조</a>
       </span>
     </div>
   </div>
