@@ -11,8 +11,8 @@ CREATE TABLE MEMBER(
 	NAME VARCHAR2(50) NOT NULL,
 	EMAIL VARCHAR2(50) UNIQUE,
 	PHONE VARCHAR2(50) NOT NULL,
-	BLACKLIST NUMBER(1) NOT NULL,	// 0 == 일반, 1 == 블랙리스트
-	AUTH NUMBER(1) NOT NULL			// 1 == 최고 운영자, 2 == 개별 관리자, 3 == 회원
+	BLACKLIST NUMBER(1) NOT NULL,	-- 0 == 일반, 1 == 블랙리스트
+	AUTH NUMBER(1) NOT NULL			-- 1 == 최고 운영자, 2 == 개별 관리자, 3 == 회원
 );
 */
 
