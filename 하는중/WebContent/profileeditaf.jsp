@@ -51,7 +51,9 @@ String str = name + email + phone;
 %>
 
 <script type="text/javascript">
-alert(<%=str%>);
+alert("수정 구현중");
+
+location.href = 'profileedit.jsp';
 </script>
 
 </body>

@@ -21,5 +21,11 @@ String phone = request.getParameter("phone");
 <body>
 
 
+<script type="text/javascript">
+alert("jsp:include 로 구현하자");
+
+location.href = 'review.jsp';
+</script>
+
 </body>
 </html>
