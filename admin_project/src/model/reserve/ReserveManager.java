@@ -1,5 +1,11 @@
 package model.reserve;
 
-public class ReserveManager implements iReserveManager {
+import model.pds.PdsManager;
 
+public class ReserveManager implements iReserveManager {
+	private static ReserveManager reserveManager = new ReserveManager();
+	
+	public static ReserveManager getInstance() {
+		return reserveManager;
+	}
 }

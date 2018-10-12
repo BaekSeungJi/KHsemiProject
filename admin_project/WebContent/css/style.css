@@ -1,4 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+
+
 * {
   box-sizing: border-box;
 } 
@@ -8,9 +10,11 @@ body {
   line-height: normal;
   font-size: 16px;
   overflow-Y: scroll;
-  font-family: 'Roboto Condensed', "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
   -webkit-font-smoothing: antialiased !important;
 }
+
+
 
 a, a:hover, a:visited, a:link, a:active {
   text-decoration: none;
@@ -418,39 +422,43 @@ a:active {
 }
 
 .rad-txt-primary {
-  color: #1C7EBB;
+  color: #548687;
 }
 
 .rad-bg-primary {
-  background: #1C7EBB;
+  background: #548687;
 }
 
 .rad-txt-success {
-  color: #23AE89;
+  color: #C5E99B;
 }
 
 .rad-bg-success {
-  background: #23AE89;
+  background: #C5E99B;
 }
 
 .rad-txt-danger {
-  color: #E94B3B;
+  color: 	#8FBC94;
 }
 
 .rad-bg-danger {
-  background: #E94B3B;
+  background: 	#8FBC94;
 }
 
 .rad-txt-warning {
-  color: #F98E33;
+  color: #56445D;
 }
 
 .rad-bg-warning {
-  background: #F98E33;
+  background: #56445D;
 }
 
 .rad-txt-violet {
   color: #6A55C2;
+}
+
+.color-main {
+  color: #FA8072;
 }
 
 .rad-bg-violet {
@@ -794,7 +802,7 @@ a:active {
   background: white !important;
 }
 
-.rad-info-box i {
+.rad-info-box_i {
   display: block;
   background-clip: padding-box;
   margin-right: 15px;
@@ -826,6 +834,15 @@ a:active {
   font-size: 2.1em;
   font-weight: 600;
   margin-top: 5px;
+  display: block;
+  background-clip: padding-box;
+
+   border-radius: 100%;
+	text-align: right;
+
+
+  
+  
 }
 
 .rad-list-group-item {
