@@ -24,7 +24,7 @@
 
 	<div id="login">
 
-		<form action="javascript:void(0);" method="post">
+		<form action="index.jsp" method="post">
 
 			<span class="fontawesome-user"></span><input type="text" required value="Username" onBlur="if(this.value=='')this.value='Username'" 
 			onFocus="if(this.value=='Username')this.value='' "> <!-- JS because of IE support; better: placeholder="Username" -->
