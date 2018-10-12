@@ -1,12 +1,14 @@
 package model.member;
 
-import java.lang.reflect.Member;
+import java.util.List;
+
+import dto.MemberDto;
 
 public interface iMemberManager {
-	public boolean addMember(MemberService ms);
-	public boolean getId(String ID);
+	public boolean addMember(String id, String pwd, String name, String email, String phone);
+
+	public List<MemberDto> getMemberDtoList();
 	
-	public MemberService login(MemberService ms);
 	
 	
 }

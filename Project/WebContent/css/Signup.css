@@ -24,6 +24,8 @@ h1 {
 
 input[type="text"],
 input[type="password"],
+input[type="name"],
+input[type="phone"],
 input[type="date"],
 input[type="datetime"],
 input[type="email"],

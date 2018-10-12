@@ -1,5 +1,9 @@
 package model.member;
 
+import java.util.List;
+
+import dto.MemberDto;
+
 public class MemberManager implements iMemberManager {
 	private static MemberManager memberManager = new MemberManager();
 	
@@ -8,22 +12,15 @@ public class MemberManager implements iMemberManager {
 	}
 
 	@Override
-	public boolean addMember(MemberService ms) {
+	public boolean addMember(String id, String pwd, String name, String email, String phone) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean getId(String ID) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public MemberService login(MemberService ms) {
+	public List<MemberDto> getMemberDtoList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
 }

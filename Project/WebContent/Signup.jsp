@@ -31,10 +31,12 @@
         
         <fieldset>
           <legend><span class="number">1</span>기본정보</legend>
+        
           <label for="name">ID:</label>
-          <input type="text" id="name" name="user_name" required value="UserID">
+          <input type="text" id="name" name="user_name" required value="UserID" onBlur="if(this.value=='')this.value='UserID'" onFocus="if(this.value=='UserID')this.value='' ">
           <label id="idcheck" style="color: green;" ></label>		
 		  <input type="button" id="btn" value="중복확인">
+      
           <script type="text/javascript">
 			$(function () {	
 				$("#btn").click(function () {		
@@ -47,7 +49,7 @@
 								$("#idcheck").css("color", "#0000ff");
 								$("#idcheck").html("사용할 수 있는 id입니다");
 							}else{
-								$("#idcheck").css("color", "#ff0000");
+								$("#idcheck").css("color", "#0000ff");
 								$("#idcheck").html("사용 중인 id입니다");		
 								$("#id").val("");
 							}
@@ -59,15 +61,23 @@
 			});
 			</script>
           
-          
-          <label for="mail">Email:</label>
-          <input type="email" id="mail" name="user_email" required value="E-mail" onBlur="if(this.value=='')this.value='Username'" onFocus="if(this.value=='Username')this.value='' ">
-          
           <label for="password">비밀번호:</label>
           <input type="password" id="password" name="user_password" required value="Password" onBlur="if(this.value=='')this.value='Password'" onFocus="if(this.value=='Password')this.value='' ">
-                  
+             
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="user_name" required value="Name" onBlur="if(this.value=='')this.value='Name'" onFocus="if(this.value=='Name')this.value='' ">
+          
+              
+          <label for="mail">Email:</label>
+          <input type="email" id="mail" name="user_email" required value="E-mail" onBlur="if(this.value=='')this.value='E-mail'" onFocus="if(this.value=='E-mail')this.value='' ">
+          
+           <label for="phone">Phone:</label>
+          <input type="text" id="phone" name="user_phone" required value="Phone" onBlur="if(this.value=='')this.value='Phone'" onFocus="if(this.value=='Phone')this.value='' ">
+          
+          
+            </form>
         
-
+		<from action="SignupAf.jsp" method="post">
         <button type="submit">회원가입</button>
       </form>
       

@@ -4,6 +4,8 @@ public class MemberService {
 	private static MemberService memberservice = null;
 	public iMemberManager manager;
 	
+	
+	
 	private MemberService() {
 		manager = new MemberManager();
 	}
