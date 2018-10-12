@@ -81,6 +81,19 @@ public class HotelDto implements Serializable {
 		this.price = price;
 		this.hotelphone = hotelphone;
 	}
+	
+	
+	// 검색한 List를 받아오기 위한 생성자 
+	public HotelDto(int seq, String id, String hotelname, String region, int maxpeople, int price, int hotelphone) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.hotelname = hotelname;
+		this.region = region;
+		this.maxpeople = maxpeople;
+		this.price = price;
+		this.hotelphone = hotelphone;
+	}
 
 	public int getSeq() {
 		return seq;

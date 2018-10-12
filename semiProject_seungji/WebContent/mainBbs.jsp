@@ -204,9 +204,8 @@ String keyword = request.getParameter("keyword");
 					<nav id="nav">
 						<ul>
 							<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
-							<li><a href="login.jsp">로그인</a></li>	
-							<li><a href="signUp.jsp">회원가입</a></li>
-							<!-- 찬수씨가 로그인/회원가입 만들면 링크이름 맞게 바꾸기 -->
+							<li><a href="loginview.jsp">로그인</a></li>	
+							<li><a href="Signup.jsp">회원가입</a></li>
 						</ul>
 					</nav>
 				</div>

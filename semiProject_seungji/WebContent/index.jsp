@@ -21,11 +21,10 @@
     <nav>
       <ul>
         <li>
-          <a class="btn" href="signUp.jsp" title="Register">Register</a>
+          <a class="btn" href="Signup.jsp" title="Register">Register</a>
         </li>
         <li>
-          <a class="btn" href="login.jsp" title="Login">Login</a>
-          <!-- 찬수씨가 로그인/회원가입 만들면 링크이름 맞게 바꾸기 -->
+          <a class="btn" href="loginview.jsp" title="Login">Login</a>
         </li>
       </ul>
     </nav>
