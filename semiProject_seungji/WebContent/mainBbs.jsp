@@ -15,7 +15,13 @@ String keyword = request.getParameter("keyword");
 		<meta name="keywords" content="" />
 		<link href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css'>
 		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		<!-- 맵 구동용 제이쿼리 버전 -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<!-- 슬라이더용 제이쿼리 버전 -->
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+		
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-panels.min.js"></script>
 		<script src="js/init.js"></script>
@@ -31,7 +37,7 @@ String keyword = request.getParameter("keyword");
 		
 		<script type="text/javascript">
 		$(function () {
-			// 페이지 실행되자마자, 검색된 맵 불러오기.
+			// 페이지 실행되자마자, 검색된 맵 불러오기.(아래 함수와 실행내용은 동일함.)
 			var keyword = $('#searchText').val();
 			
 			$.ajax({
@@ -48,7 +54,7 @@ String keyword = request.getParameter("keyword");
 			});
 			
 			// 검색버튼 클릭하면 Map 업데이트
-			$("#btn_search").click(function () {
+			/* $("#btn_search").click(function () {
 				
 				var keyword = $('#searchText').val();
 				
@@ -65,9 +71,124 @@ String keyword = request.getParameter("keyword");
 					}
 				});
 				
+			}); */
+			
+			$("#btn_search").click(function () {
+				var place = $("#searchText").val().trim();
+				var price = $("#opa").text().replace(/[^0-9\.]+/g, "");
+				var people = $("#sel_people").val();
+				var date1 = $("#date1").val();
+				var date2 = $("#date2").val();
+				
+				/* alert("place = " + place + " price = " + price + " people = " + people 
+						+ " date1 = "+ date1 + " date2 = " + date2); */
+						
+				$.ajax({
+					url : "HotelControl",
+					type : "get",
+					data : "command=search"+"&place="+place+"&price="+price+"&people="+people+"&date1="+date1+"&date2="+date2,
+					success : function(data){
+						alert("통신성공!");
+						alert(data);
+					},
+					error : function(){
+						alert("통신실패!");
+					}
+				});
+				
 			});
+			
+			// 가격 슬라이더
+			$("#slider1").slider({
+				animate:true,
+				min : 10000,
+				max : 100000,
+				slide:function(event, ui){	// ui : 수치
+					console.log("move");
+					
+					$("#opa").text(ui.value + "원");
+				}
+			});
+			
+			
+			// 달력 만들기
+			$("#date1").datepicker({
+				dateFormat:"yy/mm/dd",
+				dayNamesMin:["일", "월", "화", "수", "목", "금", "토"],	// 배열을 잡은것.
+				monthNames:["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+				onSelect:function( d ){
+					// 연,월,일 구하기
+//					alert(d + "선택됐습니다");
+					var arr = d.split("/");
+					$("#date1").text(arr[0]);
+					$("#date1").append(arr[1]);
+					$("#date1").append(arr[2]);
+					
+					// 요일 구하기
+					var date = new Date( $("#date1").datepicker({dateFormat:'yy/mm/dd'}).val() );
+					alert("date1 : "+date.getDay() );	// 0(일요일)~6(토요일)
+					
+					var week = new Array("일", "월", "화", "수", "목", "금", "토");
+					$("#date1").append( week[ date.getDay() ] );
+				}
+			});
+			
+			// 달력 만들기
+			$(".date").datepicker({
+				dateFormat:"yy/mm/dd",
+				dayNamesMin:["일", "월", "화", "수", "목", "금", "토"],	// 배열을 잡은것.
+				monthNames:["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+				onSelect:function( d ){
+					// 연,월,일 구하기
+//					alert(d + "선택됐습니다");
+					var arr = d.split("/");
+					$(this).text(arr[0]);
+					$(this).append(arr[1]);
+					$(this).append(arr[2]);
+					
+					// 요일 구하기
+					var date = new Date( $(this).datepicker({dateFormat:'yy/mm/dd'}).val() );
+					alert("this : "+date.getDay() );	// 0(일요일)~6(토요일)
+					
+					var week = new Array("일", "월", "화", "수", "목", "금", "토");
+					$(this).append( week[ date.getDay() ] );
+				}
+			});
+			
+			
+			// 스크롤 따라오는 박스
+			var currentPosition = parseInt($("#sidebox").css("top"));
+			$(window).scroll(function() { 
+				var position = $(window).scrollTop(); 
+				$("#sidebox").stop().animate({"top":position+currentPosition+"px"},1000); 
+			});
+			
+			
+			
+
+
+
+		});
 
 		</script>
+		
+		
+		<style type="text/css">
+		
+		/* 검색옵션 탭마다 붙는 분홍네모 아이콘 */
+		ul.style2 li{
+			list-style-type : none;
+			padding-left : 1.5em;
+			background-image : url('./css/images/header-wrapper-bg.png');
+			background-size : 1em;
+			background-repeat : no-repeat;
+		}
+		
+		#sidebox{
+			top:200px;
+			position:absolute; 
+		}
+		</style>
 		
 	</head>
 	<body class="homepage">
@@ -105,8 +226,6 @@ String keyword = request.getParameter("keyword");
 					<section>
 						<h2>어느 숙소에 묵으시겠습니까?</h2>
 						<p id="mainMap"><a href="#"><img src="images/pics02.jpg" alt=""></a></p>
-						<input type="text" value="<%=keyword%>" id="searchText">
-						<button type="button" id="btn_search">검색</button>
 					</section>
 					
 					
@@ -185,26 +304,34 @@ String keyword = request.getParameter("keyword");
 					</section>
 	
 					<!-- Sidebar Section 2 -->
+					<div id="sidebox" style="margin-top: 30px">
 					<section id="box1">
-						<h2>검색옵션</h2>
+						<h2 style="margin-bottom: 25px; ">검색옵션</h2>
 						<ul class="style2">
-							<li class="first">
-								<p><img src="images/pics07.jpg" alt=""><input type="text" ></p>
+							<li>
+								<p>지역 : <input type="text" value="<%=keyword%>" id="searchText" size="25px"></p>
 							</li>
 							<li>
-								<p><img src="images/pics08.jpg" alt=""></p>
-									
-								
+								<p>가격 : <div id="slider1" style="width: 150px; margin-left: 50px;"></p>
+								<p id="opa"></p>
 							</li>
 							<li>
-								<p><img src="images/pics09.jpg" alt="">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum. </p>
+								<p>인원 : <select id="sel_people" style="margin-left: 10px;">
+											<option value="1" selected>1명</option>
+											<option value="2">2명</option>
+											<option value="3">3명</option>
+											<option value="4">4명 이상</option>
+										</select>
+								</p>
 							</li>
 							<li>
-								<p><img src="images/pics10.jpg" alt="">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum. </p>
+								<p>날짜 : <input type="text" class="date" id="date1" placeholder="체크인" size="8px">~
+										<input type="text" class="date" id="date2" placeholder="체크아웃" size="8px"></p>
 							</li>
 						</ul>
-						<p><a href="#" class="button"><span>Read More</span></a></p>
+						<p><a href="#" class="button" id="btn_search"><span>Search More</span></a></p>
 					</section>
+					</div>
 
 				</div>
 				
