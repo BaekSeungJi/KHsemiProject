@@ -19,11 +19,12 @@ public class HotelManager implements iHotelManager {
 	@Override
 	public List<HotelDto> getSearchHotelList(String place, String price, String people, String date1, String date2) {
 		
+		
 		String sql = " SELECT SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT "
 				+ " FROM HOTEL "
-				+ " WHERE REGION LIKE '%?%' "
-				+ " AND PRICE >= ? "
-				+ " AND MAXPEOPLE >= ? "
+				+ " WHERE REGION LIKE '%'||?||'%' "
+				+ " AND PRICE >=? "
+				+ " AND MAXPEOPLE >=? "
 				+ " ORDER BY REGDATE DESC ";
 		
 
@@ -41,13 +42,15 @@ public class HotelManager implements iHotelManager {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 getSearchHotelList Success");
 			
-			psmt.setString(1, place);
-			psmt.setInt(2, Integer.parseInt(price));
-			psmt.setInt(3, Integer.parseInt(people));
+			psmt.setString(1, place.substring(0, 2));
 			System.out.println("3/6 getSearchHotelList Success");
+			psmt.setInt(2, Integer.parseInt(price));
+			System.out.println("4/6 getSearchHotelList Success");
+			psmt.setInt(3, Integer.parseInt(people));
+			System.out.println("5/6 getSearchHotelList Success");
 			
 			rs = psmt.executeQuery();
-			System.out.println("4/6 getSearchHotelList Success");
+			System.out.println("6/6 getSearchHotelList Success");
 			
 			while(rs.next()) {
 				int i = 1;
@@ -71,6 +74,7 @@ public class HotelManager implements iHotelManager {
 			System.out.println("5/6 getSearchHotelList Success");
 			
 		} catch(Exception e) {
+			e.printStackTrace();
 			System.out.println("getSearchHotelList Fail");
 		} finally {
 			DBClose.close(psmt, conn, rs);

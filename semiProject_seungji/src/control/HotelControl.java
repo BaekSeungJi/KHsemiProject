@@ -49,6 +49,8 @@ public class HotelControl extends HttpServlet {
 			HotelService service = HotelService.getInstance();
 			List<HotelDto> searchList = service.getSearchHotelList(place, price, people, date1, date2);
 			
+			req.setAttribute("searchList", searchList);
+			dispatch("searchList.jsp", req, resp);
 		}
 		
 		

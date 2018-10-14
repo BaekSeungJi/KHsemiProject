@@ -1,3 +1,5 @@
+<%@page import="dto.HotelDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -54,9 +56,9 @@ String keyword = request.getParameter("keyword");
 			});
 			
 			// 검색버튼 클릭하면 Map 업데이트
-			/* $("#btn_search").click(function () {
+			$("#btn_map").click(function () {
 				
-				var keyword = $('#searchText').val();
+				var keyword = $('#newMapKeyword').val();
 				
 				$.ajax({
 					url : "Map.jsp",
@@ -71,10 +73,12 @@ String keyword = request.getParameter("keyword");
 					}
 				});
 				
-			}); */
+			});
 			
+			
+			// 검색옵션 - 호텔목록 불러오기
 			$("#btn_search").click(function () {
-				var place = $("#searchText").val().trim();
+				var place = $("#searchText").val();
 				var price = $("#opa").text().replace(/[^0-9\.]+/g, "");
 				var people = $("#sel_people").val();
 				var date1 = $("#date1").val();
@@ -90,6 +94,7 @@ String keyword = request.getParameter("keyword");
 					success : function(data){
 						alert("통신성공!");
 						alert(data);
+						
 					},
 					error : function(){
 						alert("통신실패!");
@@ -126,7 +131,7 @@ String keyword = request.getParameter("keyword");
 					
 					// 요일 구하기
 					var date = new Date( $("#date1").datepicker({dateFormat:'yy/mm/dd'}).val() );
-					alert("date1 : "+date.getDay() );	// 0(일요일)~6(토요일)
+			//		alert("date1 : "+date.getDay() );	// 0(일요일)~6(토요일)
 					
 					var week = new Array("일", "월", "화", "수", "목", "금", "토");
 					$("#date1").append( week[ date.getDay() ] );
@@ -148,7 +153,7 @@ String keyword = request.getParameter("keyword");
 					
 					// 요일 구하기
 					var date = new Date( $(this).datepicker({dateFormat:'yy/mm/dd'}).val() );
-					alert("this : "+date.getDay() );	// 0(일요일)~6(토요일)
+		//			alert("this : "+date.getDay() );	// 0(일요일)~6(토요일)
 					
 					var week = new Array("일", "월", "화", "수", "목", "금", "토");
 					$(this).append( week[ date.getDay() ] );
@@ -225,6 +230,8 @@ String keyword = request.getParameter("keyword");
 					<section>
 						<h2>어느 숙소에 묵으시겠습니까?</h2>
 						<p id="mainMap"><a href="#"><img src="images/pics02.jpg" alt=""></a></p>
+						<input type="text" id="newMapKeyword">
+						<button type="button" id="btn_map">검색</button>
 					</section>
 					
 					
@@ -273,6 +280,7 @@ String keyword = request.getParameter("keyword");
 
 	
 				</div>
+				
 	
 				<!-- Sidebar Area(오른쪽 콘텐츠들) -->
 				<div id="sidebar" class="4u">
