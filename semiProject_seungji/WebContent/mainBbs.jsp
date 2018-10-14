@@ -7,7 +7,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%
+// 첫 페이지에서 넘어온 맵 검색어
 String keyword = request.getParameter("keyword");
+// 컨트롤러를 통해 찾아온 조건에 맞는 호텔 리스트
+List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 %>
 
 	<head>
@@ -93,7 +96,6 @@ String keyword = request.getParameter("keyword");
 					data : "command=search"+"&place="+place+"&price="+price+"&people="+people+"&date1="+date1+"&date2="+date2,
 					success : function(data){
 						alert("통신성공!");
-						alert(data);
 						
 					},
 					error : function(){
@@ -165,7 +167,12 @@ String keyword = request.getParameter("keyword");
 			var currentPosition = parseInt($("#sidebox").css("top"));
 			$(window).scroll(function() { 
 				var position = $(window).scrollTop(); 
-				$("#sidebox").stop().animate({"top":position+currentPosition+"px"},1000); 
+				console.log("스크롤 위치 = "+position);
+				$("#sidebox").stop().animate({"top":position+currentPosition+"px"},500); 
+				
+				if(position > 370){
+					$("#sidebox").stop();
+				};
 			});
 			
 			
@@ -239,41 +246,25 @@ String keyword = request.getParameter("keyword");
 					<section>
 						<div id="two-column" class="5grid">
 							<div class="row">
-								<div class="6u">
-									<section>
-										<h2>Tristique eleifend</h2>
-										<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</p>
-										<ul class="style3">
-											<li class="first">
-												<p><span class="date"><a href="#">20012.10.25</a></span><span class="heading-title">Etiam posuere augue</span></p>
-												<p><a href="#">Integer nisl risus, sagittis convallis, rutrum id, elementum congue, nibh. Suspendisse dictum porta lectus. </a></p>
-											</li>
-											<li>
-												<p><span class="date"><a href="#">20012.10.25</a></span><span class="heading-title">Etiam posuere augue</span></p>
-												<p><a href="#">Quisque dictum. Integer nisl risus, sagittis elementum congue, nibh. Suspendisse dictum porta lectus. </a></p>
-											</li>
-										</ul>
-									</section>
-								</div>
-								<div class="6u">
-									<section>
-										<h2>Donec dictum metus</h2>
-										<ul class="style4">
-											<li class="first">
-												<h3>Mauris vulputate dolor sit amet</h3>
-												<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
-											</li>
-											<li>
-												<h3>Fusce ultrices fringilla metus</h3>
-												<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
-											</li>
-											<li>
-												<h3>Donec dictum metus in sapien</h3>
-												<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
-											</li>
-										</ul>
-									</section>
-								</div>
+							<div >
+							<section>
+								<h2>호텔 검색 결과</h2>
+								<ul class="style4">
+									<li class="first">
+										<h3>Mauris vulputate dolor sit amet</h3>
+										<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum. </a></p>
+									</li>
+									<li>
+										<h3>Fusce ultrices fringilla metus</h3>
+										<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
+									</li>
+									<li>
+										<h3>Donec dictum metus in sapien</h3>
+										<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
+									</li>
+								</ul>
+								</section>
+							</div>
 							</div>
 						</div>					
 					</section>			
@@ -286,34 +277,12 @@ String keyword = request.getParameter("keyword");
 				<div id="sidebar" class="4u">
 				
 					<!-- Sidebar Section 1 -->
-					<!-- <section id="box1"> -->
-						
-						<!-- Two Column Content Area -->
-						<!-- <div class="5grid">
-							<div class="row">
-								<div class="6u">
-									<section>
-										<h2>검색옵션</h2>
-										<ul class="style4">
-											<li class="first"><a href="#">Maecenas luctus sapien</a></li>
-											<li><a href="#">Etiam rhoncus volutpat erat</a></li>
-											<li><a href="#">Donec dictum metus sapien</a></li>
-											<li><a href="#">Integer gravida quis urna</a></li>
-											<li><a href="#">Etiam rhoncus volutpat erat</a></li>
-											<li><a href="#">Donec dictum metus sapien</a></li>
-										</ul>
-									</section>
-								</div>
-							</div>
-						</div> -->
-						<!-- Two Column Content Area Ends Here -->
 					
-					</section>
 	
 					<!-- Sidebar Section 2 -->
-					<div id="sidebox" style="margin-top: 5%">
+					<div id="sidebox" >
 					<section id="box1">
-						<h2 >검색옵션</h2>
+						<h2 style="margin-top: 5%;">검색옵션</h2>
 						<ul class="style2">
 							<li>
 								<p>지역 : <input type="text" value="<%=keyword%>" id="searchText" size="25px"></p>

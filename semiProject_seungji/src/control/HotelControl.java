@@ -50,7 +50,7 @@ public class HotelControl extends HttpServlet {
 			List<HotelDto> searchList = service.getSearchHotelList(place, price, people, date1, date2);
 			
 			req.setAttribute("searchList", searchList);
-			dispatch("searchList.jsp", req, resp);
+			dispatch("mainBbs.jsp", req, resp);
 		}
 		
 		
