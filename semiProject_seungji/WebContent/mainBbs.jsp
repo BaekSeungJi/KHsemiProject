@@ -303,9 +303,9 @@ String keyword = request.getParameter("keyword");
 					</section>
 	
 					<!-- Sidebar Section 2 -->
-					<div id="sidebox" style="margin-top: 30px">
+					<div id="sidebox" style="margin-top: 5%">
 					<section id="box1">
-						<h2 style="margin-bottom: 25px; ">검색옵션</h2>
+						<h2 >검색옵션</h2>
 						<ul class="style2">
 							<li>
 								<p>지역 : <input type="text" value="<%=keyword%>" id="searchText" size="25px"></p>
