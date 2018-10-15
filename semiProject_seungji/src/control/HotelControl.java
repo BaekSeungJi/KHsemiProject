@@ -66,6 +66,7 @@ public class HotelControl extends HttpServlet {
 		List<HotelDto> searchList = service.getSearchHotelList(place, price, people, date1, date2);
 		
 		for (int i = 0; i < searchList.size(); i++) {
+			System.out.println("리스트 json으로 변경중");
 			// SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT
 			result.append("[{\"value\": \"" + searchList.get(i).getSeq() + "\"},");
 			result.append("{\"value\": \"" + searchList.get(i).getId() + "\"},");

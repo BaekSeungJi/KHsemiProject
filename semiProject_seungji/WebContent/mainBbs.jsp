@@ -102,12 +102,11 @@ String keyword = request.getParameter("keyword");
 						date2 : date2
 					},
 					success : function(data){
-						alert("통신성공!");
+						alert("검색 통신성공!");
 						var parsed = JSON.parse(data);
 						var result = parsed.result;
 						// json형태로 파싱한 데이터의 result부분을 가져와서 addList를 통해 매개변수로 넘겨준다. 나머지 ul에 까는 작업은 해당 함수 내부에서 처리해줄것. 
 						for(var i = 0; i< result.length; i++){
-							System.out.println("parsing i = " + i);
 							addList(result[i][0].value, result[i][1].value, result[i][2].value,
 									result[i][3].value, result[i][4].value, result[i][5].value,
 									result[i][6].value, result[i][7].value, result[i][8].value);
@@ -126,15 +125,6 @@ String keyword = request.getParameter("keyword");
 				
 				// 0 == 노삭제
 				if(DEL == 0){
-					
-					System.out.println("SEQ = "+ SEQ);
-					System.out.println("ID = "+ ID);
-					System.out.println("hotelname = "+ HOTELNAME);
-					System.out.println("REGION = "+ REGION);
-					System.out.println("MAXPEOPLE = "+ MAXPEOPLE);
-					System.out.println("PRICE = "+ PRICE);
-					System.out.println("HOTELPHONE = "+ HOTELPHONE);
-					System.out.println("READCOUNT = "+ READCOUNT);
 					
 					$("#searchHotelList").append('<li>'+
 							'<h3>' + HOTELNAME +
