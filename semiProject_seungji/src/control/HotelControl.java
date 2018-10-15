@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -40,21 +41,47 @@ public class HotelControl extends HttpServlet {
 			String people = req.getParameter("people");
 			String date1 = req.getParameter("date1");
 			String date2 = req.getParameter("date2");
-			System.out.println(place);
+			System.out.println("controller 들어옴 " + place);
 			System.out.println(price);
 			System.out.println(people);
 			System.out.println(date1);
 			System.out.println(date2);
 			
-			HotelService service = HotelService.getInstance();
-			List<HotelDto> searchList = service.getSearchHotelList(place, price, people, date1, date2);
+			// 밑에 따로 만든 getSearchList 함수를 실행한 결과를 write로 ajax에 보낸다.(success에 data부분으로 들어갈 것.)
+			resp.getWriter().write(getSearchList(place, price, people, date1, date2));
 			
-			req.setAttribute("searchList", searchList);
-			dispatch("mainBbs.jsp", req, resp);
+			/*req.setAttribute("searchList", searchList);
+			dispatch("mainBbs.jsp", req, resp);*/
 		}
 		
 		
 	}
+	
+	// 서비스를 통해 받아온 리스트를 json파일로 만들어주는 함수.
+	public String getSearchList(String place, String price, String people, String date1, String date2) {
+		StringBuffer result = new StringBuffer("");
+		result.append("{\"result\":[");
+		
+		HotelService service = HotelService.getInstance();
+		List<HotelDto> searchList = service.getSearchHotelList(place, price, people, date1, date2);
+		
+		for (int i = 0; i < searchList.size(); i++) {
+			// SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT
+			result.append("[{\"value\": \"" + searchList.get(i).getSeq() + "\"},");
+			result.append("{\"value\": \"" + searchList.get(i).getId() + "\"},");
+			result.append("{\"value\": \"" + searchList.get(i).getHotelname() + "\"},");
+			result.append("{\"value\": \"" + searchList.get(i).getRegion() + "\"},");
+			result.append("{\"value\": \"" + searchList.get(i).getMaxpeople() + "\"},");
+			result.append("{\"value\": \"" + searchList.get(i).getPrice() + "\"},");
+			result.append("{\"value\": \"" + searchList.get(i).getHotelphone() + "\"},");
+			result.append("{\"value\": \"" + searchList.get(i).getDel() + "\"},");
+			result.append("{\"value\": \"" + searchList.get(i).getReadcount() + "\"}]");
+			if(i != searchList.size() -1) result.append(",");
+		}
+		result.append("]}");
+		return result.toString();
+	}
+		
 	
 	
 	// forword만 하는 메소드

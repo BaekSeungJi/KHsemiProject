@@ -9,8 +9,6 @@
 <%
 // 첫 페이지에서 넘어온 맵 검색어
 String keyword = request.getParameter("keyword");
-// 컨트롤러를 통해 찾아온 조건에 맞는 호텔 리스트
-List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 %>
 
 
@@ -43,7 +41,7 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 		
 		<script type="text/javascript">
 		$(function () {
-			// 페이지 실행되자마자, 검색된 맵 불러오기.(아래 함수와 실행내용은 동일함.)
+			// 페이지 실행되자마자, 검색된 맵 불러오기.(아래 $("#btn_map").click 함수와 실행내용은 동일함.)
 			var keyword = $('#searchText').val();
 			
 			$.ajax({
@@ -59,7 +57,7 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 				}
 			});
 			
-			// 검색버튼 클릭하면 Map 업데이트
+			// 지도이미지 바로 아래 검색버튼 클릭하면 Map 실시간 업데이트
 			$("#btn_map").click(function () {
 				
 				var keyword = $('#newMapKeyword').val();
@@ -80,7 +78,7 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 			});
 			
 			
-			// 검색옵션 - 호텔목록 불러오기
+			// 검색옵션 -> search more 버튼클릭 -> 검색된 호텔목록 불러오기
 			$("#btn_search").click(function () {
 				var place = $("#searchText").val();
 				var price = $("#opa").text().replace(/[^0-9\.]+/g, "");
@@ -88,16 +86,32 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 				var date1 = $("#date1").val();
 				var date2 = $("#date2").val();
 				
+				
 				/* alert("place = " + place + " price = " + price + " people = " + people 
 						+ " date1 = "+ date1 + " date2 = " + date2); */
 						
 				$.ajax({
 					url : "HotelControl",
 					type : "get",
-					data : "command=search"+"&place="+place+"&price="+price+"&people="+people+"&date1="+date1+"&date2="+date2,
+					data : {
+						command : "search",
+						place : place,
+						price : price,
+						people : people,
+						date1 : date1,
+						date2 : date2
+					},
 					success : function(data){
 						alert("통신성공!");
-						
+						var parsed = JSON.parse(data);
+						var result = parsed.result;
+						// json형태로 파싱한 데이터의 result부분을 가져와서 addList를 통해 매개변수로 넘겨준다. 나머지 ul에 까는 작업은 해당 함수 내부에서 처리해줄것. 
+						for(var i = 0; i< result.length; i++){
+							System.out.println("parsing i = " + i);
+							addList(result[i][0].value, result[i][1].value, result[i][2].value,
+									result[i][3].value, result[i][4].value, result[i][5].value,
+									result[i][6].value, result[i][7].value, result[i][8].value);
+						}
 					},
 					error : function(){
 						alert("통신실패!");
@@ -105,6 +119,49 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 				});
 				
 			});
+			
+			
+			// json으로 잘라온 리스트를 실제로 태그와 함께 동적생성하며 ul에 뿌려주는 함수
+			function addList(SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT) {
+				
+				// 0 == 노삭제
+				if(DEL == 0){
+					
+					System.out.println("SEQ = "+ SEQ);
+					System.out.println("ID = "+ ID);
+					System.out.println("hotelname = "+ HOTELNAME);
+					System.out.println("REGION = "+ REGION);
+					System.out.println("MAXPEOPLE = "+ MAXPEOPLE);
+					System.out.println("PRICE = "+ PRICE);
+					System.out.println("HOTELPHONE = "+ HOTELPHONE);
+					System.out.println("READCOUNT = "+ READCOUNT);
+					
+					$("#searchHotelList").append('<li>'+
+							'<h3>' + HOTELNAME +
+							'</h3>' +
+							'<p>'+ 
+							'<a href="hotelDetail.jsp?seq='+ SEQ + 
+									'&id='+ ID + '&hotelname='+ HOTELNAME + 
+									'&region=' + REGION + '&maxpeople='+ MAXPEOPLE + 
+									'&price='+ PRICE + '&hotelphone='+ HOTELPHONE + 
+									'&readcount='+ READCOUNT
+								+'">' +
+							REGION + 
+							'</a>' + 
+							'</p>' + 
+							'</li>'
+						);
+				// 1 == 삭제 
+				}else if(DEL == 1){
+					$("#searchHotelList").append('<li>'+
+							'<h3>관리자에 의해 삭제된 호텔입니다.</h3>' +
+							'<p>'+ 
+							'<a href="#">죄송합니다. 해당 호텔은 이용하실 수 없습니다. 더 훌륭한 호텔들이 당신을 기다리고 있습니다.</a>' + 
+							'</p>' + 
+							'</li>'
+					);
+				}
+			};
 			
 			// 가격 슬라이더
 			$("#slider1").slider({
@@ -178,9 +235,7 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 
 
 		});
-
 		</script>
-		
 		
 		
 		
@@ -197,7 +252,7 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 		}
 		
 		#sidebox{
-			top:200px;
+			top:30%;
 			position:absolute; 
 		}
 		</style>
@@ -239,7 +294,6 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 						<p id="mainMap"><a href="#"><img src="images/pics02.jpg" alt=""></a></p>
 						<input type="text" id="newMapKeyword">
 						<button type="button" id="btn_map">검색</button>
-						<button type="button" id="btn_test">동적생성</button>
 					</section>
 					
 					
@@ -250,33 +304,12 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 							<div >
 							<section>
 								<h2>호텔 검색 결과</h2>
-								<ul class="style4">
+								<ul class="style4" id="searchHotelList">
 									<li class="first">
 										<h3>Mauris vulputate dolor sit amet</h3>
 										<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum. </a></p>
 									</li>
-									<%
-									if(searchList != null){
-										System.out.println("size = "+searchList.size());
-										for(HotelDto list : searchList){
-											System.out.println(list.getHotelname());
-									%>
-										<li>
-											<h3><%=list.getHotelname() %></h3>
-											<p><a href='#'><%=list.getDescription() %></a></p>
-										</li>
-									<%
-										}
-									}
-									%>
-									<!-- <li>
-										<h3>Fusce ultrices fringilla metus</h3>
-										<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
-									</li>
-									<li>
-										<h3>Donec dictum metus in sapien</h3>
-										<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
-									</li> -->
+									<!-- 검색된 호텔 리스트가 addList 함수를 통해 이 부분에 append됨. -->
 								</ul>
 								</section>
 							</div>
