@@ -33,7 +33,7 @@
       <tbody>
         <tr>
           <td>회원번호</td>
-          <td>code</td>
+          <td>code</td> <!-- 로그인한후 loginid.id 등으로 받아오기 -->
         </tr>
         <tr>
           <td>이름</td>
@@ -49,11 +49,11 @@
         </tr>
         <tr>
           <td>블랙리스트</td>
-          <td>blacklist</td>
+          <td>blacklist</td> <!-- 1일시 일반, 2일시 정지회원 -->
         </tr>
         <tr>
           <td>권한</td>
-          <td>auth</td>
+          <td>1</td> <!-- 1일시 일반, 2일시 관리자, 3일시 운영자 -->
         </tr>
        
       </tbody>
@@ -79,7 +79,7 @@
   <div class="tbl-content">
     <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-        <tr>
+        <tr><!-- bbslist 참고하기 -->
           <td><a href="index.jsp">호텔 이름</a></td>
           <td>지역</td>
           <td>날짜</td>

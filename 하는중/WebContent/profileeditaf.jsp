@@ -53,6 +53,8 @@ String str = name + email + phone;
 <script type="text/javascript">
 alert("수정 구현중");
 
+/* dao.update 이용해서 멤버정보 변경 */
+
 location.href = 'profileedit.jsp';
 </script>
 

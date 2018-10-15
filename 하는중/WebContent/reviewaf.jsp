@@ -5,8 +5,8 @@ request.setCharacterEncoding("utf-8");
 %>
 <%
 String hotelname = request.getParameter("name");
-String email = request.getParameter("email");
-String phone = request.getParameter("phone");
+String star = request.getParameter("star");
+String hugi = request.getParameter("hugi");
 %>      
     
     
