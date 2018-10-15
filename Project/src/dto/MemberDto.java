@@ -24,10 +24,9 @@ public class MemberDto implements Serializable {
 	private String email;
 	private String phone;
 	private int blacklist;
-	private int auth;
+	private int auth;	//사용자 : 3 관리자 : 1
 	
-	public MemberDto() {
-	}
+	public MemberDto() {}
 	
 	public MemberDto(String id, String pwd, String name, String email, String phone, int blacklist, int auth) {
 		super();
