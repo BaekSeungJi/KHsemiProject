@@ -81,10 +81,10 @@
       <tbody>
         <tr><!-- bbslist 참고하기 -->
           <td><a href="index.jsp">호텔 이름</a></td>
-          <td>지역</td>
-          <td>날짜</td>
-          <td>시각</td>
-          <td>시각</td>
+          <td>인천</td>
+          <td>10.18</td>
+          <td>10/20</td>
+          <td>10/22</td>
         </tr>
         
       <!--   강사님 bbslist 보고 수정! -->
