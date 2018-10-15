@@ -23,7 +23,7 @@ public class MemberDto implements Serializable {
 	private String name;
 	private String email;
 	private String phone;
-	private int blacklist;
+	private int blacklist;	//0==일반 1==블랙리스트
 	private int auth;	//사용자 : 3 관리자 : 1
 	
 	public MemberDto() {}
@@ -93,6 +93,12 @@ public class MemberDto implements Serializable {
 
 	public void setAuth(int auth) {
 		this.auth = auth;
+	}
+
+	@Override
+	public String toString() {
+		return "MemberDto [id=" + id + ", pwd=" + pwd + ", name=" + name + ", email=" + email + ", phone=" + phone
+				+ ", blacklist=" + blacklist + ", auth=" + auth + "]";
 	}
 	
 	

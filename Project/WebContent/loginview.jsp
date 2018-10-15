@@ -1,10 +1,16 @@
+<%@page import="model.member.iMemberManager"%>
+<%@page import="dto.MemberDto"%>
+<%@page import="model.member.MemberService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>login view</title>
    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
@@ -24,7 +30,7 @@
 
 	<div id="login">
 
-		<form action="javascript:void(0);" method="post">
+		<form action="login.jsp" method="post">
 
 			<span class="fontawesome-user"></span><input type="text" required value="Username" onBlur="if(this.value=='')this.value='Username'" 
 			onFocus="if(this.value=='Username')this.value='' "> <!-- JS because of IE support; better: placeholder="Username" -->
@@ -36,6 +42,8 @@
 			<input type="submit" value="Login">
 			<br>
 			</form>
+			
+			
 			<form action="Signup.jsp" method="post">
 			<input type="submit" value="회원가입">
 			<br>

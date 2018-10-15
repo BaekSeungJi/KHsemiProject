@@ -1,23 +1,24 @@
-<%@page import="javax.annotation.ManagedBean"%>
-<%@page import="dto.MemberDto"%>
 <%@page import="model.member.MemberManager"%>
 <%@page import="model.member.iMemberManager"%>
 <%@page import="model.member.MemberService" %>
 <%
-String id = request.getParameter("id");
+String id = request.getParameter("user_id");
 System.out.println("Id = " + id);
+
 %>
 <%
 
-MemberService service = MemberService.getInstance();
+MemberService dao = MemberService.getInstance();
 
-boolean isDup = service.isDupId(id);
+boolean isDup = dao.getId(id);
 
 
 if(isDup){
 	out.print("NO");
+
 }else{	
 	out.print("OK");
+
 }
 
 
