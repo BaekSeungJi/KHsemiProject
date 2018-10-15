@@ -13,6 +13,7 @@ String keyword = request.getParameter("keyword");
 List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 %>
 
+
 	<head>
 		<title>mainBbs.jsp</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -118,7 +119,7 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 			});
 			
 			
-			// 달력 만들기
+			// 달력 만들기(체크인)
 			$("#date1").datepicker({
 				dateFormat:"yy/mm/dd",
 				dayNamesMin:["일", "월", "화", "수", "목", "금", "토"],	// 배열을 잡은것.
@@ -140,8 +141,8 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 				}
 			});
 			
-			// 달력 만들기
-			$(".date").datepicker({
+			// 달력 만들기(체크아웃)
+			$("#date2").datepicker({
 				dateFormat:"yy/mm/dd",
 				dayNamesMin:["일", "월", "화", "수", "목", "금", "토"],	// 배열을 잡은것.
 				monthNames:["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
@@ -149,16 +150,16 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 					// 연,월,일 구하기
 //					alert(d + "선택됐습니다");
 					var arr = d.split("/");
-					$(this).text(arr[0]);
-					$(this).append(arr[1]);
-					$(this).append(arr[2]);
+					$("#date2").text(arr[0]);
+					$("#date2").append(arr[1]);
+					$("#date2").append(arr[2]);
 					
 					// 요일 구하기
-					var date = new Date( $(this).datepicker({dateFormat:'yy/mm/dd'}).val() );
+					var date = new Date( $("#date2").datepicker({dateFormat:'yy/mm/dd'}).val() );
 		//			alert("this : "+date.getDay() );	// 0(일요일)~6(토요일)
 					
 					var week = new Array("일", "월", "화", "수", "목", "금", "토");
-					$(this).append( week[ date.getDay() ] );
+					$("#date2").append( week[ date.getDay() ] );
 				}
 			});
 			
@@ -174,15 +175,14 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 					$("#sidebox").stop();
 				};
 			});
-			
-			
-			
-
 
 
 		});
 
 		</script>
+		
+		
+		
 		
 		
 		<style type="text/css">
@@ -239,6 +239,7 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 						<p id="mainMap"><a href="#"><img src="images/pics02.jpg" alt=""></a></p>
 						<input type="text" id="newMapKeyword">
 						<button type="button" id="btn_map">검색</button>
+						<button type="button" id="btn_test">동적생성</button>
 					</section>
 					
 					
@@ -254,14 +255,28 @@ List<HotelDto> searchList = (List<HotelDto>)request.getAttribute("searchList");
 										<h3>Mauris vulputate dolor sit amet</h3>
 										<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum. </a></p>
 									</li>
-									<li>
+									<%
+									if(searchList != null){
+										System.out.println("size = "+searchList.size());
+										for(HotelDto list : searchList){
+											System.out.println(list.getHotelname());
+									%>
+										<li>
+											<h3><%=list.getHotelname() %></h3>
+											<p><a href='#'><%=list.getDescription() %></a></p>
+										</li>
+									<%
+										}
+									}
+									%>
+									<!-- <li>
 										<h3>Fusce ultrices fringilla metus</h3>
 										<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
 									</li>
 									<li>
 										<h3>Donec dictum metus in sapien</h3>
 										<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
-									</li>
+									</li> -->
 								</ul>
 								</section>
 							</div>
