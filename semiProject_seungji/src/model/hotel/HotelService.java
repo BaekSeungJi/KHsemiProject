@@ -25,5 +25,13 @@ public class HotelService {
 		
 		return manager.getSearchHotelList(place, price, people, date1, date2);
 	}
+	
+	public void readCountPlus(int seq) {
+		// 호텔디테일 들어왔을때 단순히 조회수 +1해주는 함수
+	}
+	
+	public HotelDto getHotelDetail(int seq) {
+		return manager.getHotelDetail(seq);
+	}
 
 }

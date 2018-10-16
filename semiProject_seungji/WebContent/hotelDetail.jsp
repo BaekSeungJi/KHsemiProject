@@ -1,3 +1,4 @@
+<%@page import="dto.HotelDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -19,6 +20,12 @@ System.out.println("price = "+ price);
 System.out.println("hotelphone = "+ hotelphone);
 System.out.println("readcount = "+ readcount); */
 
+// 호텔 디테일 db에서 쏴준거 받기
+HotelDto detailDto = (HotelDto)request.getAttribute("detailDto");
+if(detailDto != null){
+	request.setAttribute("detail", detailDto);
+	
+}
 
 %>
     
@@ -34,6 +41,34 @@ System.out.println("readcount = "+ readcount); */
 
 <script type="text/javascript">
 	$(function () {
+		
+		// 이 페이지 켜자마자 디테일 가져오기
+		$.ajax({
+			url : "HotelControl",
+			type : "post",
+			data : {
+				command : "detail",
+				seq : <%=seq%>
+			},
+			success : function(data){
+				alert("디테일 통신성공!");
+				alert(${detail.description });
+				/* $("#three-column").append(
+						'<div class="tbox">' + 
+							'<div class="title">' + 
+								'<h2>호텔설명</h2>' + 
+							'</div>' + 
+							'<p>' + ${detail.description } + '</p>' + 
+						'<a href="#" class="button">예약하기</a></div>'
+							
+					); */
+			},
+			error : function(){
+				alert("통신실패!");
+			}
+		});
+		
+		
 		$("#btn_detail").click(function () {
 			alert("정보내놔");
 			$("#three-column").append(
@@ -41,7 +76,7 @@ System.out.println("readcount = "+ readcount); */
 					'<div class="title">' + 
 						'<h2>호텔설명</h2>' + 
 					'</div>' + 
-					'<p>' +  + '</p>' + 
+					'<p>' + ${detail.description } + '</p>' + 
 				'<a href="#" class="button">예약하기</a></div>'
 					
 			);

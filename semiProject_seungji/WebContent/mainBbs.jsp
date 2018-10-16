@@ -263,6 +263,7 @@ String keyword = request.getParameter("keyword");
 							<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
 							<li><a href="loginview.jsp">로그인</a></li>	
 							<li><a href="Signup.jsp">회원가입</a></li>
+							<!-- 찬수씨 로그인화면 완성되면 session에서 로그인 정보 불러와서 '마이페이지' 동적생성하기 -->
 						</ul>
 					</nav>
 				</div>

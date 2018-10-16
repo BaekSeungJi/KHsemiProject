@@ -34,14 +34,14 @@ public class HotelControl extends HttpServlet {
 		String command = req.getParameter("command");
 		System.out.println("command = " + command);
 		
-		// 메인 페이지 오른쪽 검색옵션에서 검색버튼을 눌렀을때
+		// 메인 페이지 오른쪽 검색옵션에서 'search more'버튼을 눌렀을때
 		if(command.equals("search")) {
 			String place = req.getParameter("place");
 			String price = req.getParameter("price");
 			String people = req.getParameter("people");
 			String date1 = req.getParameter("date1");
 			String date2 = req.getParameter("date2");
-			System.out.println("controller 들어옴 " + place);
+			System.out.println("controller search 들어옴 place = " + place);
 			System.out.println(price);
 			System.out.println(people);
 			System.out.println(date1);
@@ -50,8 +50,22 @@ public class HotelControl extends HttpServlet {
 			// 밑에 따로 만든 getSearchList 함수를 실행한 결과를 write로 ajax에 보낸다.(success에 data부분으로 들어갈 것.)
 			resp.getWriter().write(getSearchList(place, price, people, date1, date2));
 			
-			/*req.setAttribute("searchList", searchList);
-			dispatch("mainBbs.jsp", req, resp);*/
+		}
+		
+		// 호텔 디테일 페이지에서 '호텔정보'탭을 눌렀을때
+		else if(command.equals("detail")) {
+			String sseq = req.getParameter("seq");
+			int seq = Integer.parseInt(sseq);
+			System.out.println("controller detail 들어옴. seq = " + seq);
+			
+			
+			// 디테일 가져오는 함수 실행.
+			HotelService service = HotelService.getInstance();
+			HotelDto detailDto = service.getHotelDetail(seq);
+			// 짐싸서 보내주기(hotelDetail.jsp로)
+			req.setAttribute("detailDto", detailDto);
+			dispatch("hotelDetail.jsp", req, resp);
+			
 		}
 		
 		
