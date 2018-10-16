@@ -1,7 +1,5 @@
 package model.member;
 
-import java.util.List;
-
 import dto.MemberDto;
 
 public interface iMemberManager {

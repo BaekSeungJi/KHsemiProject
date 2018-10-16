@@ -6,8 +6,6 @@ import java.util.List;
 import db.DBClose;
 import db.DBConnection;
 import dto.MemberDto;
-import oracle.jdbc.driver.DBConversion;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -29,9 +27,12 @@ public class MemberManager implements iMemberManager {
 
 	@Override
 	public boolean addMember(MemberDto dto) {
-		String sql = " INSERT INTO MEMBER"
-				+ " (ID, PWD, NAME, EMAIL, PHONE, BLACKLIST, AUCH ) "
-				+ " VALUES(?, ?, ?, ?, ?, ?, ?) ";
+		
+		System.out.println("dto:" + dto.toString()); 
+		
+		String sql = " INSERT INTO MEMBER "
+				+ " (ID, PWD, NAME, EMAIL, PHONE, BLACKLIST, AUTH) "
+				+ " VALUES(?, ?, ?, ?, ?, 0, 3) ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -40,24 +41,25 @@ public class MemberManager implements iMemberManager {
 
 		try {
 			conn = DBConnection.getConnection();
-			System.out.println("1/6 addMember Success");
+			System.out.println("1/3 addMember Success");
 
 			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 addMember Success");
+			System.out.println("2/3 addMember Success");
 
 			psmt.setString(1, dto.getId());
 			psmt.setString(2, dto.getPwd());
 			psmt.setString(3, dto.getName());
 			psmt.setString(4, dto.getEmail());
 			psmt.setString(5, dto.getPhone());
-			psmt.setInt(6, dto.getBlacklist());
-			psmt.setInt(7, dto.getAuth());
+		//	psmt.setInt(6, dto.getBlacklist());
+		//	psmt.setInt(7, dto.getAuth());
 			System.out.println("여기까지클리어");
 
 			count = psmt.executeUpdate();	//??
-			System.out.println("3/6 addMember Success");
+			System.out.println("3/3 addMember Success");
 		} catch (Exception e) {			
 			System.out.println("addMember Fail");
+			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, null);
 		}

@@ -36,8 +36,8 @@
 			</legend>
 
 			<label for="user_id">ID:</label> 
-				<input type="text" id="user_id"
-				name="user_id" required value="User_ID"
+				<input type="text" id="id"
+				name="id" required value="User_ID"
 				onBlur="if(this.value=='')this.value='User_ID'"
 				onFocus="if(this.value=='User_ID')this.value='' "> 
 				<tr>
@@ -47,25 +47,25 @@
 				</td>
 				</tr>				
 				<label for="password">비밀번호:</label> <input
-				type="password" id="password" name="user_password" required
+				type="password" id="pwd" name="pwd" required
 				value="Password" onBlur="if(this.value=='')this.value='Password'"
 				onFocus="if(this.value=='Password')this.value='' "> 
 				
 				<label
 				for="name">Name:</label> <input type="text" id="name"
-				name="user_name" required value="Name"
+				name="name" required value="Name"
 				onBlur="if(this.value=='')this.value='Name'"
 				onFocus="if(this.value=='Name')this.value='' "> 
 				
 				<label
-				for="mail">Email:</label> <input type="email" id="mail"
-				name="user_email" required value="E-mail"
+				for="mail">Email:</label> <input type="email" id="email"
+				name="email" required value="E-mail"
 				onBlur="if(this.value=='')this.value='E-mail'"
 				onFocus="if(this.value=='E-mail')this.value='' "> 
 				
 				<label
 				for="phone">Phone:</label> <input type="text" id="phone"
-				name="user_phone" required value="Phone"
+				name="phone" required value="Phone"
 				onBlur="if(this.value=='')this.value='Phone'"
 				onFocus="if(this.value=='Phone')this.value='' ">
 	</form>
@@ -80,7 +80,7 @@
 					$.ajax({
 						type:"get",
 						url:"./idcheck.jsp",
-						data:"user_id=" + $('#user_id').val(),
+						data:"id=" + $('#id').val(),
 						success:function(data){				
 							if(data.trim() == "OK"){
 								$("#idcheck").css("color", "#0000ff");
@@ -88,7 +88,7 @@
 							}else{
 								$("#idcheck").css("color", "#0000ff");
 								$("#idcheck").html("사용 중인 id입니다");		
-								$("#user_id").val("");
+								$("#id").val("");
 							}
 						}			
 					});

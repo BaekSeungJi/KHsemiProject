@@ -2,7 +2,7 @@
 <%@page import="model.member.iMemberManager"%>
 <%@page import="model.member.MemberService" %>
 <%
-String id = request.getParameter("user_id");
+String id = request.getParameter("id");
 System.out.println("Id = " + id);
 
 %>
