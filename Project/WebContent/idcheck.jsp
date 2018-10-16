@@ -10,7 +10,7 @@ System.out.println("Id = " + id);
 
 MemberService dao = MemberService.getInstance();
 
-boolean isDup = dao.getId(id);
+boolean isDup = dao.manager.getId(id);
 
 
 if(isDup){

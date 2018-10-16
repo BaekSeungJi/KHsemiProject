@@ -6,6 +6,7 @@ import java.util.List;
 import db.DBClose;
 import db.DBConnection;
 import dto.MemberDto;
+import oracle.jdbc.driver.DBConversion;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,28 +15,23 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 
 public class MemberManager implements iMemberManager {
-	
+
 	private static MemberManager memberManager = new MemberManager();
-	
+
+	public MemberManager() {
+		DBConnection.initConnect();
+	}
+
 	public static MemberManager getInstance() {
 		return memberManager;
 	}
-	
-	public MemberManager() {
-		DBConnection.initConnect();
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {			
-			e.printStackTrace();
-		}
-	}
-	
-	
+
 
 	@Override
 	public boolean addMember(MemberDto dto) {
-		String sql = " INSERT INTO CUSTUSER(ID, PWD, NAME, EMAIL, PHONE, BLACKLIST, AUCH ) "
-				+ " VALUES(?, ?, ?, ?, ?, 0, 3) ";
+		String sql = " INSERT INTO MEMBER"
+				+ " (ID, PWD, NAME, EMAIL, PHONE, BLACKLIST, AUCH ) "
+				+ " VALUES(?, ?, ?, ?, ?, ?, ?) ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -43,13 +39,12 @@ public class MemberManager implements iMemberManager {
 		int count = 0;
 
 		try {
-			conn = getConnection();
+			conn = DBConnection.getConnection();
 			System.out.println("1/6 addMember Success");
 
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 addMember Success");
 
-			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getId());
 			psmt.setString(2, dto.getPwd());
 			psmt.setString(3, dto.getName());
@@ -57,10 +52,11 @@ public class MemberManager implements iMemberManager {
 			psmt.setString(5, dto.getPhone());
 			psmt.setInt(6, dto.getBlacklist());
 			psmt.setInt(7, dto.getAuth());
+			System.out.println("여기까지클리어");
 
-			count = psmt.executeUpdate();		
+			count = psmt.executeUpdate();	//??
 			System.out.println("3/6 addMember Success");
-		} catch (SQLException e) {			
+		} catch (Exception e) {			
 			System.out.println("addMember Fail");
 		} finally {
 			DBClose.close(psmt, conn, null);
@@ -68,55 +64,6 @@ public class MemberManager implements iMemberManager {
 
 		return count>0?true:false;
 
-	}
-
-
-	public Connection getConnection() throws SQLException {
-		String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
-		String user = "hr";
-		String pass = "hr";
-
-		Connection conn = DriverManager.getConnection(url, user, pass);
-
-		return conn;
-	}
-
-
-	public List<MemberDto> getMemberDtoList() {
-		String sql = " SELECT ID, PWD, NAME, EMAIL, PHONE "
-				+ " FROM CUSTUSER "
-				+ " ORDER BY ID DESC ";
-
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-
-		List<MemberDto> list = new ArrayList<>();
-
-		try {
-			conn = getConnection();
-			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
-
-			while(rs.next()) {
-				MemberDto c = new MemberDto();
-
-				c.setId(rs.getString("ID"));
-				c.setPwd(rs.getString("PWD"));
-				c.setName(rs.getString("NAME"));
-				c.setEmail(rs.getString("Email"));
-				c.setPhone(rs.getString("Phone"));
-				list.add(c);				
-			}			
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-
-		}
-
-		return list;		
 	}
 
 
@@ -173,8 +120,9 @@ public class MemberManager implements iMemberManager {
 
 	@Override
 	public boolean getId(String id) {
-		System.out.println("여기까지");
-		String sql = " SELECT ID FROM MEMBER WHERE ID=? ";
+
+		String sql = " SELECT ID FROM MEMBER"
+				+ " WHERE ID = ? ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -182,51 +130,38 @@ public class MemberManager implements iMemberManager {
 
 		boolean findId = false;
 
-	
+
 		int count = 0;
 
 		try {
 
-			conn = getConnection();
-			System.out.println("1/6 getId Success");
+			conn = DBConnection.getConnection();
+			System.out.println("1/3 getId Success");
 			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 getId Success");
+			System.out.println("2/3 getId Success");
 
 			psmt.setString(1, id.trim());
 
-			psmt = conn.prepareStatement(sql);
-
 			rs = psmt.executeQuery();		
-			System.out.println("3/6 getId Success");
+			
+			System.out.println("3/3 getId Success");
 			while(rs.next()) {
-				count = count + rs.getInt("cnt");
+				findId = true;
 			}	
 
-			if(count > 0) {
-				findId = true;
-			}else {
-				DBClose.close(psmt, conn, null);
-				findId = false;
-			}
 			
-
-
-		} catch (SQLException e) {			
+		} catch (Exception e) {	
+			System.out.println("getId Fail");
 			e.printStackTrace();
-			DBClose.close(psmt, conn, null);
-			
+		
+
 		} finally {
 			DBClose.close(psmt, conn, null);
 		}
-
+		System.out.println("findId = " + findId);
 		return findId;
 	}
 
-	@Override
-	public List<MemberManager> getMemberList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 }

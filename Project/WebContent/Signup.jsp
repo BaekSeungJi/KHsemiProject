@@ -26,7 +26,7 @@
 </head> -->
 <body>
 
-	<form action="loginview.jsp" method="post">
+	<form action="SignupAf.jsp" method="post">
 
 		<h1>Join to us</h1>
 

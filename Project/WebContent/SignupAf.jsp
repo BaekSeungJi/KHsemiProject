@@ -15,8 +15,8 @@ String pwd = request.getParameter("pwd");
 String name = request.getParameter("name");
 String email = request.getParameter("email");
 String phone = request.getParameter("phone");
-String blacklist = request.getParameter("0");
-String auch = request.getParameter("3");
+int blacklist = 0;
+int auch = 3;
 %>      
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -32,9 +32,9 @@ String auch = request.getParameter("3");
 MemberService service = MemberService.getInstance();
 
 
-boolean isS = service.addMember(id, pwd, name, email, phone, 0, 3);
+boolean isS = service.manager.addMember(new MemberDto(id, pwd, name, email, phone, blacklist, auch));
 
-if(isS){
+if(isS==true){
 %>
 	<script type="text/javascript">
 	alert("성공적으로 가입하셨습니다");
