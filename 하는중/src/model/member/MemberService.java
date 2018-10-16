@@ -7,7 +7,7 @@ public class MemberService {
 	private MemberService() {
 		manager = new MemberManager();
 	}
-	
+
 	
 	public static MemberService getInstance() {
 		if(memberservice == null) {
