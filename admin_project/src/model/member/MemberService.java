@@ -55,4 +55,6 @@ public class MemberService {
 		public MemberDto ad_login(String id) {
 			return manager.ad_login(id);
 	}
+		
+	
 }

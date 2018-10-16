@@ -2,8 +2,8 @@
 <%@page import="dto.ReserveDto"%>
 <%@page import="java.util.List"%>
 <%@page import="dto.MemberDto"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -150,10 +150,9 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
 	<header>
 		<nav class="rad-navigation">
 			<div class="rad-logo-container rad-nav-min">
-				<a href="#" class="rad-logo"> Admin</a>
-				<a href="#" class="rad-toggle-btn pull-right"><i class="fa fa-bars"></i></a>
+				
 			</div>
-			<a href="#" class="rad-logo-hidden">Admin</a>
+			<a href="index.jsp" class="rad-logo-hidden">Admin</a>
 
 			
 		</nav>
@@ -165,7 +164,7 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
 			<li>
 				<a href="#" class="inbox">
 					<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
-					<span class="rad-sidebar-item">È¸¿ø °ü¸®</span>
+					<span class="rad-sidebar-item">íšŒì› ê´€ë¦¬</span>
 				</a>
 			</li>
 			<li>
@@ -173,11 +172,11 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
 				<i class="fas fa-hotel">
 						<span class="icon-bg rad-bg-danger"></span>
 					</i>
-					<span class="rad-sidebar-item">È£ÅÚ °ü¸®</span>
+					<span class="rad-sidebar-item">í˜¸í…” ê´€ë¦¬</span>
 				</a>
 			</li>
-			<li><a href="#" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">¸ÅÃâ °ü¸®</span></a></li>
-			<li><a href="#" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">°øÁö»çÇ×</span></a></li>
+			<li><a href="#" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">ë§¤ì¶œ ê´€ë¦¬</span></a></li>
+			<li><a href="#" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">ê³µì§€ì‚¬í•­</span></a></li>
 			
 		</ul>
 	</nav>
@@ -199,24 +198,26 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
 
 
 
-  <h1>¿¹¾à ³»¿ª</h1>
+  <h1>ì˜ˆì•½ ë‚´ì—­</h1>
 
   <div class="tbl-header">
     <table>
       <thead>
         <tr>
-          <th>¿¹¾à ³¯Â¥</th>
-          <th>È£ÅÚ ÀÌ¸§</th>
-          <th>¿ä±¸ »çÇ×</th>
-          <th>µî·ÏÀÏ</th>
-          <th>Ãë¼Ò</th>
+          <th>ì˜ˆì•½ ë‚ ì§œ</th>
+          <th>í˜¸í…” ì´ë¦„</th>
+          <th>ìš”êµ¬ ì‚¬í•­</th>
+          <th>ë“±ë¡ì¼</th>
+          <th>ìˆ˜ì •</th>
+          <th>ì·¨ì†Œ</th>
         </tr>
       </thead>
     </table>
   </div>
   
-  
+   <form action="ReserveControl">
   <div class="tbl-content">
+  
     <table cellpadding="0" cellspacing="0" border=" ">
       <tbody>
  	  <% 
@@ -225,43 +226,61 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
       %>
       <tr onmouseover="this.style.background='#f0f0f0'"
         	onmouseout="this.style.background='white'">
-          <td><%=dto.getRealdate() %></td>
-          <td><%=dto.getHotelname() %></td>
-          <td><%=dto.getRequest() %></td>
-          <td><%=dto.getRegdate() %></td>
           <td>
-          <%if(dto.getDel() == 0){
-        	  %><input type="button" value="¿¹¾àÃë¼Ò">
-        <%  }else{
-        	%> Ãë¼ÒµÈ ¿¹¾àÀÔ´Ï´Ù
+      
+          <input type="hidden" name="command" value="ad_reserveUpdate">
+          <input type="hidden" name="seq" value="<%=dto.getSeq()%>">
+          <input type="hidden" name="id" value="<%=dto.getId()%>">
+          
+          
+          <input type="text" value="<%=dto.getRealdate() %>" name="regdate"></td>
+          <td><%=dto.getHotelname() %></td>
+          <td><input type="text" value="<%=dto.getRequest() %>" name="request"></td>
+          <td><%=dto.getRegdate() %></td>
+           
+          <td>
+           <%if(dto.getDel() == 0){
+        	  %><input type="submit" value="ìˆ˜ì •">
+        	   <%  }else{
+        	%> ì·¨ì†Œëœ ì˜ˆì•½ì…ë‹ˆë‹¤
         	<%
       		 }
           %>
-          
-          
           </td>
+          <td>
+          <%if(dto.getDel() == 0){
+        	  %><input type="button" value="ì˜ˆì•½ì·¨ì†Œ" onclick="location.href='ReserveControl?command=ad_reserveDelete&seq=<%=dto.getSeq() %>&id=<%=dto.getId()%>'">
+        <%  }else{
+        	%> ì·¨ì†Œëœ ì˜ˆì•½ì…ë‹ˆë‹¤
+        	<%
+      		 }
+          %>
+
+          </td>
+          
         </tr>
        <%
        }
        %>
       </tbody>
     </table>
+   
   </div>
-
+</form>
 
 <div style="padding-bottom: 100px;">
 
- <h1>ÀÛ¼ºÇÑ ÈÄ±â</h1>
+ <h1>ì‘ì„±í•œ í›„ê¸°</h1>
 
   <div class="tbl-header">
     <table>
       <thead>
         <tr>
-          <th>È£ÅÚÀÌ¸§</th>
-          <th>Á¦¸ñ</th>
-          <th>³»¿ë</th>
-          <th>ÀÛ¼º ³¯Â¥</th>
-          <th>»èÁ¦</th>
+          <th>í˜¸í…”ì´ë¦„</th>
+          <th>ì œëª©</th>
+          <th>ë‚´ìš©</th>
+          <th>ì‘ì„± ë‚ ì§œ</th>
+          <th>ì‚­ì œ</th>
         </tr>
       </thead>
     </table>
@@ -284,9 +303,9 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
           <td><%=dto2.getRegdate() %></td>
           <td>
            <%if(dto2.getDel() == 0){
-        	  %><input type="button" value="»èÁ¦">
+        	  %><input type="button" value="ì‚­ì œ" onclick="location.href='ReviewControl?command=ad_reviewDelete&seq=<%=dto2.getNum() %>&id=<%=dto2.getId()%>'">>
         <%  }else{
-        	%> »èÁ¦µÈ ÈÄ±âÀÔ´Ï´Ù
+        	%> ì‚­ì œëœ í›„ê¸°ì…ë‹ˆë‹¤
         	<%
       		 }
           %>
@@ -330,10 +349,6 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
 <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.3/jquery-jvectormap.js'></script>
 <script src='http://jvectormap.com/js/jquery-jvectormap-1.2.2.min.js'></script>
-
-  
-
-    <script  src="js/index.js"></script>
 
 
 

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -27,10 +27,9 @@
 	<header>
 		<nav class="rad-navigation">
 			<div class="rad-logo-container rad-nav-min">
-				<a href="#" class="rad-logo"> Admin</a>
-				<a href="#" class="rad-toggle-btn pull-right"><i class="fa fa-bars"></i></a>
+				
 			</div>
-			<a href="#" class="rad-logo-hidden">Admin</a>
+			<a href="index.jsp" class="rad-logo-hidden">Admin</a>
 
 			
 		</nav>
@@ -42,7 +41,7 @@
 			<li>
 				<a href="#" class="inbox">
 					<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
-					<span class="rad-sidebar-item">È¸¿ø °ü¸®</span>
+					<span class="rad-sidebar-item">íšŒì› ê´€ë¦¬</span>
 				</a>
 			</li>
 			<li>
@@ -50,11 +49,11 @@
 				<i class="fas fa-hotel">
 						<span class="icon-bg rad-bg-danger"></span>
 					</i>
-					<span class="rad-sidebar-item">È£ÅÚ °ü¸®</span>
+					<span class="rad-sidebar-item">í˜¸í…” ê´€ë¦¬</span>
 				</a>
 			</li>
-			<li><a href="#" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">¸ÅÃâ °ü¸®</span></a></li>
-			<li><a href="#" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">°øÁö»çÇ×</span></a></li>
+			<li><a href="#" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">ë§¤ì¶œ ê´€ë¦¬</span></a></li>
+			<li><a href="#" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">ê³µì§€ì‚¬í•­</span></a></li>
 			
 		</ul>
 	</nav>
@@ -69,12 +68,6 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.3/jquery-jvectormap.js'></script>
 <script src='http://jvectormap.com/js/jquery-jvectormap-1.2.2.min.js'></script>
-
-  
-
-    <script  src="js/index.js"></script>
-
-
 
 
 </body>

@@ -38,8 +38,99 @@ public class MemberManager implements iMemberManager {
 		return null;
 	}
 
-	
-	
+	// 임시로 로그인
+		@Override
+		public MemberDto ad_login(String id) {
+			String sql = " SELECT ID, pwd, name, email , phone, blacklist, auth "
+					+ " FROM MEMBER "
+					+ " WHERE ID=? ";
+			
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			ResultSet rs = null;
+			
+			MemberDto mem = null;
+			
+			try {
+				conn = DBConnection.getConnection();
+				psmt = conn.prepareStatement(sql);
+				
+				System.out.println("1/6 login Success");
+				
+				psmt.setString(1, id);
+				
+				
+				System.out.println("2/6 login Success");
+				
+				rs = psmt.executeQuery();
+				
+				if(rs.next()) {
+					String _id = rs.getString(1);
+					String pwd = rs.getString(2);
+					String name = rs.getString(3);
+					String email = rs.getString(4);
+					String phone = rs.getString(5);
+					int blacklist = rs.getInt(6);
+					int auth = rs.getInt(7);
+					
+					mem = new MemberDto(_id, pwd, name, email, phone, blacklist, auth);
+				}
+				System.out.println("3/6 login Success");
+				
+			} catch (Exception e) {
+				System.out.println("login fail");
+				e.printStackTrace();
+			} finally {
+				DBClose.close(psmt, conn, rs);			
+			}
+			
+			return mem;
+		}
+
+		// 회원 정보 수정
+		@Override
+		public boolean ad_MemberUpdate(String id, String pw, String name, String email, String phone) {
+			String sql = " UPDATE member SET "
+					+ " pwd=?, name=?, email=?, phone=? "
+					+ " WHERE id=? ";
+			
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			int count = 0;
+			
+		
+				try {
+				conn = DBConnection.getConnection();
+			
+				
+			
+				System.out.println("2/6  ad_MemberUpdate");
+				
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1, pw);
+				psmt.setString(2, name);
+				psmt.setString(3, email);
+				psmt.setString(4, phone);
+				psmt.setString(5, id);
+				
+				
+				System.out.println("3/6  ad_MemberUpdate");
+				
+				count = psmt.executeUpdate();
+				System.out.println("4/6 ad_MemberUpdate");
+				
+			} catch (Exception e) {			
+				e.printStackTrace();
+			} finally{
+				DBClose.close(psmt, conn, null);	
+				System.out.println("5/6 ad_MemberUpdate");
+			}		
+			
+			return count>0?true:false;
+		}
+
+		
+		
 	//admin 해당아이디의 호텔 이름 가져오기
 	@Override
 	public String ad_getHotelname(String id) {
@@ -107,7 +198,7 @@ public class MemberManager implements iMemberManager {
 			System.out.println("4/6 ad_GetHotelmember Success");
 			
 			
-			if(rs.next()){			
+			while(rs.next()){			
 				System.out.println("5/6 ad_GetHotelmember Success");
 				
 			
@@ -161,7 +252,7 @@ public class MemberManager implements iMemberManager {
 			System.out.println("4/6 ad_reserveList Success");
 			
 			
-			if(rs.next()){			
+			while(rs.next()){			
 				System.out.println("5/6 ad_reserveList Success");
 				
 			
@@ -213,7 +304,7 @@ public class MemberManager implements iMemberManager {
 			System.out.println("4/6 ad_reviewList Success");
 			
 			
-			if(rs.next()){			
+			while(rs.next()){			
 				System.out.println("5/6 ad_reviewList Success");
 				
 			
@@ -239,94 +330,7 @@ public class MemberManager implements iMemberManager {
 		return list;
 	}
 
-	@Override
-	public boolean ad_MemberUpdate(String id, String pw, String name, String email, String phone) {
-		String sql = " UPDATE member SET "
-				+ " pwd=?, name=?, email=?, phone=? "
-				+ " WHERE id=? ";
-		
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		int count = 0;
-		
 	
-			try {
-			conn = DBConnection.getConnection();
-		
-			
-		
-			System.out.println("2/6  ad_MemberUpdate");
-			
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, pw);
-			psmt.setString(2, name);
-			psmt.setString(3, email);
-			psmt.setString(4, phone);
-			psmt.setString(5, id);
-			
-			
-			System.out.println("3/6  ad_MemberUpdate");
-			
-			count = psmt.executeUpdate();
-			System.out.println("4/6 ad_MemberUpdate");
-			
-		} catch (Exception e) {			
-			e.printStackTrace();
-		} finally{
-			DBClose.close(psmt, conn, null);	
-			System.out.println("5/6 ad_MemberUpdate");
-		}		
-		
-		return count>0?true:false;
-	}
-
-	@Override
-	public MemberDto ad_login(String id) {
-		String sql = " SELECT ID, pwd, name, email , phone, blacklist, auth "
-				+ " FROM MEMBER "
-				+ " WHERE ID=? ";
-		
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		
-		MemberDto mem = null;
-		
-		try {
-			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql);
-			
-			System.out.println("1/6 login Success");
-			
-			psmt.setString(1, id);
-			
-			
-			System.out.println("2/6 login Success");
-			
-			rs = psmt.executeQuery();
-			
-			if(rs.next()) {
-				String _id = rs.getString(1);
-				String pwd = rs.getString(2);
-				String name = rs.getString(3);
-				String email = rs.getString(4);
-				String phone = rs.getString(5);
-				int blacklist = rs.getInt(6);
-				int auth = rs.getInt(7);
-				
-				mem = new MemberDto(_id, pwd, name, email, phone, blacklist, auth);
-			}
-			System.out.println("3/6 login Success");
-			
-		} catch (Exception e) {
-			System.out.println("login fail");
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, rs);			
-		}
-		
-		return mem;
-	}
 	
-
+	
 }

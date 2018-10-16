@@ -1,17 +1,18 @@
+<%@page import="dto.MemberDto"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="dto.ReserveDto"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     
     
 <%!
-// nvl ÇÔ¼ö
+// nvl í•¨ìˆ˜
 public boolean nvl(String msg){
 	return msg == null || msg.trim().equals("")?true:false;
 }
 
-// ³¯Â¥¸¦ Å¬¸¯ÇÏ¸é, ±×³¯ÀÇ ÀÏÁ¤ÀÌ ¸ğµÎ º¸ÀÌ°Ô ÇÏ´Â callist.jsp·Î ÀÌµ¿½ÃÅ°´Â ÇÔ¼ö
+// ë‚ ì§œë¥¼ í´ë¦­í•˜ë©´, ê·¸ë‚ ì˜ ì¼ì •ì´ ëª¨ë‘ ë³´ì´ê²Œ í•˜ëŠ” callist.jspë¡œ ì´ë™ì‹œí‚¤ëŠ” í•¨ìˆ˜
 public String callist(int year, int month, int day){
 	String s = "";
 	
@@ -23,7 +24,7 @@ public String callist(int year, int month, int day){
 	return s;
 }
 
-// ÀÏÁ¤À» ±âÀÔÇÏ±â À§ÇØ¼­ penÀÌ¹ÌÁö¸¦ Å¬¸¯ÇÏ¸é, calwrite.jsp·Î ÀÌµ¿
+// ì¼ì •ì„ ê¸°ì…í•˜ê¸° ìœ„í•´ì„œ penì´ë¯¸ì§€ë¥¼ í´ë¦­í•˜ë©´, calwrite.jspë¡œ ì´ë™
 public String showPen(int year, int month, int day){
 	String s = "";
 	String url = "calWrite.jsp";
@@ -39,7 +40,7 @@ public String two(String msg){
 	return msg.trim().length() < 2 ? "0"+msg : msg.trim(); 
 }
 
-// °¢ ³¯Â¥º°·Î Å×ÀÌºíÀ» »ı¼ºÇÏ´Â ÇÔ¼ö
+// ê° ë‚ ì§œë³„ë¡œ í…Œì´ë¸”ì„ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
 public String makeTable(int year, int month, int day, List<ReserveDto> list)
 {
 	String s = "";
@@ -70,7 +71,7 @@ public String makeTable(int year, int month, int day, List<ReserveDto> list)
 	return s;
 }
 
-// Á¦¸ñÀÌ ³Ê¹« ±æ¸é, Á¦¸ñ + ...À¸·Î Ã³¸®ÇÏ´Â ÇÔ¼ö		Ã¶¼ö¿Í ±¤È­¹®¿¡¼­ ½Ä»ç -> Ã¶¼ö¿Í ±¤...
+// ì œëª©ì´ ë„ˆë¬´ ê¸¸ë©´, ì œëª© + ...ìœ¼ë¡œ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜		ì² ìˆ˜ì™€ ê´‘í™”ë¬¸ì—ì„œ ì‹ì‚¬ -> ì² ìˆ˜ì™€ ê´‘...
 public String dot3(String msg){
 	String s = "";
 	if(msg.length() >= 10){
@@ -105,15 +106,22 @@ public String dot3(String msg){
 </head>
 
 <body>
+<%
+MemberDto mem = (MemberDto)session.getAttribute("login");
+
+String hotelname = (String)session.getAttribute("hotelname");
+
+
+%>
+
 
   <section>
 	<header>
 		<nav class="rad-navigation">
 			<div class="rad-logo-container rad-nav-min">
-				<a href="#" class="rad-logo"> Admin</a>
-				<a href="#" class="rad-toggle-btn pull-right"><i class="fa fa-bars"></i></a>
+				
 			</div>
-			<a href="#" class="rad-logo-hidden">Admin</a>
+			<a href="index.jsp" class="rad-logo-hidden">Admin</a>
 
 			
 		</nav>
@@ -125,7 +133,7 @@ public String dot3(String msg){
 			<li>
 				<a href="#" class="inbox">
 					<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
-					<span class="rad-sidebar-item">È¸¿ø °ü¸®</span>
+					<span class="rad-sidebar-item">íšŒì› ê´€ë¦¬</span>
 				</a>
 			</li>
 			<li>
@@ -133,11 +141,11 @@ public String dot3(String msg){
 				<i class="fas fa-hotel">
 						<span class="icon-bg rad-bg-danger"></span>
 					</i>
-					<span class="rad-sidebar-item">È£ÅÚ °ü¸®</span>
+					<span class="rad-sidebar-item">í˜¸í…” ê´€ë¦¬</span>
 				</a>
 			</li>
-			<li><a href="#" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">¸ÅÃâ °ü¸®</span></a></li>
-			<li><a href="#" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">°øÁö»çÇ×</span></a></li>
+			<li><a href="#" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">ë§¤ì¶œ ê´€ë¦¬</span></a></li>
+			<li><a href="#" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">ê³µì§€ì‚¬í•­</span></a></li>
 			
 		</ul>
 	</nav>
@@ -148,7 +156,11 @@ public String dot3(String msg){
 		<div class="rad-body-wrapper rad-nav-min">
 			<div class="container-fluid">
 
-	
+		<header class="rad-page-title">
+					<span><%=hotelname %> </span>
+					<small><a href="HotelControl?command=ad_GohotelUpdate&hotelname=<%=hotelname%>"> ì •ë³´ ìˆ˜ì •í•˜ê¸°</a></small>
+								
+				</header>
 	
 <%
 Calendar cal = Calendar.getInstance();
@@ -158,7 +170,7 @@ String syear = request.getParameter("year");
 String smonth = request.getParameter("month");
 
 int year = cal.get(Calendar.YEAR);
-if(nvl(syear) == false){	// ÆÄ¶ó¹ÌÅÍ·Î ³Ñ¾î¿Â µ¥ÀÌÅÍ°¡ ÀÖÀ» ½Ã
+if(nvl(syear) == false){	// íŒŒë¼ë¯¸í„°ë¡œ ë„˜ì–´ì˜¨ ë°ì´í„°ê°€ ìˆì„ ì‹œ
 	year = Integer.parseInt(syear);
 }
 
@@ -177,9 +189,9 @@ if(month > 12){
 	year++;
 }
 
-cal.set(year, month - 1, 1);	// ¿¬¿ùÀÏ ¼ÂÆÃ¿Ï·á
+cal.set(year, month - 1, 1);	// ì—°ì›”ì¼ ì…‹íŒ…ì™„ë£Œ
 
-// ¿äÀÏ
+// ìš”ì¼
 int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
 // <<
@@ -202,11 +214,16 @@ String nn = String.format("<a href='%s?year=%d&month=%d'>"
 							+ "<img src='image/last.gif'></a>", 
 							"calendar.jsp", year+1, month);
 
-/* MemberDto user = (MemberDto)session.getAttribute("login");
+ MemberDto user = (MemberDto)session.getAttribute("login");
 
-iCalendar dao = CalendarDao.getInstance();
+ 
+ response.sendRedirect("ReserveControl?command=ad_calendar&id="+user.getId()+"&yyyyMM="+year + two(month + ""));
+
+ // ë¬¼ì–´ë³´ê¸°
+ List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("dto");
+ /* iCalendar dao = CalendarDao.getInstance();
 List<CalendarDto> list = dao.getCalendarList(user.getId(), year + two(month + ""));
- */
+  */
 %>
 
 <div align="center">
@@ -219,32 +236,32 @@ List<CalendarDto> list = dao.getCalendarList(user.getId(), year + two(month + ""
 	<td colspan="7" align="center">
 		<%=pp %>&nbsp;<%=p %>
 		<font color="black" style="font-size: 50px">
-			<%=String.format("%d³â&nbsp;&nbsp;%d¿ù", year, month) %>
+			<%=String.format("%dë…„&nbsp;&nbsp;%dì›”", year, month) %>
 		</font>
 		<%=n %>&nbsp;<%=nn %>
 	</td>
 </tr>
 
 <tr height="100">
-	<td align="center">ÀÏ</td>
-	<td align="center">¿ù</td>
-	<td align="center">È­</td>
-	<td align="center">¼ö</td>
-	<td align="center">¸ñ</td>
-	<td align="center">±İ</td>
-	<td align="center">Åä</td>
+	<td align="center">ì¼</td>
+	<td align="center">ì›”</td>
+	<td align="center">í™”</td>
+	<td align="center">ìˆ˜</td>
+	<td align="center">ëª©</td>
+	<td align="center">ê¸ˆ</td>
+	<td align="center">í† </td>
 </tr>
 
 <tr height="100" align="left" valign="top">
 <%
-//À§ÂÊ ºóÄ­
+//ìœ„ìª½ ë¹ˆì¹¸
 for(int i = 1;i < dayOfWeek; i++){
 	%>
 	<td>&nbsp;</td>	
 	<%
 }
 
-// ³¯Â¥
+// ë‚ ì§œ
 int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 for(int i = 1;i <= lastDay; i++){
 	%>
@@ -259,7 +276,7 @@ for(int i = 1;i <= lastDay; i++){
 	}
 }
 
-// ¹ØÄ­
+// ë°‘ì¹¸
 for(int i = 0;i < (7 - (dayOfWeek + lastDay - 1) % 7 ) % 7; i++){
 	%>
 	<td>&nbsp;</td>	
@@ -296,9 +313,6 @@ for(int i = 0;i < (7 - (dayOfWeek + lastDay - 1) % 7 ) % 7; i++){
 <script src='http://jvectormap.com/js/jquery-jvectormap-1.2.2.min.js'></script>
 
   
-
-    <script  src="js/index.js"></script>
-
 
 
 

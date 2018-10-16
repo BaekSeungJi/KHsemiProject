@@ -148,10 +148,9 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
 	<header>
 		<nav class="rad-navigation">
 			<div class="rad-logo-container rad-nav-min">
-				<a href="#" class="rad-logo"> Admin</a>
-				<a href="#" class="rad-toggle-btn pull-right"><i class="fa fa-bars"></i></a>
+				
 			</div>
-			<a href="#" class="rad-logo-hidden">Admin</a>
+			<a href="index.jsp" class="rad-logo-hidden">Admin</a>
 
 			
 		</nav>
@@ -230,7 +229,7 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
      
           <tr onmouseover="this.style.background='#f0f0f0'"
         	onmouseout="this.style.background='white'"
-        	onclick="location.href='MemberControl?command=ad_member_detail&member_id=<%=dto.getId() %>'" style="cursor:pointer;"
+        	onclick="location.href='MemberControl?command=ad_member_detail&id=<%=dto.getId() %>'" style="cursor:pointer;"
         	>
         
           <td><%=dto.getId() %></td>

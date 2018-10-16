@@ -35,7 +35,7 @@ public class MemberControl extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/html; charset=UTF-8");
 		
-		req.getParameter("command");
+	
 		
 		String command =req.getParameter("command");
 		
@@ -80,8 +80,10 @@ public class MemberControl extends HttpServlet {
 		// 해당 회원 예약,리뷰 리스트 보기 
 		else if(command.equals("ad_member_detail")) {
 			
-			String id = req.getParameter("member_id");
+		
+			String id = req.getParameter("id");
 			
+			System.out.println("mem컨트롤 id 테스트"+id);
 			MemberService service = MemberService.getInstance();
 			
 			List<ReserveDto> reserveList = service.ad_reserveList(id); 

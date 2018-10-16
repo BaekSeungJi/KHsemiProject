@@ -19,21 +19,21 @@
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 
-
+<!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<!-- <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
 <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<!-- <script src='http://code.jquery.com/ui/1.11.4/jquery-ui.js'></script> -->
 
-<script src='http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js'></script>
+<!-- ? -->
+<!-- <script src='http://cdnjs.cloudflare.com/ajax/	libs/raphael/2.1.0/raphael-min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.3/jquery.slimscroll.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.8.0/lodash.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.3/jquery-jvectormap.js'></script>
 <script src='http://jvectormap.com/js/jquery-jvectormap-1.2.2.min.js'></script>
+ -->
 
-
+<!-- 차트 -->
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/highcharts-3d.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -45,15 +45,25 @@
 <body>
 
 <%
+MemberDto mem = null;
+String hotelname = null;
 
-MemberDto mem = (MemberDto)request.getAttribute("dto");
+if(request.getAttribute("dto") != null){
+	 mem = (MemberDto)request.getAttribute("dto");
+	session.setAttribute("login", mem);
+	session.setMaxInactiveInterval(30*60);
+}else{
+	 mem = (MemberDto)session.getAttribute("login");
+}
 
-session.setAttribute("login", mem);
-session.setMaxInactiveInterval(30*60);
+if(request.getAttribute("hotelname") != null){
+	 hotelname  = (String)request.getAttribute("hotelname");
+	session.setAttribute("hotelname", hotelname);
+	session.setMaxInactiveInterval(30*60);
+}else{
+	 hotelname = (String)session.getAttribute("hotelname");
+}
 
-
-String hotelname = (String)request.getAttribute("hotelname");
-System.out.println(hotelname);
 
 
 %>
@@ -62,8 +72,7 @@ System.out.println(hotelname);
 
 		<nav class="rad-navigation">
 			<div class="rad-logo-container rad-nav-min">
-			
-			
+				
 			</div>
 			<a href="index.jsp" class="rad-logo-hidden">Admin</a>
 
@@ -78,7 +87,9 @@ System.out.println(hotelname);
 			
 			
 				<a href="MemberControl?command=memberGo&id=<%=mem.getId() %>" class="inbox">
-					<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
+					<i class="fas fa-user-alt">
+					<span class="icon-bg rad-bg-success"></span>
+					</i>
 					<span class="rad-sidebar-item">회원 관리</span>
 				</a>
 			</li>
@@ -118,9 +129,9 @@ System.out.println(hotelname);
 							<i class="fas fa-user-alt rad-info-box_i"></i>
 							<a href="MemberControl?command=memberGo&id=<%=mem.getId() %>">
 								<span class="heading">회원 관리</span>
-							</a>
+							
 							<span class="value"><span><i class="fas fa-arrow-alt-circle-right"></i></span></span>
-						
+						</a>
 						</div>
 					</div>
 					
@@ -182,7 +193,7 @@ System.out.println(hotelname);
 							</tr>
 							
 							<tr height="40">
-								<td>비밀번호 </p></td><td><input type="text" value=<%=mem.getPwd() %> name="pw"></td>
+								<td>비밀번호 </p></td><td><input type="password" value=<%=mem.getPwd() %> name="pw"></td>
 							</tr>
 							
 								<tr height="40">
@@ -285,17 +296,14 @@ Highcharts.chart('container', {
         }
     },
     series: [{
-        name: 'Delivered amount',
+        name: '평점',
         data: [
-            ['Bananas', 8],
-            ['Kiwi', 3],
-            ['Mixed nuts', 1],
-            ['Oranges', 6],
-            ['Apples', 8],
-            ['Pears', 4],
-            ['Clementines', 4],
-            ['Reddish (bag)', 1],
-            ['Grapes (bunch)', 1]
+            ['5점', 8],
+            ['4점', 3],
+            ['3점', 1],
+            ['2점', 6],
+            ['1점', 8]
+           
         ]
     }]
 });
@@ -336,13 +344,13 @@ Highcharts.chart('container2', {
     yAxis: {
         min: 0,
         title: {
-            text: 'Rainfall (mm)'
+            text: ''
         }
     },
     tooltip: {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true
@@ -361,20 +369,28 @@ Highcharts.chart('container2', {
         name: '후기글',
         data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
 
-    }, {
-        name: 'London',
-        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-
-    }, {
-        name: 'Berlin',
-        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
-
     }]
 });
 
 
 </script>
 
+
+<script type="text/javascript">
+
+$(".fa-chevron-down").on("click", function() {
+	var $ele = $(this).parents('.panel-heading');
+	$ele.siblings('.panel-footer').toggleClass("rad-collapse");
+	$ele.siblings('.panel-body').toggleClass("rad-collapse", function() {
+		setTimeout(function() {
+			initializeCharts();
+		}, 200);
+	});
+});
+
+
+
+</script>
 </body>
 
 </html>

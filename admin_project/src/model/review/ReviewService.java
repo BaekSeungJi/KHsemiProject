@@ -16,4 +16,12 @@ public class ReviewService {
 		}		
 		return reviewService;
 	}
+
+
+	//admin 리뷰 삭제
+	public  boolean reviewdelete(int seq){
+		
+		return manager.ad_reviewdelete(seq);
+		}
+
 }
