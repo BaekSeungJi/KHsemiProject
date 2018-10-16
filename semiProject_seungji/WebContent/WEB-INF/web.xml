@@ -19,4 +19,15 @@
   	<servlet-name>HotelControl</servlet-name>
   	<url-pattern>/HotelControl</url-pattern>
   </servlet-mapping>
+  
+  
+  <servlet>
+  	<servlet-name>ReviewControl</servlet-name>
+  	<servlet-class>control.ReviewControl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>ReviewControl</servlet-name>
+  	<url-pattern>/ReviewControl</url-pattern>
+  </servlet-mapping>
 </web-app>

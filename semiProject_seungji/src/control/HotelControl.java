@@ -34,44 +34,61 @@ public class HotelControl extends HttpServlet {
 		String command = req.getParameter("command");
 		System.out.println("command = " + command);
 		
-		// 메인 페이지 오른쪽 검색옵션에서 'search more'버튼을 눌렀을때
+		// [1] 조건에 맞는 호텔 리스트 가져오기 (메인 페이지 오른쪽 검색옵션에서 'search more'버튼을 눌렀을때)
 		if(command.equals("search")) {
 			String place = req.getParameter("place");
 			String price = req.getParameter("price");
 			String people = req.getParameter("people");
 			String date1 = req.getParameter("date1");
 			String date2 = req.getParameter("date2");
-			System.out.println("controller search 들어옴 place = " + place);
-			System.out.println(price);
-			System.out.println(people);
-			System.out.println(date1);
-			System.out.println(date2);
+			System.out.println("호텔 컨트롤러 -> search 들어옴");
+			System.out.println("place = " + place);
+			System.out.println("price = " + price);
+			System.out.println("people = " + people);
+			System.out.println("date1 = " + date1);
+			System.out.println("date2 = " + date2);
 			
 			// 밑에 따로 만든 getSearchList 함수를 실행한 결과를 write로 ajax에 보낸다.(success에 data부분으로 들어갈 것.)
 			resp.getWriter().write(getSearchList(place, price, people, date1, date2));
+			resp.getWriter().flush();
 			
 		}
 		
-		// 호텔 디테일 페이지에서 '호텔정보'탭을 눌렀을때
+		// [2] 해당 호텔의 상세정보 가져오기 (호텔 디테일 페이지에서 '호텔정보'탭을 눌렀을때)
 		else if(command.equals("detail")) {
 			String sseq = req.getParameter("seq");
 			int seq = Integer.parseInt(sseq);
-			System.out.println("controller detail 들어옴. seq = " + seq);
+			System.out.println("호텔 컨트롤러 -> detail 들어옴.");
+			System.out.println("seq = " + seq);
 			
 			
 			// 디테일 가져오는 함수 실행.
 			HotelService service = HotelService.getInstance();
 			HotelDto detailDto = service.getHotelDetail(seq);
 			// 짐싸서 보내주기(hotelDetail.jsp로)
-			req.setAttribute("detailDto", detailDto);
-			dispatch("hotelDetail.jsp", req, resp);
+			/*req.setAttribute("detailDto", detailDto);
+			dispatch("hotelDetail.jsp", req, resp);*/
+			
+			// DESCRIPTION, READCOUNT, REGDATE를 넘겨주는데, 각각 태그를 임의로 설정해서 넘겨준다. 그럼 find(태그이름)으로 찾을 수 있으니까.
+			resp.getWriter().write("<description>" + detailDto.getDescription() + "</description>"+
+									"<readcount>" + detailDto.getReadcount() + "</readcount>" + 
+									"<regdate>" + detailDto.getRegdate() + "</regdate>");
+			resp.getWriter().flush();
 			
 		}
 		
 		
 	}
 	
-	// 서비스를 통해 받아온 리스트를 json파일로 만들어주는 함수.
+	// forword만 하는 메소드(결국 쓰진 않았음...)
+	public void dispatch(String urls, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// urls : 여기로 가겠다
+		RequestDispatcher dispatch = req.getRequestDispatcher(urls);
+		dispatch.forward(req, resp);
+		
+	}
+	
+	// 위에서 서비스를 통해 받아온 호텔 리스트를 json파일로 만들어주는 함수.
 	public String getSearchList(String place, String price, String people, String date1, String date2) {
 		StringBuffer result = new StringBuffer("");
 		result.append("{\"result\":[");
@@ -99,12 +116,6 @@ public class HotelControl extends HttpServlet {
 		
 	
 	
-	// forword만 하는 메소드
-	public void dispatch(String urls, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// urls : 여기로 가겠다
-		RequestDispatcher dispatch = req.getRequestDispatcher(urls);
-		dispatch.forward(req, resp);
-		
-	}
+	
 
 }

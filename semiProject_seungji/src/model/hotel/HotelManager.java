@@ -143,7 +143,7 @@ public class HotelManager implements iHotelManager {
 			System.out.println("4/6 getHotelDetail Success");
 			
 			if(rs.next()) {
-				detailDto.setDescription(rs.getString(1));
+				detailDto.setDescription(rs.getString(1).replaceAll(" ", "&nbsp;").replaceAll("\n", "<br>"));
 				detailDto.setReadcount(rs.getInt(2));
 				detailDto.setRegdate(rs.getString(3));
 				System.out.println("5/6 getHotelDetail Success");

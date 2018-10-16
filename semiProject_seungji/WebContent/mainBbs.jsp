@@ -41,26 +41,23 @@ String keyword = request.getParameter("keyword");
 		
 		<script type="text/javascript">
 		$(function () {
-			// 페이지 실행되자마자, 검색된 맵 불러오기.(아래 $("#btn_map").click 함수와 실행내용은 동일함.)
-			var keyword = $('#searchText').val();
-			
-			$.ajax({
-				url : "Map.jsp",
-				type : "get",
-				data : "keyword="+keyword,
-				success : function(data){
-					alert("통신성공!");
-					$("#mainMap").html(data);
-				},
-				error : function(){
-					alert("통신실패!");
-				}
-			});
+			// 페이지 실행되자마자, 검색된 맵 불러오기.
+			updateMap(1);
 			
 			// 지도이미지 바로 아래 검색버튼 클릭하면 Map 실시간 업데이트
 			$("#btn_map").click(function () {
+				updateMap(2);
 				
-				var keyword = $('#newMapKeyword').val();
+			});
+			
+			function updateMap( number) {
+				var keyword = "";
+				
+				if(number == 1){
+					keyword = $('#searchText').val();
+				}else if(number == 2){
+					keyword = $('#newMapKeyword').val();
+				}
 				
 				$.ajax({
 					url : "Map.jsp",
@@ -74,21 +71,16 @@ String keyword = request.getParameter("keyword");
 						alert("통신실패!");
 					}
 				});
-				
-			});
+			}
 			
 			
-			// 검색옵션 -> search more 버튼클릭 -> 검색된 호텔목록 불러오기
+			// 조건에 맞는 호텔목록 불러오기 (검색옵션 -> search more 버튼클릭) 
 			$("#btn_search").click(function () {
 				var place = $("#searchText").val();
 				var price = $("#opa").text().replace(/[^0-9\.]+/g, "");
 				var people = $("#sel_people").val();
 				var date1 = $("#date1").val();
 				var date2 = $("#date2").val();
-				
-				
-				/* alert("place = " + place + " price = " + price + " people = " + people 
-						+ " date1 = "+ date1 + " date2 = " + date2); */
 						
 				$.ajax({
 					url : "HotelControl",
@@ -102,10 +94,11 @@ String keyword = request.getParameter("keyword");
 						date2 : date2
 					},
 					success : function(data){
+						if(data == "") return;
 						alert("검색 통신성공!");
 						var parsed = JSON.parse(data);
 						var result = parsed.result;
-						// json형태로 파싱한 데이터의 result부분을 가져와서 addList를 통해 매개변수로 넘겨준다. 나머지 ul에 까는 작업은 해당 함수 내부에서 처리해줄것. 
+						// json형태로 파싱한 데이터의 result부분을 가져와서 addList 함수를 통해 매개변수로 넘겨준다. 나머지 ul에 까는 작업은 해당 함수 내부에서 처리해줄것. 
 						for(var i = 0; i< result.length; i++){
 							addList(result[i][0].value, result[i][1].value, result[i][2].value,
 									result[i][3].value, result[i][4].value, result[i][5].value,
