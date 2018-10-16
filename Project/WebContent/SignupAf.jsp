@@ -27,7 +27,7 @@ int auch = Integer.parseInt("3");
 <title>SignupAf.jsp</title>
 </head>
 <body>
-
+<%-- 
 <%
 MemberService service = MemberService.getInstance();
 
@@ -49,7 +49,7 @@ if(isS==true){
 <%
 }
 %>
-
+ --%>
 
 
 

@@ -70,7 +70,7 @@
 				onFocus="if(this.value=='Phone')this.value='' ">
 	</form>
 
-	<button href="SignupAf.jsp" type="submit">회원가입</button>
+	<button href="MemberControl?command=SignupAf" type="submit" name = "Signup" id = "Signup">회원가입</button>
 
 
 	<script type="text/javascript">

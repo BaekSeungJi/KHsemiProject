@@ -13,24 +13,24 @@
 <title>login view</title>
    <link rel="stylesheet" href="css/login.css">
 </head>
-<body>
+<!-- <body>
 
   <html>
 <head>
 	
 	<title>Login_03</title>
 
-	<!--[if lt IE 9]>
+	[if lt IE 9]>
 		<script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+	<![endif]
 
-</head>
+</head> -->
 
 <body>
 
 	<div id="login">
 
-		<form action="login.jsp" method="post">
+		<form action="MemberControl?command=login" >
 
 			<span class="fontawesome-user"></span><input type="text" required value="Username" onBlur="if(this.value=='')this.value='Username'" 
 			onFocus="if(this.value=='Username')this.value='' "> <!-- JS because of IE support; better: placeholder="Username" -->
@@ -42,9 +42,10 @@
 			<input type="submit" value="Login">
 			<br>
 			</form>
-			
-			
-			<form action="Signup.jsp" method="post">
+			<br>
+		
+		
+			<form action="MemberControl?command=signup" >
 			<input type="submit" value="회원가입">
 			<br>
 			</form>

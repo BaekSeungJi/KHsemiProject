@@ -8,14 +8,12 @@
    <%
 String id = request.getParameter("id");
 String pwd = request.getParameter("pwd");
-String name = request.getParameter("name");
-String email = request.getParameter("email");
-String phone = request.getParameter("phone");
+
 %>
 <% 
 MemberService dao = MemberService.getInstance();
-//(new MemberDto(id, pwd, name, email, phone, 0, 3));
-MemberDto mem = dao.manager.login(new MemberDto(id, pwd, name, email, phone, 0, 3));
+
+MemberDto mem = dao.manager.login(new MemberDto(id, pwd, null, null, null, 0, 3));
 
 %>
 
