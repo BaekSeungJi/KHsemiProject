@@ -38,14 +38,50 @@ public class ReviewControl extends HttpServlet {
 			System.out.println("리뷰 컨트롤러 -> review 들어옴");
 			String hotelname = req.getParameter("hotelname");
 			System.out.println("hotelname = " + hotelname);
+			
 			ReviewService service = ReviewService.getInstance();
 			List<ReviewDto> reviewList = service.getReviewList(hotelname);
 			
 			req.setAttribute("reviewList", reviewList);
 			dispatch("hotelDetail.jsp", req, resp);
+			
+			// 밑에 따로 만든 getSearchList 함수를 실행한 결과를 write로 ajax에 보낸다.(success에 data부분으로 들어갈 것.)
+			/*resp.getWriter().write(reviewToJson(hotelname));
+			resp.getWriter().flush();*/
 		}
 		
 	}
+	
+	// 위에서 서비스를 통해 받아온 리뷰 리스트를 json파일로 만들어주는 함수.
+		public String reviewToJson(String hotelname) {
+			StringBuffer result = new StringBuffer("");
+			//result.append("{\"result\":[");
+			result.append("[");
+			
+			ReviewService service = ReviewService.getInstance();
+			List<ReviewDto> searchList = service.getReviewList(hotelname);
+			
+			for (int i = 0; i < searchList.size(); i++) {
+				System.out.println("리뷰리스트 json으로 변경중");
+				// NUM, ID, TITLE, CONTENT, SCORE, DEL, REGDATE
+				result.append("{\"num\": \"" + searchList.get(i).getNum() + "\",");
+				result.append("\"id\": \"" + searchList.get(i).getId() + "\",");
+				result.append("\"title\": \"" + searchList.get(i).getTitle() + "\",");
+				result.append("\"content\": \"" + searchList.get(i).getContent() + "\",");
+				result.append("\"score\": \"" + searchList.get(i).getScore() + "\",");
+				result.append("\"del\": \"" + searchList.get(i).getDel() + "\",");
+				result.append("\"regdate\": \"" + searchList.get(i).getRegdate() + "\"}");
+				if(i != searchList.size() -1) result.append(",");
+			}
+			
+			 result.append("]");
+			//result.append("]");
+			
+			System.out.println(result.toString());
+			
+			return result.toString();
+			
+		}
 	
 	public void dispatch(String urls, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// urls : 여기로 가겠다
@@ -53,5 +89,8 @@ public class ReviewControl extends HttpServlet {
 		dispatch.forward(req, resp);
 		
 	}
+	
+	
+	
 	
 }

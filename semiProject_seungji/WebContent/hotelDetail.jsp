@@ -14,13 +14,10 @@ String price = request.getParameter("price");
 String hotelphone = request.getParameter("hotelphone");
 String readcount = request.getParameter("readcount");
 
-
-// 리뷰 리스트 받아오기
 List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList");
 
-
-
 %>
+
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -37,6 +34,10 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 		
 		// 디테일 페이지 로딩되자마자 호텔디테일 가져오기
 		getDetail();
+		
+		// 리뷰 div안보이게
+		$("#reviewDiv").hide();
+		$("#reviewTable").hide();
 		
 		$("#btn_detail").click(function () {
 			// '호텔정보' 탭 누르면 디테일 가져오기(그냥 페이지 새로고침만 해줘도 된다. 자동으로 getDetail 불러와질것.)
@@ -56,7 +57,7 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 				},
 				success : function(data){
 					if(data == "") return;
-					alert("디테일 통신성공!");
+					//alert("디테일 통신성공!");
 					// DESCRIPTION, READCOUNT, REGDATE 중에서 description만 찾아와서 뿌리기(find('태그이름') 사용)
 					$("#hotel_description").html($("#hotel_description").html(data).find('description').text());
 					//$("#hotel_description").html(data).find('description').text();
@@ -96,14 +97,19 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 		
 		
 		$("#btn_review").click(function () {
-			alert("리뷰내놔");
-			getReview();
+			//alert("리뷰내놔");
+			//getReview();
 			
+			// 중간영역 비우기
+			//$("#centerContents").empty();
+			
+			$("#detailDiv").remove();
+			$("#hotel_description").remove();
+			$(".tbox").remove();
+			// 리뷰 내용으로 다시 채우기
+			$("#reviewDiv").show();
+			$("#reviewTable").show();
 		});
-		$("#btn_place").click(function () {
-			alert("길내놔");
-		});
-		
 		
 		// 호텔 리뷰 가져오는 함수
 		function getReview() {
@@ -112,52 +118,84 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 			
 			$.ajax({
 				url : "ReviewControl",
-				type : "post",
+				type : "get",
 				data : {
-					command : "review",
-					hotelname : hotelname
+					"command":"review",
+					"hotelname":hotelname
 				},
+				/* dataType : 'json', */
 				success : function(data){
 					if(data == "") return;
-					alert("리뷰 통신성공!");
+					//alert("리뷰 통신성공1!");
 					
-					/* 여기 전부 바꾸기. */
-					$("#centerContents").empty();
-					// 설명 ==> remove : 요소 자체를 지운다, empty : 요소 자체가 아니라 요소의 내용을 지운다.
-					// 중간 콘텐츠 부분 영역은 남겨두되, 정보내용만 지우고 그 위에 대신 리뷰내용을 깔려는 거니까, empty를 쓴다.
+					alert(data);
 					
-					var $div = $('<div class="title"><div id="welcome" class="container"><h2>호텔 리뷰를 꼼꼼히 확인하세요!</h2></div></div>');
-					/* var div = document.createElement('div');
-					var text = document.createTextNode('Hollo');
-					div.appendChild(text); */
-										
-					$("#centerContents").append($div);
-					// $div.appendTo($('#centerContents'));
+					alert("리뷰 통신성공2!");
 					
-					<%-- <%
-					if(reviewList != null){
-						for(int i=0; i<reviewList.size(); i++){
-							%>
-							$("#centerAgain").append(
-									'<div class="wrapper" id="centerContents">' + 
-									'<div class="title">' + 
-									'<div id="welcome" class="container">' +
-									'<h2>Welcome to our hotel</h2>' +
-									'</div>' +
-									'</div>' + 
-									'</div>');
-							<%
-						}
-					}
-					%> --%>
+					var parsed = JSON.parse(data);
 					
+					$.each(parsed, function (i, item) { // i는 iterator, item은 각 아이템
+	                    $("#centerContents").append(i + " num : " + item.num + " title : " + item.title + "<br>");
+	                });
+	                  
+	               //   var parsed = JSON.parse(data);
 					
+					// json형태로 파싱한 데이터의 result부분을 가져온다.
+					//var parsed = JSON.parse(data);
+					// var result = parsed.result;
+					// addReviewList 함수의 매개변수로 넘겨준다. 나머지 까는 작업은 해당 함수 내부에서 처리해줄것.
+					// NUM, ID, TITLE, CONTENT, SCORE, DEL, REGDATE
+					/* for(var i = 0; i< result.length; i++){
+						alert("파싱 시작");
+						addReviewList(result[i][0].value, result[i][1].value, result[i][2].value,
+										result[i][3].value, result[i][4].value, result[i][5].value,
+										result[i][6].value);
+					} */
 				},
 				error : function(){
 					alert("통신실패!");
 				}
 			});
-		}
+		};
+		
+		// json으로 잘라온 리스트를 실제로 태그와 함께 동적생성하며 ul에 뿌려주는 함수
+		function addReviewList(NUM, ID, TITLE, CONTENT, SCORE, DEL, REGDATE) {
+			alert(NUM);
+			alert(ID);
+			alert(TITLE);
+			alert(CONTENT);
+			alert(SCORE);
+			alert(DEL);
+			alert(REGDATE);
+			
+			// 0 == 노삭제
+			if(DEL == 0){
+				alert("삭제되지 않은 리뷰");
+				$("#centerContents").append(
+						'<div class="tbox">' + 
+						'<div class="title">' + 
+							'<h2>리뷰작성자 아이디</h2>' + 
+						'</div>' + 
+						'<p>' + ID + ' 님</p>'
+					);
+			// 1 == 삭제 
+			}else if(DEL == 1){
+				$("#centerContents").append('<li>'+
+						'<h3>관리자에 의해 삭제된 호텔입니다.</h3>' +
+						'<p>'+ 
+						'<a href="#">죄송합니다. 해당 호텔은 이용하실 수 없습니다. 더 훌륭한 호텔들이 당신을 기다리고 있습니다.</a>' + 
+						'</p>' + 
+						'</li>'
+				);
+			}
+		};
+		
+		
+		
+
+		$("#btn_place").click(function () {
+			alert("길내놔");
+		});
 	});
 </script>
 </head>
@@ -187,7 +225,8 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 
 <!-- 중간 콘텐츠 부분(핵심) -->
 <div class="wrapper" id="centerContents">
-<div class="title">
+
+<div class="title" id="detailDiv">
 <div id="welcome" class="container">
 	  <h2>Welcome to our hotel</h2>
 		</div>
@@ -195,6 +234,37 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 	<div id="three-column" class="container">
 		<div><span id="hotel_description" class="arrow-down"></span></div>
 		<!-- ajax를 통해 이부분에 호텔정보가 출력됨. -->
+
+<div id="reviewDiv">
+	<div class="title">
+	<div id="welcome" class="container">
+	  <h2>우리 호텔을 다녀간 사람들의 리뷰를 확인하세요!</h2>
+		</div>
+	</div>
+	<div id="three-column" class="container">
+	</div>
+</div>
+
+<table id="reviewTable">
+<%
+	if(reviewList != null){
+		for(int i = 0; i<reviewList.size(); i++){
+	%>
+	<tr>
+		<th>작성자</th>
+		<td><%=reviewList.get(i).getId() %></td>
+		<th>제목</th>
+		<td><%=reviewList.get(i).getTitle() %></td>
+		<th>내용</th>
+		<td><%=reviewList.get(i).getContent() %></td>
+	</tr>
+	<%
+	}
+}
+%>
+</table>
+	
+
 	</div>
 </div>
 

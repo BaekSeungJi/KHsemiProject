@@ -86,19 +86,20 @@ String keyword = request.getParameter("keyword");
 					url : "HotelControl",
 					type : "get",
 					data : {
-						command : "search",
-						place : place,
-						price : price,
-						people : people,
-						date1 : date1,
-						date2 : date2
+						"command" : "search",
+						"place" : place,
+						"price" : price,
+						"people" : people,
+						"date1" : date1,
+						"date2" : date2
 					},
 					success : function(data){
 						if(data == "") return;
 						alert("검색 통신성공!");
+						// json형태로 파싱한 데이터의 result부분을 가져온다.
 						var parsed = JSON.parse(data);
 						var result = parsed.result;
-						// json형태로 파싱한 데이터의 result부분을 가져와서 addList 함수를 통해 매개변수로 넘겨준다. 나머지 ul에 까는 작업은 해당 함수 내부에서 처리해줄것. 
+						// addList 함수를 통해 매개변수로 넘겨준다. 나머지 ul에 까는 작업은 해당 함수 내부에서 처리해줄것. 
 						for(var i = 0; i< result.length; i++){
 							addList(result[i][0].value, result[i][1].value, result[i][2].value,
 									result[i][3].value, result[i][4].value, result[i][5].value,
@@ -139,7 +140,7 @@ String keyword = request.getParameter("keyword");
 					$("#searchHotelList").append('<li>'+
 							'<h3>관리자에 의해 삭제된 호텔입니다.</h3>' +
 							'<p>'+ 
-							'<a href="#">죄송합니다. 해당 호텔은 이용하실 수 없습니다. 더 훌륭한 호텔들이 당신을 기다리고 있습니다.</a>' + 
+							'<a href="#">죄송합니다. 등록된 리뷰가 없습니다.</a>' + 
 							'</p>' + 
 							'</li>'
 					);

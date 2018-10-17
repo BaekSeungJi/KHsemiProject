@@ -49,7 +49,7 @@ public class HotelControl extends HttpServlet {
 			System.out.println("date2 = " + date2);
 			
 			// 밑에 따로 만든 getSearchList 함수를 실행한 결과를 write로 ajax에 보낸다.(success에 data부분으로 들어갈 것.)
-			resp.getWriter().write(getSearchList(place, price, people, date1, date2));
+			resp.getWriter().write(hotelListToJson(place, price, people, date1, date2));
 			resp.getWriter().flush();
 			
 		}
@@ -89,7 +89,7 @@ public class HotelControl extends HttpServlet {
 	}
 	
 	// 위에서 서비스를 통해 받아온 호텔 리스트를 json파일로 만들어주는 함수.
-	public String getSearchList(String place, String price, String people, String date1, String date2) {
+	public String hotelListToJson(String place, String price, String people, String date1, String date2) {
 		StringBuffer result = new StringBuffer("");
 		result.append("{\"result\":[");
 		
@@ -97,7 +97,7 @@ public class HotelControl extends HttpServlet {
 		List<HotelDto> searchList = service.getSearchHotelList(place, price, people, date1, date2);
 		
 		for (int i = 0; i < searchList.size(); i++) {
-			System.out.println("리스트 json으로 변경중");
+			System.out.println("호텔리스트 json으로 변경중");
 			// SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT
 			result.append("[{\"value\": \"" + searchList.get(i).getSeq() + "\"},");
 			result.append("{\"value\": \"" + searchList.get(i).getId() + "\"},");
