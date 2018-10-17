@@ -150,5 +150,40 @@ public class HotelManager implements iHotelManager {
 			return list;
 		}
 
+		@Override
+		public String getPrice(String hotelname) {
+			String sql = " SELECT price "
+					+ " FROM hotel "
+					+ " WHERE hotelname= '" + hotelname + "'";
+			
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			ResultSet rs = null;
+			
+			String p = null;
+			
+			try {
+				conn = DBConnection.getConnection();
+				psmt = conn.prepareStatement(sql);
+				
+				System.out.println("1/6 login Success");
+
+				
+				rs = psmt.executeQuery();
+				
+				if(rs.next()) {
+					p = rs.getString(1);
+				}
+				System.out.println("3/6 login Success");
+				
+			} catch (Exception e) {
+				System.out.println("login fail");
+				e.printStackTrace();
+			} finally {
+				DBClose.close(psmt, conn, rs);			
+			}
+			
+			return p;
+		}
 		
 }

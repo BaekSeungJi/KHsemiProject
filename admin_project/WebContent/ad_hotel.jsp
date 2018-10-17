@@ -2,87 +2,11 @@
 <%@page import="java.util.Calendar"%>
 <%@page import="dto.ReserveDto"%>
 <%@page import="java.util.List"%>
+<%@page import="dto.util"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-    
-<%!
-// nvl 함수
-public boolean nvl(String msg){
-	return msg == null || msg.trim().equals("")?true:false;
-}
-
-// 날짜를 클릭하면, 그날의 일정이 모두 보이게 하는 callist.jsp로 이동시키는 함수
-public String callist(int year, int month, int day){
-	String s = "";
-	
-	s += String.format("<a href='%s?year=%d&month=%d&day=%d'>", 
-						"callist.jsp", year, month, day);
-	s += String.format("%2d", day);
-	s += "</a>";
-
-	return s;
-}
-
-// 일정을 기입하기 위해서 pen이미지를 클릭하면, calwrite.jsp로 이동
-public String showPen(int year, int month, int day){
-	String s = "";
-	String url = "calWrite.jsp";
-	String image = "<img src='./image/pen.gif'>";
-	
-	s = String.format("<a href='%s?year=%d&month=%d&day=%d'>%s</a>", 
-							url, year, month, day, image);
-	return s;
-}
-
-// 1 -> 01		2018112
-public String two(String msg){
-	return msg.trim().length() < 2 ? "0"+msg : msg.trim(); 
-}
-
-// 각 날짜별로 테이블을 생성하는 함수
-public String makeTable(int year, int month, int day, List<ReserveDto> list)
-{
-	String s = "";
-	String dates = (year + "") + two(month + "") + two(day + ""); // 20181001
-	
-	s += "<table>";
-	s += "<col width='98' >";
-	int w = 0;
-
-	for(ReserveDto dto : list){
-		if(dto.getRealdate().substring(0, 8).equals(dates)){
-			
-			s += "<tr bgcolor='pink'>";
-			s += "<td>";
-			s += "<a href='calDetail.jsp?seq=" + dto.getSeq() + "'>";
-			s += "<font style='font-size: 4px; color:red'>";
-			s += dot3(dto.getId());
-			s += "</font>";
-			s += "</a>";
-			s += "</td>";
-			s += "</tr>";			
-			
-		
-	}	
-	}
-	s += "</table>";
-	
-	return s;
-}
-
-// 제목이 너무 길면, 제목 + ...으로 처리하는 함수		철수와 광화문에서 식사 -> 철수와 광...
-public String dot3(String msg){
-	String s = "";
-	if(msg.length() >= 10){
-		s = msg.substring(0, 10);
-		s += "...";
-	}else{
-		s = msg.trim();
-	}
-	return s;
-}
-%>    
         
 <!DOCTYPE html>
 <html lang="en" >
@@ -92,25 +16,46 @@ public String dot3(String msg){
   <title>Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
  
+ <!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+ 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
 <link rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css'>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.4/jquery-jvectormap.min.css'>
- <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
-      <link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 
+<style type="text/css">
+._tablee{
+background-color: #FFFAFA;
+  display:inline-block;
+float: left;
+
+}
+
+._tr{
+background-color: #FA8072;
+}
+tr,td{
+border: 1px solid #F5F5F5	;
+
+}
+
+
+</style>
   
 </head>
 
 <body>
 <%
-MemberDto mem = (MemberDto)session.getAttribute("login");
-
 String hotelname = (String)session.getAttribute("hotelname");
 
+List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list"); 
 
 %>
 
@@ -161,78 +106,50 @@ String hotelname = (String)session.getAttribute("hotelname");
 					<small><a href="HotelControl?command=ad_GohotelUpdate&hotelname=<%=hotelname%>"> 정보 수정하기</a></small>
 								
 				</header>
-	
-<%
-Calendar cal = Calendar.getInstance();
-cal.set(Calendar.DATE, 1);
 
-String syear = request.getParameter("year");
-String smonth = request.getParameter("month");
+<div>
 
-int year = cal.get(Calendar.YEAR);
-if(nvl(syear) == false){	// 파라미터로 넘어온 데이터가 있을 시
-	year = Integer.parseInt(syear);
-}
-
-int month = cal.get(Calendar.MONTH) + 1;
-if(nvl(smonth) == false){
-	month = Integer.parseInt(smonth);
-}
-
-if(month < 1){
-	month = 12;
-	year--;
-}
-
-if(month > 12){
-	month = 1;
-	year++;
-}
-
-cal.set(year, month - 1, 1);	// 연월일 셋팅완료
-
-// 요일
-int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-
-// <<
-String pp = String.format("<a href='%s?year=%d&month=%d'>"
-							+ "<img src='image/left.gif'></a>", 
-								"calendar.jsp", year-1, month);
-
-// <
-String p = String.format("<a href='%s?year=%d&month=%d'>"
-							+ "<img src='image/prec.gif'></a>", 
-								"calendar.jsp", year, month-1);
-
-// >
-String n = String.format("<a href='%s?year=%d&month=%d'>"
-							+ "<img src='image/next.gif'></a>", 
-								"calendar.jsp", year, month+1);
-
-// >>
-String nn = String.format("<a href='%s?year=%d&month=%d'>"
-							+ "<img src='image/last.gif'></a>", 
-							"calendar.jsp", year+1, month);
-
- MemberDto user = (MemberDto)session.getAttribute("login");
-
- 
- response.sendRedirect("ReserveControl?command=ad_calendar&id="+user.getId()+"&yyyyMM="+year + two(month + ""));
-
- // 물어보기
- List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("dto");
- /* iCalendar dao = CalendarDao.getInstance();
-List<CalendarDto> list = dao.getCalendarList(user.getId(), year + two(month + ""));
-  */
-%>
-
-<div align="center">
-
-<table style="border-color: black;">
+<table class="_tablee">
 <col width="100"><col width="100"><col width="100"><col width="100">
 <col width="100"><col width="100"><col width="100">
 
-<tr height="100">
+<%
+
+
+
+int dayOfWeek = (int)request.getAttribute("dayOfWeek");
+int year = (int)request.getAttribute("year");
+int month = (int)request.getAttribute("month");
+
+
+Calendar cal = (Calendar)request.getAttribute("cal");
+			
+			// <<
+			String pp = String.format("<a href='%s?year=%d&month=%d'>"
+										+ "<img src='image/left.gif'></a>", 
+											"calendar.jsp", year-1, month);
+
+			// <
+			String p = String.format("<a href='%s?year=%d&month=%d'>"
+										+ "<img src='image/prec.gif'></a>", 
+											"calendar.jsp", year, month-1);
+
+			// >
+			String n = String.format("<a href='%s?year=%d&month=%d'>"
+										+ "<img src='image/next.gif'></a>", 
+											"calendar.jsp", year, month+1);
+
+			// >>
+			String nn = String.format("<a href='%s?year=%d&month=%d'>"
+										+ "<img src='image/last.gif'></a>", 
+										"calendar.jsp", year+1, month);
+
+
+%>
+
+
+
+<tr height="100" class="_tr">
 	<td colspan="7" align="center">
 		<%=pp %>&nbsp;<%=p %>
 		<font color="black" style="font-size: 50px">
@@ -242,17 +159,17 @@ List<CalendarDto> list = dao.getCalendarList(user.getId(), year + two(month + ""
 	</td>
 </tr>
 
-<tr height="100">
-	<td align="center">일</td>
+<tr height="40" bgcolor="#F5F1E9">
+	<td align="center" style="padding-top: 7px; color: red;">일</td>
 	<td align="center">월</td>
 	<td align="center">화</td>
 	<td align="center">수</td>
 	<td align="center">목</td>
 	<td align="center">금</td>
-	<td align="center">토</td>
+	<td align="center" style="color: red;">토</td>
 </tr>
 
-<tr height="100" align="left" valign="top">
+<tr height="100" align="left" valign="top"  class="_t">
 <%
 //위쪽 빈칸
 for(int i = 1;i < dayOfWeek; i++){
@@ -265,13 +182,13 @@ for(int i = 1;i < dayOfWeek; i++){
 int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 for(int i = 1;i <= lastDay; i++){
 	%>
-	<td><%=callist(year, month, i) %>&nbsp;<%=showPen(year, month, i) %>	
-		<%-- <%=makeTable(year, month, i, list) %> --%>
+	<td><%= util.callist(year, month, i) %>
+	<%=util.makeTable(year, month, i, list) %>
 	</td>
 	<%
 	if((i + dayOfWeek - 1) % 7 == 0 && i != lastDay){
 		%>
-		</tr><tr height="100" align="left" valign="top">
+		</tr><tr height="100" align="left" valign="top"  class="_t">
 		<%
 	}
 }
@@ -293,6 +210,16 @@ for(int i = 0;i < (7 - (dayOfWeek + lastDay - 1) % 7 ) % 7; i++){
 
 </div>
 	
+<div>
+
+<table style=" float:left;" >
+<tr>
+<td>test</td>
+</tr>
+
+</table>
+
+</div>
 					
 		</div>
 	</div>

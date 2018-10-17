@@ -11,4 +11,6 @@ public interface iReserveManager {
 	public boolean ad_reservedelete(int seq);
 	
 	public List<ReserveDto> getCalendarList(String hotelname, String yyyyMM);
+	
+	public List<ReserveDto> getReserve(String hotelname);
 }

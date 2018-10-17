@@ -17,6 +17,6 @@ String id = "yuriv";
 %>
 
 <a href="MemberControl?command=ad_admin&id=<%=id%>">관리자 모드 이동</a>
-
+ㄴ
 </body>
 </html>

@@ -1,3 +1,5 @@
+<%@page import="dto.MonthlysalesDto"%>
+<%@page import="dto.scoreDto"%>
 <%@page import="dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
@@ -23,15 +25,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
-<!-- ? -->
-<!-- <script src='http://cdnjs.cloudflare.com/ajax/	libs/raphael/2.1.0/raphael-min.js'></script>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.3/jquery.slimscroll.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.8.0/lodash.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.3/jquery-jvectormap.js'></script>
-<script src='http://jvectormap.com/js/jquery-jvectormap-1.2.2.min.js'></script>
- -->
 
 <!-- 차트 -->
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -47,6 +40,8 @@
 <%
 MemberDto mem = null;
 String hotelname = null;
+scoreDto sdto = null;
+MonthlysalesDto Mdto = null;
 
 if(request.getAttribute("dto") != null){
 	 mem = (MemberDto)request.getAttribute("dto");
@@ -64,6 +59,13 @@ if(request.getAttribute("hotelname") != null){
 	 hotelname = (String)session.getAttribute("hotelname");
 }
 
+
+sdto = (scoreDto)request.getAttribute("sdto");
+
+
+
+Mdto = (MonthlysalesDto)request.getAttribute("Mdto");
+	
 
 
 %>
@@ -95,14 +97,14 @@ if(request.getAttribute("hotelname") != null){
 			</li>
 			
 			<li>
-				<a href="ad_hotel.jsp">
+				<a href="HotelControl?command=ad_hotel&hotelname=<%=hotelname%>">
 				<i class="fas fa-hotel">
 						<span class="icon-bg rad-bg-danger"></span>
 					</i>
 					<span class="rad-sidebar-item">호텔 관리</span>
 				</a>
 			</li>
-			<li><a href="ad_chart.jsp" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a></li>
+			<li><a href="HotelControl?command=ad_chart&hotelname=<%=hotelname%>" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a></li>
 			<li><a href="ad_notice.jsp" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a></li>
 			
 		</ul>
@@ -117,7 +119,7 @@ if(request.getAttribute("hotelname") != null){
 			<div class="container-fluid">
 			
 				<header class="rad-page-title">
-					<span><%=mem.getName() %> 님 환영합니다</span>
+					<span><!--  <%=mem.getName() %>--> 님 환영합니다</span>
 					<small class="md-txt"><%=hotelname %> <a href="https://www.google.com/maps/place/3720+Emerald+St,+Torrance,+CA+90503/@33.8403836,-118.3543828,17z/data=!4m18!1m15!4m14!1m6!1m2!1s0x80c2b4d407f58b11:0xdedca55964c89054!2s3720+Emerald+St,+Torrance,+CA+90503!2m2!1d-118.3520761!2d33.8403792!1m6!1m2!1s0x80c2b4d407f58b11:0xdedca55964c89054!2s3720+Emerald+St,+Torrance,+CA+90503!2m2!1d-118.3520761!2d33.8403792!3m1!1s0x80c2b4d407f58b11:0xdedca55964c89054" target="_blank"><i class="fa fa-map-marker color-main"></i> 서울</a></small>					
 				</header>
 				
@@ -284,7 +286,7 @@ Highcharts.chart('container', {
         }
     },
     title: {
-        text: '호텔 이용자 후기 평점'
+        text: '호텔 이용자 후기 '
     },
     subtitle: {
         text: '히든베이호텔'
@@ -296,13 +298,13 @@ Highcharts.chart('container', {
         }
     },
     series: [{
-        name: '평점',
+        name: '개수',
         data: [
-            ['5점', 8],
-            ['4점', 3],
-            ['3점', 1],
-            ['2점', 6],
-            ['1점', 8]
+            ['5점', <%=sdto.getStar5()%>],
+            ['4점', <%=sdto.getStar4()%>],
+            ['3점', <%=sdto.getStar3()%>],
+            ['2점', <%=sdto.getStar2()%>],
+            ['1점', <%=sdto.getStar1()%>]
            
         ]
     }]
@@ -313,6 +315,7 @@ Highcharts.chart('container', {
 
  
 <script type="text/javascript">
+
 
 Highcharts.chart('container2', {
     chart: {
@@ -350,7 +353,7 @@ Highcharts.chart('container2', {
     tooltip: {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+            '<td style="padding:0"><b>{point.y:f} 원</b></td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true
@@ -363,11 +366,7 @@ Highcharts.chart('container2', {
     },
     series: [{
         name: '매출',
-        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-
-    }, {
-        name: '후기글',
-        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+        data: [<%=Mdto.getJan()%>, <%=Mdto.getFeb()%>, <%=Mdto.getMar()%>, <%=Mdto.getApr()%>, <%=Mdto.getMay()%>,<%=Mdto.getJul()%>,<%=Mdto.getJul()%>,<%=Mdto.getAug()%>,<%=Mdto.getSep()%>,<%=Mdto.getOct()%>,<%=Mdto.getNov()%>,<%=Mdto.getDec()%>]
 
     }]
 });

@@ -10,12 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.swing.JOptionPane;
 
 import dto.MemberDto;
+import dto.MonthlysalesDto;
 import dto.ReserveDto;
 import dto.ReserveTableDto;
 import dto.ReviewDto;
+import dto.scoreDto;
+import dto.util;
 
 import javax.servlet.RequestDispatcher;
+
+import model.hotel.HotelService;
 import model.member.MemberService;
+import model.reserve.ReserveService;
+import model.review.ReviewService;
 
 public class MemberControl extends HttpServlet {
 
@@ -47,12 +54,24 @@ public class MemberControl extends HttpServlet {
 			String id = req.getParameter("id");
 	
 			MemberService service = MemberService.getInstance();
+			ReserveService ser = ReserveService.getInstance();
+			ReviewService Rservice = ReviewService.getInstance();
+			HotelService Hser = HotelService.getInstance();
 			
 			String hotelname= service.getHotelname(id);
+			int price = Integer.parseInt(Hser.getPrice(hotelname));
+	
+			List<ReviewDto> Rlist = Rservice.ad_getReview(hotelname);
+			List<ReserveDto> Rdto = ser.getReserve(hotelname);
+			
+			scoreDto sdto = util.getScore(Rlist);
+			MonthlysalesDto Mdto =  util.getsales(Rdto, price);
 			
 			MemberDto dto = service.ad_login(id);
 			
-			
+
+			req.setAttribute("Mdto", Mdto);
+			req.setAttribute("sdto", sdto);
 			req.setAttribute("dto", dto);
 			req.setAttribute("hotelname", hotelname);
 		

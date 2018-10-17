@@ -59,6 +59,68 @@
 	</nav>
 </aside>
 
+<section>
+		<div class="rad-body-wrapper rad-nav-min">
+			<div class="container-fluid">
+
+
+<h2>자료실</h2>
+
+<div align="center">
+
+<table border="1">
+<col width="50"><col width="100"><col width="400"><col width="50">
+<col width="50"><col width="50"><col width="100">
+
+<tr bgcolor="#09bbaa" align="center">
+	<td>번호</td><td>작성자</td><td>제목</td><td>다운로드</td>
+	<td>조회수</td><td>다운수</td><td>작성일</td>
+</tr>
+
+<%
+for(int i = 0;i < 5; i++){
+//	PdsDto pds = list.get(i);
+	String bgcolor = "";
+	if(i % 2 == 0){
+		bgcolor = "#ddeebb";
+	}else{
+		bgcolor = "#ddddcc";
+	}
+	%>
+	<tr  align="center" height="5">
+		<td><%=i + 1 %></td>
+		<td>id</td>
+		<td align="left">
+			<a href="pdsdetail.jsp?seq=1">
+				title
+			</a>
+		</td>
+		<td>
+			<input type="button" name="btnDown" value="파일"
+				onclick="location.href='filedown?filename=파일이름&seq=2'">
+		</td>
+		<td>0</td>
+		<td>0</td>
+		<td>20181002</td>	
+	</tr>
+	<%
+}
+%>
+</table>
+</div>
+
+<a href="pdswrite.jsp">자료 올리기</a>
+<br><br>
+
+<a href="bbslist.jsp">Home</a>
+
+
+</div>
+</div>
+</section>
+
+
+
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js'></script>

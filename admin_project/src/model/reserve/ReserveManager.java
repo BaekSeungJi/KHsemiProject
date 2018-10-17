@@ -87,23 +87,29 @@ public class ReserveManager implements iReserveManager {
 	public List<ReserveDto> getCalendarList(String hotelname, String yyyyMM) {
 		String sql = " SELECT SEQ, ID, HOTELNAME, REQUEST, REALDATE, REGDATE, DEL "
 				+ " FROM ( "
-				+ " 	SELECT ROW_NUMBER() OVER(PARTITION BY SUBSTR(RDATE, 1, 8) ORDER BY REALDATE ASC) RN, "
+				+ " 	SELECT ROW_NUMBER() OVER(PARTITION BY SUBSTR(REALDATE, 1, 8) ORDER BY REALDATE ASC) RN, "
 				+ "				SEQ, ID, HOTELNAME, REQUEST, REALDATE, REGDATE, DEL "
 				+ "		FROM reserve "
 				+ "		WHERE HOTELNAME=? AND SUBSTR(REALDATE, 1, 6)=?) "
-				+ " WHERE RN BETWEEN 1 AND 5 ";
+				+ "  WHERE RN BETWEEN 1 AND 5 ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
+		System.out.println(hotelname.trim());
+		System.out.println(yyyyMM.trim());
+		
 		List<ReserveDto> list = new ArrayList<ReserveDto>();
+		
+		ReserveDto dto = null;
 		
 		try {
 			conn = DBConnection.getConnection();
 			System.out.println("1/6 getCalendarList Success");
 			
 			psmt = conn.prepareStatement(sql);
+			
 			psmt.setString(1, hotelname.trim());
 			psmt.setString(2, yyyyMM.trim());
 			System.out.println("2/6 getCalendarList Success");
@@ -112,7 +118,7 @@ public class ReserveManager implements iReserveManager {
 			System.out.println("3/6 getCalendarList Success");
 			
 			while(rs.next()) {
-				ReserveDto dto = new ReserveDto();
+				 dto = new ReserveDto();
 				dto.setSeq(rs.getInt(1));
 				dto.setId(rs.getString(2));
 				dto.setHotelname(rs.getString(3));
@@ -120,7 +126,9 @@ public class ReserveManager implements iReserveManager {
 				dto.setRealdate(rs.getString(5));
 				dto.setRegdate(rs.getString(6));
 				dto.setDel(rs.getInt(7));
-				list.add(dto);				
+				list.add(dto);			
+		
+				
 			}
 			System.out.println("4/6 getCalendarList Success");
 			
@@ -132,4 +140,47 @@ public class ReserveManager implements iReserveManager {
 			
 		return list;
 	}
+
+	@Override
+	public List<ReserveDto> getReserve(String hotelname) {
+
+		String sql = " SELECT realdate FROM reserve "
+				+ " WHERE hotelname = '" + hotelname + "'";
+		
+		List<ReserveDto> dto = new ArrayList<>();
+		ReserveDto Rdto = null;
+		
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 ad_getHotelname Success");
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 ad_getHotelname Success");
+			rs = psmt.executeQuery(sql);
+			System.out.println("3/6 ad_getHotelname Success");
+			
+			while(rs.next()){			
+				Rdto = new ReserveDto(0, "", "", "", rs.getString(1), "", 0);
+				
+				dto.add(Rdto);
+				
+			}
+		} catch (Exception e1) {
+			System.out.println("ad_getHotelname Fail");
+			e1.printStackTrace();
+			
+		}	finally{			
+			DBClose.close(psmt, conn, rs);			
+		}
+		
+		
+		
+		return dto;
+	}
+
+	
 }

@@ -2,9 +2,13 @@ package model.review;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import db.DBClose;
 import db.DBConnection;
+import dto.ReviewDto;
 
 public class ReviewManager implements iReviewManager {
 	
@@ -39,7 +43,52 @@ public class ReviewManager implements iReviewManager {
 				
 		return count>0?true:false;
 	}
+
 	
+	@Override
+	public List<ReviewDto> ad_getReview(String hotelname) {
+		String sql = " SELECT score from REVIEW where hotelname = ? ";
+		List<ReviewDto> list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 ad_reviewList Success");
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 ad_reviewList Success");
+	
+			
+			psmt.setString(1, hotelname);
+			
+			System.out.println("3/6 ad_reviewList Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("4/6 ad_reviewList Success");
+			
+			
+			while(rs.next()){			
+				System.out.println("5/6 ad_reviewList Success");
+				
+				int score = rs.getInt(1);
+				
+				ReviewDto dto = new ReviewDto(0, "", "", "", "", score, 0, 0, "");
+				list.add(dto);
+			
+			}
+		} catch (Exception e1) {
+			System.out.println("ad_reviewList Fail");
+			e1.printStackTrace();
+			
+		}	finally{			
+			DBClose.close(psmt, conn, rs);			
+		}
+		
+		return list;
+	}
+
 	
 	
 	

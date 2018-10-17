@@ -1,5 +1,8 @@
 package model.review;
 
+import java.util.List;
+
+import dto.ReviewDto;
 
 public class ReviewService {
 	private static ReviewService reviewService = null;
@@ -24,4 +27,8 @@ public class ReviewService {
 		return manager.ad_reviewdelete(seq);
 		}
 
+	//admin 호텔 리뷰 가져오기 
+	public List<ReviewDto> ad_getReview(String hotelname) {
+		return manager.ad_getReview(hotelname);
+	}
 }

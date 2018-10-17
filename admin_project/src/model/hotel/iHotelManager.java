@@ -13,4 +13,6 @@ public interface iHotelManager {
 	public HotelDto getHoteldetail(String hotelname);
 	
 	public List<String> getMonthlyChart(String hotelname);
+	
+	public String getPrice(String hotelname);
 }

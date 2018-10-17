@@ -38,4 +38,10 @@ public class HotelService {
 	public List<String> getMonthlyChart(String hotelname){
 		return manager.getMonthlyChart(hotelname);
 	}
+	
+	// 호텔 가격 가져오기 
+	public String getPrice(String hotelname) {
+		return manager.getPrice(hotelname);
+	}
+	
 }

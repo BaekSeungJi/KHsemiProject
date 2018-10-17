@@ -29,8 +29,12 @@ public class ReserveService {
 				return manager.ad_reserveUpdate(seq, regdate, request);
 			}
 	//admin 예약 달력 
-			public List<ReserveDto> getCalendarList(String id, String yyyyMM){
-				return manager.getCalendarList(id, yyyyMM);
+			public List<ReserveDto> getCalendarList(String hotelname, String yyyyMM){
+				return manager.getCalendarList(hotelname, yyyyMM);
 			}
-	
+
+	//admin 해당호텔의 예약 전체 가져오기
+			public List<ReserveDto> getReserve(String hotelname) {
+				return manager.getReserve(hotelname);
+			}
 }
