@@ -15,6 +15,12 @@ String hotelphone = request.getParameter("hotelphone");
 String readcount = request.getParameter("readcount");
 
 List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList");
+if(reviewList != null ){
+	for(int i=0; i<reviewList.size(); i++){
+		System.out.println("타이틀 = " + reviewList.get(i).getTitle());
+		System.out.println("내용 = " + reviewList.get(i).getContent());
+	}
+}
 
 %>
 
@@ -30,19 +36,19 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script type="text/javascript">
-	$(function () {
+	$(document).ready(function () {
 		
 		// 디테일 페이지 로딩되자마자 호텔디테일 가져오기
 		getDetail();
-		
-		// 리뷰 div안보이게
+		// 리뷰 div("우리 호텔을 다녀간 사람들의 리뷰를 확인하세요!")안보이게
 		$("#reviewDiv").hide();
-		$("#reviewTable").hide();
 		
+		// [1] '호텔정보' 탭
 		$("#btn_detail").click(function () {
-			// '호텔정보' 탭 누르면 디테일 가져오기(그냥 페이지 새로고침만 해줘도 된다. 자동으로 getDetail 불러와질것.)
+			
 			// alert("정보내놔");
 				window.location.reload();
+				// 그냥 페이지 새로고침. 자동으로 getDetail 불러와질것.
 			
 		});
 		
@@ -93,22 +99,25 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 			});
 		}
 		
-		
-		
-		
-		$("#btn_review").click(function () {
+		// [2] '사용자후기' 탭
+		$(document).on("click", "#btn_review", function () {
 			//alert("리뷰내놔");
-			//getReview();
 			
-			// 중간영역 비우기
+			// 기존 중간영역 콘텐츠(호텔정보) 비우기
 			//$("#centerContents").empty();
-			
 			$("#detailDiv").remove();
 			$("#hotel_description").remove();
 			$(".tbox").remove();
+			
+			// 리뷰탭 선택 표시(클래스 삭제/클래스 추가)
+			$("#tap1").removeAttr("class");
+			$("#tap2").attr("class", "active");
+			
 			// 리뷰 내용으로 다시 채우기
 			$("#reviewDiv").show();
-			$("#reviewTable").show();
+			getReview();
+			
+			
 		});
 		
 		// 호텔 리뷰 가져오는 함수
@@ -123,34 +132,19 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 					"command":"review",
 					"hotelname":hotelname
 				},
-				/* dataType : 'json', */
 				success : function(data){
 					if(data == "") return;
-					//alert("리뷰 통신성공1!");
-					
-					alert(data);
-					
-					alert("리뷰 통신성공2!");
+					//alert("리뷰 통신성공!");
+					//alert(data);
 					
 					var parsed = JSON.parse(data);
 					
 					$.each(parsed, function (i, item) { // i는 iterator, item은 각 아이템
-	                    $("#centerContents").append(i + " num : " + item.num + " title : " + item.title + "<br>");
+	                    $("#centerContents").append(
+	                    		i + " num : " + item.num + " title : " + item.title + 
+	                    		" CONTENT = " + item.content + "<br>");
 	                });
-	                  
-	               //   var parsed = JSON.parse(data);
 					
-					// json형태로 파싱한 데이터의 result부분을 가져온다.
-					//var parsed = JSON.parse(data);
-					// var result = parsed.result;
-					// addReviewList 함수의 매개변수로 넘겨준다. 나머지 까는 작업은 해당 함수 내부에서 처리해줄것.
-					// NUM, ID, TITLE, CONTENT, SCORE, DEL, REGDATE
-					/* for(var i = 0; i< result.length; i++){
-						alert("파싱 시작");
-						addReviewList(result[i][0].value, result[i][1].value, result[i][2].value,
-										result[i][3].value, result[i][4].value, result[i][5].value,
-										result[i][6].value);
-					} */
 				},
 				error : function(){
 					alert("통신실패!");
@@ -190,9 +184,6 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 			}
 		};
 		
-		
-		
-
 		$("#btn_place").click(function () {
 			alert("길내놔");
 		});
@@ -207,14 +198,13 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 	<div id="header-wrapper" style="background-color: #FA8072">
 	<div id="header" class="container">
 		<div id="logo">
-        	<!-- <span class="icon icon-cog"></span> -->
 			<h1><a href="#"><%=hotelname %></a></h1>
 		</div>
 		<div id="menu">
 			<ul>
-				<li class="active"><a accesskey="1" title="호텔정보" id="btn_detail">호텔정보</a></li>
-				<li><a accesskey="2" title="사용자 후기" id="btn_review">사용자 후기</a></li>
-				<li><a accesskey="3" title="오시는 길" id="btn_place">오시는 길</a></li>
+				<li class="active" id="tap1"><a accesskey="1" title="호텔정보" id="btn_detail">호텔정보</a></li>
+				<li id="tap2"><a accesskey="2" title="사용자 후기" id="btn_review">사용자 후기</a></li>
+				<li id="tap3"><a accesskey="3" title="오시는 길" id="btn_place">오시는 길</a></li>
 			</ul>
 		</div>
 	</div>
@@ -244,27 +234,7 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 	<div id="three-column" class="container">
 	</div>
 </div>
-
-<table id="reviewTable">
-<%
-	if(reviewList != null){
-		for(int i = 0; i<reviewList.size(); i++){
-	%>
-	<tr>
-		<th>작성자</th>
-		<td><%=reviewList.get(i).getId() %></td>
-		<th>제목</th>
-		<td><%=reviewList.get(i).getTitle() %></td>
-		<th>내용</th>
-		<td><%=reviewList.get(i).getContent() %></td>
-	</tr>
-	<%
-	}
-}
-%>
-</table>
 	
-
 	</div>
 </div>
 

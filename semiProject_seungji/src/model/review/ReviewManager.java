@@ -49,7 +49,11 @@ public class ReviewManager implements iReviewManager {
 				d.setNum(rs.getInt(i++));
 				d.setId(rs.getString(i++));
 				d.setTitle(rs.getString(i++));
-				d.setContent(rs.getString(i++));
+				// json 데이터는 value값 중간에 개행문자(엔터값)이 절대 들어가선 안된다. 파싱을 못함.
+				// 따라서 textArea에서 유저가 입력한 리뷰에 들어간 엔터값을 다른 값으로 치환해줘야 한다.
+				// replaceAll("(\r\n|\r|\n|\n\r)", " ") 로 엔터값을 공백으로 처리했다.
+				// 미친 이거 찾느라고 하루 죙일 걸렸네....ㅅㅂㅠㅠㅠㅠㅠㅠ아!!!!!!!!!!!!!!!!!!!!
+				d.setContent(rs.getString(i++).replaceAll("(\r\n|\r|\n|\n\r)", " "));
 				d.setScore(rs.getInt(i++));
 				d.setDel(rs.getInt(i++));
 				d.setRegdate(rs.getString(i++));
