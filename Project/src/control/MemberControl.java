@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
+import dto.MemberDto;
 
 import javax.servlet.RequestDispatcher;
 
@@ -59,20 +60,19 @@ public class MemberControl extends HttpServlet {
 			int blacklist = Integer.parseInt("0");
 			int auth = Integer.parseInt("3");
 			
-			req.setAttribute("id", id);
-			req.setAttribute("pwd", pwd);
-			req.setAttribute("name", name);
-			req.setAttribute("email", email);
-			req.setAttribute("phone", phone);
+			MemberDto dto = new MemberDto(id, pwd, name, email, phone, 0, 3);
+						
+			req.setAttribute("dto", dto);//여기 하는중
+			
 			dispatch("SignupAf.jsp", req, resp);
 	
 		}
 		else if(command.equals("Login")) {		//로그인
 			String id = req.getParameter("id");
 			String pwd = req.getParameter("pwd");
+			
 			req.setAttribute("id", id);
 			req.setAttribute("pwd", pwd);
-	
 			dispatch("login.jsp", req, resp);	
 		
 			

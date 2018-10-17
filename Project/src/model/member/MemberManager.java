@@ -97,13 +97,13 @@ public class MemberManager implements iMemberManager {
 			if(rs.next()) {
 				String id = rs.getString(1);
 				String pwd = rs.getString(2);
-				String name = rs.getString(3);
+				/*String name = rs.getString(3);
 				String email = rs.getString(4);
-				String phone = rs.getString(5);		
+				String phone = rs.getString(5);	*/	
 				int blacklist = rs.getShort(6);
 				int auth = rs.getInt(7);
 
-				mem = new MemberDto(id, pwd, name, email, phone, blacklist, auth);
+				mem = new MemberDto(id, pwd, null, null, null, blacklist, auth);
 			}
 			System.out.println("3/3 login Success");
 

@@ -47,7 +47,7 @@
 			onFocus="if(this.value=='Password')this.value='' ">
 			
 			
-			<input type="submit" name = "command" value="Login">
+			<input type="submit" name = "command" id = "Login" value="Login">
 			<br>
 			</form>
 			<br>

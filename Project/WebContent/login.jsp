@@ -7,13 +7,15 @@
 
    <%
 String id = request.getParameter("id");
+   System.out.println("확인 id ="+id);
 String pwd = request.getParameter("pwd");
-
+int blacklist =0;
+int auth = 0;
 %>
 <% 
 MemberService dao = MemberService.getInstance();
 
-MemberDto mem = dao.manager.login(new MemberDto(id, pwd, null, null, null, 0, 3));
+MemberDto mem = dao.manager.login(new MemberDto(id, pwd, null, null, null, blacklist, auth));
 
 %>
 
@@ -29,8 +31,14 @@ DB 접속
 bbslist.jsp
  -->
 <%
-System.out.println("로그인 확인");
-if(mem != null && !mem.getId().equals("")){
+System.out.println("확인 mem ="+mem);
+%><% 
+
+
+
+%>
+<%
+if(mem != null && !mem.getId().equals("") && mem.getBlacklist()==0){
 	session.setAttribute("login", mem);
 	session.setMaxInactiveInterval(30*60);
 
