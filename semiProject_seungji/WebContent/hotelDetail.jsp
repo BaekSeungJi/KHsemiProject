@@ -125,7 +125,16 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 					$("#centerContents").empty();
 					// 설명 ==> remove : 요소 자체를 지운다, empty : 요소 자체가 아니라 요소의 내용을 지운다.
 					// 중간 콘텐츠 부분 영역은 남겨두되, 정보내용만 지우고 그 위에 대신 리뷰내용을 깔려는 거니까, empty를 쓴다.
-					<%
+					
+					var $div = $('<div class="title"><div id="welcome" class="container"><h2>호텔 리뷰를 꼼꼼히 확인하세요!</h2></div></div>');
+					/* var div = document.createElement('div');
+					var text = document.createTextNode('Hollo');
+					div.appendChild(text); */
+										
+					$("#centerContents").append($div);
+					// $div.appendTo($('#centerContents'));
+					
+					<%-- <%
 					if(reviewList != null){
 						for(int i=0; i<reviewList.size(); i++){
 							%>
@@ -140,7 +149,7 @@ List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList")
 							<%
 						}
 					}
-					%>
+					%> --%>
 					
 					
 				},

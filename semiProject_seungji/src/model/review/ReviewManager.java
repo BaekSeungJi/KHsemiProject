@@ -31,16 +31,16 @@ public class ReviewManager implements iReviewManager {
 		try {
 			
 			conn = DBConnection.getConnection();
-			System.out.println("1/6 getSearchHotelList Success");
+			System.out.println("1/6 getReviewList Success");
 			
 			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 getSearchHotelList Success");
+			System.out.println("2/6 getReviewList Success");
 			
 			psmt.setString(1, hotelname);
-			System.out.println("3/6 getSearchHotelList Success");
+			System.out.println("3/6 getReviewList Success");
 			
 			rs = psmt.executeQuery();
-			System.out.println("4/6 getSearchHotelList Success");
+			System.out.println("4/6 getReviewList Success");
 			
 			while(rs.next()) {
 				int i = 1;
@@ -57,11 +57,11 @@ public class ReviewManager implements iReviewManager {
 				list.add(d);
 				
 			}
-			System.out.println("5/6 getSearchHotelList Success");
+			System.out.println("5/6 getReviewList Success");
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("getSearchHotelList Fail");
+			System.out.println("getReviewList Fail");
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
