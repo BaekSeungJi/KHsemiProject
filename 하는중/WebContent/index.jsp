@@ -28,7 +28,7 @@ body {
 <br>
 <%
 //임의로 로그인
-String id = "ham";
+String id = "hyh";
 
 %>
 

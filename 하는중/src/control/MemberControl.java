@@ -43,6 +43,18 @@ public class MemberControl extends HttpServlet {
 			MemberService service = MemberService.getInstance();
 			
 			MemberDto dto = service.login(id);
+
+		
+			req.setAttribute("dto", dto);
+		
+			dispatch("mypage.jsp", req, resp);
+		}
+		
+		else if(command.equals("profileedit")) {
+			String id = req.getParameter("id");
+			MemberService service = MemberService.getInstance();
+			
+			MemberDto dto = service.login(id);
 			
 			String code = dto.getId();
 			String name = dto.getName();
@@ -51,12 +63,13 @@ public class MemberControl extends HttpServlet {
 			int black = dto.getBlacklist();
 			int auth = dto.getAuth();
 			
-			System.out.println("dto.toString():" + dto.toString());
 			
 			req.setAttribute("dto", dto);
 		
-			dispatch("mypage.jsp", req, resp);
+			dispatch("profileedit.jsp", req, resp);
 		}
+		
+		
 
 		// 관리자 페이지 메인
 		else if(command.equals("ad_admin")) {

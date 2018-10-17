@@ -4,22 +4,55 @@
     
 <%
 request.setCharacterEncoding("utf-8");
-%>    
+%>  
+
     
 <%
-/* 
-String code = request.getParameter("code");
-String name = request.getParameter("name");
-String email = request.getParameter("email");
-String phone = request.getParameter("phone");
-String black = request.getParameter("black");
-String auth = request.getParameter("auth");
- */
 
 MemberDto dto = (MemberDto)request.getAttribute("dto");
- 
- 
+
+//이건 로그인 유지로 나중에 바꾸기
+String id = "hyh";
+
 %>
+
+
+<%!
+//비밀번호 2자리 이후로는 * 처리
+public String pw2change(String pwd){
+	String s = "**";
+	
+	if(pwd.length() > 2){
+		s += pwd.substring(2, pwd.length());
+	}
+		
+
+	return s;
+}
+
+%>  
+
+<%!
+//일반유저/관리자/운영자
+public String whour(int Auth){
+	String s = "";
+	
+	if(Auth == 1){
+  	  s = "일반유저";
+    }
+    else if(Auth == 2){
+  	  s = "관리자";
+    }
+    else if(Auth == 3){
+  	  s = "운영자";
+    }		
+
+	return s;
+}
+
+
+%>
+
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -31,7 +64,7 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 <link rel="stylesheet" type="text/css" href="js/main.js">
 
 
-<title>profileedit</title>
+<title>mypage</title>
 </head>
 <body>
 
@@ -53,8 +86,12 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
     <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
         <tr>
-          <td>회원번호</td>
+          <td>ID</td>
           <td><%=dto.getId() %></td> 
+        </tr>
+        <tr>
+          <td>비밀번호</td>
+          <td><%=  pw2change(dto.getPwd()) %></td> <!-- 1일시 일반, 2일시 정지회원 -->
         </tr>
         <tr>
           <td>이름</td>
@@ -69,19 +106,15 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
           <td><%=dto.getPhone()%></td>
         </tr>
         <tr>
-          <td>블랙리스트</td>
-          <td><%=dto.getBlacklist() %></td> <!-- 1일시 일반, 2일시 정지회원 -->
-        </tr>
-        <tr>
           <td>권한</td>
-          <td><%=dto.getAuth() %></td> <!-- 1일시 일반, 2일시 관리자, 3일시 운영자 -->
+          <td><%=whour(dto.getAuth()) %></td> <!-- 1일시 일반, 2일시 관리자, 3일시 운영자 -->
         </tr>
        
       </tbody>
     </table>
   </div>
+  <a href="MemberControl?command=profileedit&id=<%=id%>">프로필 업데이트</a>
   
-  <a href="profileedit.jsp">profileedit.jsp</a>	
   <h1>최근 이용한 호텔</h1>
   <br>
   <div class="tbl-header">

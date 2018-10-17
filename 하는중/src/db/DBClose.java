@@ -3,7 +3,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+f
 public class DBClose {
 	
 	public static void close(Statement stmt, Connection conn, ResultSet rs) {
