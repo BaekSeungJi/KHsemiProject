@@ -50,4 +50,10 @@ public class MemberService {
 		public MemberDto ad_login(String id) {
 			return manager.ad_login(id);
 	}
+		
+		
+	//유저 임시 로그인
+			public MemberDto login(String id) {
+				return manager.login(id);
+			}
 }

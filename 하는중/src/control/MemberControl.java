@@ -38,10 +38,28 @@ public class MemberControl extends HttpServlet {
 		
 		String command =req.getParameter("command");
 		
+		if(command.equals("mypage")) {
+			String id = req.getParameter("id");
+			MemberService service = MemberService.getInstance();
+			
+			MemberDto dto = service.login(id);
+			
+			String code = dto.getId();
+			String name = dto.getName();
+			String email = dto.getEmail();
+			String phone = dto.getPhone();
+			int black = dto.getBlacklist();
+			int auth = dto.getAuth();
+			
+			System.out.println("dto.toString():" + dto.toString());
+			
+			req.setAttribute("dto", dto);
 		
+			dispatch("mypage.jsp", req, resp);
+		}
 
 		// 관리자 페이지 메인
-		if(command.equals("ad_admin")) {
+		else if(command.equals("ad_admin")) {
 			
 			String id = req.getParameter("id");
 	

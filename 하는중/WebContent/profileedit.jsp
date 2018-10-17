@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
    
 
  
@@ -20,13 +20,13 @@
 <form method="get" action="profileeditaf.jsp">
 <section>
   <!--for demo wrap-->
-  <h1>ÇÁ·ÎÇÊ ¼öÁ¤</h1>
+  <h1>í”„ë¡œí•„ ìˆ˜ì •</h1>
   <div class="tbl-header">
     <table cellpadding="0" cellspacing="0" border="0">
       <thead>
         <tr>
-          <th>±¸ºÐ</th>
-          <th>³ª</th>	
+          <th>êµ¬ë¶„</th>
+          <th>ë‚˜</th>	
         </tr>
       </thead>
     </table>
@@ -35,27 +35,27 @@
     <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
         <tr>
-          <td>È¸¿ø¹øÈ£</td>
+          <td>íšŒì›ë²ˆí˜¸</td>
           <td>code</td>
         </tr>
         <tr>
-          <td>ÀÌ¸§</td>
+          <td>ì´ë¦„</td>
           <td><input type="text" name="name" size="20" value="name"></td>
         </tr>
         <tr>
-          <td>ÀÌ¸ÞÀÏ</td>
+          <td>ì´ë©”ì¼</td>
           <td><input type="text" name="email" size="20" value="email"></td>
         </tr>
         <tr>
-          <td>ÀüÈ­¹øÈ£</td>
+          <td>ì „í™”ë²ˆí˜¸</td>
           <td><input type="text" name="phone" size="20" value="phone"></td>
         </tr>
         <tr>
-          <td>ºí·¢¸®½ºÆ®</td>
+          <td>ë¸”ëž™ë¦¬ìŠ¤íŠ¸</td>
           <td>blacklist</td>
         </tr>
         <tr>
-          <td>±ÇÇÑ</td>
+          <td>ê¶Œí•œ</td>
           <td>1</td>
         </tr>
        
@@ -63,8 +63,8 @@
     </table>
   </div>
 
-<input type="submit" value="¼öÁ¤">
-<a href="mypage.jsp">Ãë¼Ò</a>
+<input type="submit" value="ìˆ˜ì •">
+<a href="mypage.jsp">ì·¨ì†Œ</a>
 </section>
 </form>
 

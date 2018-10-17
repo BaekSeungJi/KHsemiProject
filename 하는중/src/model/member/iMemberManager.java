@@ -11,8 +11,7 @@ public interface iMemberManager {
 	public boolean addMember(MemberService ms);
 	public boolean getId(String ID);
 	
-	public MemberService login(MemberService ms);
-	
+	public MemberDto login(String id);
 	
 	public MemberDto ad_login(String id);
 	

@@ -95,6 +95,12 @@ public class MemberDto implements Serializable {
 	public void setAuth(int auth) {
 		this.auth = auth;
 	}
+
+	@Override
+	public String toString() {
+		return "MemberDto [id=" + id + ", pwd=" + pwd + ", name=" + name + ", email=" + email + ", phone=" + phone
+				+ ", blacklist=" + blacklist + ", auth=" + auth + "]";
+	}
 	
 	
 

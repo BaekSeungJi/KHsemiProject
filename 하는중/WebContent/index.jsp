@@ -1,3 +1,4 @@
+<%@page import="dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -21,13 +22,20 @@ body {
 <body>
 
 <h1>index.jsp</h1>
-<Br>
-<a href="mypage.jsp">to mypage.jsp</a>
-<br>
-<a href="calendar.jsp">호텔예약</a>
 
-<h2>로그인시 승지씨 검색창이 메인</h2>
-<h2>auth가 1일시 마이페이지 진입 가능</h2>
+
+
+<br>
+<%
+//임의로 로그인
+String id = "ham";
+
+%>
+
+<a href="MemberControl?command=mypage&id=<%=id%>">마이페이지</a>
+<br>
+
+<a href="ReserveControl?command=reserve&id=<%=id%>">호텔예약</a>
 
 </body>
 </html>

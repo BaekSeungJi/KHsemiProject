@@ -31,54 +31,6 @@ public class MemberManager implements iMemberManager {
 		return false;
 	}
 
-	@Override
-	public MemberService login(MemberService ms) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-	
-	//admin 해당아이디의 호텔 이름 가져오기
-	@Override
-	public String ad_getHotelname(String id) {
-	
-		String sql = " SELECT HOTELNAME FROM HOTEL "
-				+ " WHERE ID = '" + id + "'";
-		
-		String find = null;
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		
-		try {
-			conn = DBConnection.getConnection();
-			System.out.println("1/6 ad_getHotelname Success");
-			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 ad_getHotelname Success");
-			rs = psmt.executeQuery(sql);
-			System.out.println("3/6 ad_getHotelname Success");
-			
-			if(rs.next()){			
-				find = rs.getString(1);	
-				System.out.println(find);
-				
-			}
-		} catch (Exception e1) {
-			System.out.println("ad_getHotelname Fail");
-			e1.printStackTrace();
-			
-		}	finally{			
-			DBClose.close(psmt, conn, rs);			
-		}
-		
-		
-		
-		return find;
-	}
-
-
-
 
 	
 	// 예약 리스트 가져오기
@@ -228,6 +180,60 @@ public class MemberManager implements iMemberManager {
 
 	@Override
 	public MemberDto ad_login(String id) {
+		String sql = " SELECT ID, pwd, name, email , phone, blacklist, auth "
+				+ " FROM MEMBER "
+				+ " WHERE ID=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		MemberDto mem = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			System.out.println("1/6 login Success");
+			
+			psmt.setString(1, id);
+			
+			
+			System.out.println("2/6 login Success");
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				String _id = rs.getString(1);
+				String pwd = rs.getString(2);
+				String name = rs.getString(3);
+				String email = rs.getString(4);
+				String phone = rs.getString(5);
+				int blacklist = rs.getInt(6);
+				int auth = rs.getInt(7);
+				
+				mem = new MemberDto(_id, pwd, name, email, phone, blacklist, auth);
+			}
+			System.out.println("3/6 login Success");
+			
+		} catch (Exception e) {
+			System.out.println("login fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);			
+		}
+		
+		return mem;
+	}
+
+	@Override
+	public String ad_getHotelname(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberDto login(String id) {
 		String sql = " SELECT ID, pwd, name, email , phone, blacklist, auth "
 				+ " FROM MEMBER "
 				+ " WHERE ID=? ";

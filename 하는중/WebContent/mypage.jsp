@@ -1,5 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@page import="dto.MemberDto"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%
+request.setCharacterEncoding("utf-8");
+%>    
+    
+<%
+/* 
+String code = request.getParameter("code");
+String name = request.getParameter("name");
+String email = request.getParameter("email");
+String phone = request.getParameter("phone");
+String black = request.getParameter("black");
+String auth = request.getParameter("auth");
+ */
+
+MemberDto dto = (MemberDto)request.getAttribute("dto");
+ 
+ 
+%>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,13 +38,13 @@
 
 <section>
   <!--for demo wrap-->
-  <h1>³ªÀÇ ÇÁ·ÎÇÊ</h1>
+  <h1>ë‚˜ì˜ í”„ë¡œí•„</h1>
   <div class="tbl-header">
     <table cellpadding="0" cellspacing="0" border="0">
       <thead>
         <tr>
-          <th>±¸ºÐ</th>
-          <th>³ª</th>	
+          <th>êµ¬ë¶„</th>
+          <th>ë‚˜</th>	
         </tr>
       </thead>
     </table>
@@ -32,28 +53,28 @@
     <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
         <tr>
-          <td>È¸¿ø¹øÈ£</td>
-          <td>code</td> <!-- ·Î±×ÀÎÇÑÈÄ loginid.id µîÀ¸·Î ¹Þ¾Æ¿À±â -->
+          <td>íšŒì›ë²ˆí˜¸</td>
+          <td><%=dto.getId() %></td> 
         </tr>
         <tr>
-          <td>ÀÌ¸§</td>
-          <td>name</td>
+          <td>ì´ë¦„</td>
+          <td>${dto.name }</td>
         </tr>
         <tr>
-          <td>ÀÌ¸ÞÀÏ</td>
-          <td>email</td>
+          <td>ì´ë©”ì¼</td>
+          <td><%=dto.getEmail() %></td>
         </tr>
         <tr>
-          <td>ÀüÈ­¹øÈ£</td>
-          <td>phone</td>
+          <td>ì „í™”ë²ˆí˜¸</td>
+          <td><%=dto.getPhone()%></td>
         </tr>
         <tr>
-          <td>ºí·¢¸®½ºÆ®</td>
-          <td>blacklist</td> <!-- 1ÀÏ½Ã ÀÏ¹Ý, 2ÀÏ½Ã Á¤ÁöÈ¸¿ø -->
+          <td>ë¸”ëž™ë¦¬ìŠ¤íŠ¸</td>
+          <td><%=dto.getBlacklist() %></td> <!-- 1ì¼ì‹œ ì¼ë°˜, 2ì¼ì‹œ ì •ì§€íšŒì› -->
         </tr>
         <tr>
-          <td>±ÇÇÑ</td>
-          <td>1</td> <!-- 1ÀÏ½Ã ÀÏ¹Ý, 2ÀÏ½Ã °ü¸®ÀÚ, 3ÀÏ½Ã ¿î¿µÀÚ -->
+          <td>ê¶Œí•œ</td>
+          <td><%=dto.getAuth() %></td> <!-- 1ì¼ì‹œ ì¼ë°˜, 2ì¼ì‹œ ê´€ë¦¬ìž, 3ì¼ì‹œ ìš´ì˜ìž -->
         </tr>
        
       </tbody>
@@ -61,17 +82,17 @@
   </div>
   
   <a href="profileedit.jsp">profileedit.jsp</a>	
-  <h1>ÃÖ±Ù ÀÌ¿ëÇÑ È£ÅÚ</h1>
+  <h1>ìµœê·¼ ì´ìš©í•œ í˜¸í…”</h1>
   <br>
   <div class="tbl-header">
     <table cellpadding="0" cellspacing="0" border="0">
       <thead>
         <tr>
-          <th>È£ÅÚ ÀÌ¸§</th>
-          <th>Áö¿ª</th>
-          <th>¿¹¾à ³¯Â¥</th>
-          <th>ÀÌ¿ë ½ÃÀÛ ½Ã°¢</th>
-          <th>ÀÌ¿ë ¿Ï·á ½Ã°¢</th>	
+          <th>í˜¸í…” ì´ë¦„</th>
+          <th>ì§€ì—­</th>
+          <th>ì˜ˆì•½ ë‚ ì§œ</th>
+          <th>ì´ìš© ì‹œìž‘ ì‹œê°</th>
+          <th>ì´ìš© ì™„ë£Œ ì‹œê°</th>	
         </tr>
       </thead>
     </table>
@@ -79,15 +100,15 @@
   <div class="tbl-content">
     <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-        <tr><!-- bbslist Âü°íÇÏ±â -->
-          <td><a href="index.jsp">È£ÅÚ ÀÌ¸§</a></td>
-          <td>Áö¿ª</td>
-          <td>³¯Â¥</td>
-          <td>½Ã°¢</td>
-          <td>½Ã°¢</td>
+        <tr><!-- bbslist ì°¸ê³ í•˜ê¸° -->
+          <td><a href="index.jsp">í˜¸í…” ì´ë¦„</a></td>
+          <td>ì§€ì—­</td>
+          <td>ë‚ ì§œ</td>
+          <td>ì‹œê°</td>
+          <td>ì‹œê°</td>
         </tr>
         
-      <!--   °­»ç´Ô bbslist º¸°í ¼öÁ¤! -->
+      <!--   ê°•ì‚¬ë‹˜ bbslist ë³´ê³  ìˆ˜ì •! -->
        
       </tbody>
     </table>
