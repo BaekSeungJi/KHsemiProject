@@ -23,15 +23,6 @@ public class MemberService {
 	}
 
 	
-/*public boolean addMember(String id, String pwd, String name, String email, String phone, int blacklist, int auth) {
-	return manager.addMember(id, pwd, name, email, phone, blacklist, auth);
-	//return manager.addMember();
-}*/
 
-	
-/*public boolean getId(String id) {
-
-	return manager.getId(id);
-}*/
 	
 }

@@ -20,6 +20,5 @@ if(isDup){
 	out.print("OK");
 
 }
-
-
 %>
+

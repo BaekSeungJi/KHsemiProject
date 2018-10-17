@@ -31,7 +31,7 @@ public class MemberManager implements iMemberManager {
 		System.out.println("dto:" + dto.toString()); 
 		
 		String sql = " INSERT INTO MEMBER "
-				+ " (ID, PWD, NAME, EMAIL, PHONE, BLACKLIST, AUTH) "
+				+ " ( ID, PWD, NAME, EMAIL, PHONE, BLACKLIST, AUTH ) "
 				+ " VALUES(?, ?, ?, ?, ?, 0, 3) ";
 
 		Connection conn = null;
@@ -85,12 +85,12 @@ public class MemberManager implements iMemberManager {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
 
-			System.out.println("1/6 login Success");
+			System.out.println("1/3 login Success");
 
 			psmt.setString(1, dto.getId());
 			psmt.setString(2, dto.getPwd());
 
-			System.out.println("2/6 login Success");
+			System.out.println("2/3 login Success");
 
 			rs = psmt.executeQuery();
 
@@ -103,12 +103,9 @@ public class MemberManager implements iMemberManager {
 				int blacklist = rs.getShort(6);
 				int auth = rs.getInt(7);
 
-
-
-
 				mem = new MemberDto(id, pwd, name, email, phone, blacklist, auth);
 			}
-			System.out.println("3/6 login Success");
+			System.out.println("3/3 login Success");
 
 		} catch (Exception e) {
 			System.out.println("login fail");

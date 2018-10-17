@@ -29,9 +29,11 @@ DB 접속
 bbslist.jsp
  -->
 <%
+System.out.println("로그인 확인");
 if(mem != null && !mem.getId().equals("")){
 	session.setAttribute("login", mem);
 	session.setMaxInactiveInterval(30*60);
+
 %>
 	<script type="text/javascript">
 	alert("안녕하세요 <%=mem.getId() %> 님");
