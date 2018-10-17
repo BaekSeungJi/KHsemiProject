@@ -55,13 +55,18 @@ public class MemberControl extends HttpServlet {
 			MemberService service = MemberService.getInstance();
 			
 			MemberDto dto = service.login(id);
+
+		
+			req.setAttribute("dto", dto);
+		
+			dispatch("profileedit.jsp", req, resp);
+		}
+		
+		else if(command.equals("profileedit")) {
+			String id = req.getParameter("id");
+			MemberService service = MemberService.getInstance();
 			
-			String code = dto.getId();
-			String name = dto.getName();
-			String email = dto.getEmail();
-			String phone = dto.getPhone();
-			int black = dto.getBlacklist();
-			int auth = dto.getAuth();
+			MemberDto dto = service.login(id);
 			
 			
 			req.setAttribute("dto", dto);

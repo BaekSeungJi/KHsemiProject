@@ -10,9 +10,8 @@ request.setCharacterEncoding("utf-8");
 <%
 
 MemberDto dto = (MemberDto)request.getAttribute("dto");
-
-//이건 로그인 유지로 나중에 바꾸기
-String id = "hyh";
+Object ologin = session.getAttribute("login");
+String id = request.getParameter("id");
 
 %>
 
@@ -114,6 +113,7 @@ public String whour(int Auth){
     </table>
   </div>
   <a href="MemberControl?command=profileedit&id=<%=id%>">프로필 업데이트</a>
+  
   
   <h1>최근 이용한 호텔</h1>
   <br>
