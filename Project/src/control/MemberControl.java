@@ -95,20 +95,26 @@ public class MemberControl extends HttpServlet {
 			req.setAttribute("blacklist", 0);
 			req.setAttribute("auth", 3);
 			dispatch("login.jsp", req, resp);	
-		}
-		else if (command.equals("아이디찾기")) {
+		}else if (command.equals("아이디찾기")) {
 			resp.sendRedirect("Suchidview.jsp");
+			
 		}else if (command.equals("비밀번호찾기")) {
 			resp.sendRedirect("Suchpwdview.jsp");
-
-		}
-
-		else if (command.equals("IDSUCH")) {
+			
+		}else if (command.equals("아이디확인")) {
 			String email = req.getParameter("email");
-			
 			req.setAttribute("email", email);
+			dispatch("SuchidAf.jsp", req, resp);
+		
+		}else if (command.equals("비밀번호확인")){
+			String id = req.getParameter("id");
+			String phone = req.getParameter("phone");
+			req.setAttribute("id", id);
+			req.setAttribute("phone", phone);
+			dispatch("SuchpwdAf.jsp", req, resp);
 			
 		}
+		
 
 
 

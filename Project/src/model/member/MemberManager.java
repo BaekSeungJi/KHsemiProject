@@ -160,12 +160,11 @@ public class MemberManager implements iMemberManager {
 		return findId;
 	}
 
-	public MemberDto getid(MemberDto dto) {
-		
+	public MemberDto suchid(MemberDto dto) {
 		String sql = " SELECT ID, PWD, NAME, EMAIL, PHONE, BLACKLIST, AUTH "
 				+ " FROM MEMBER "
-				+ " WHERE ID=? AND EMAIL=? ";
-		
+				+ " WHERE email=?";
+
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -176,12 +175,12 @@ public class MemberManager implements iMemberManager {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
 
-			System.out.println("1/3 suchid Success");
+			System.out.println("1/3 Suchid Success");
 
-			psmt.setString(1, dto.getId());
-			psmt.setString(2, dto.getPwd());
+			psmt.setString(1, dto.getEmail());
+		
 
-			System.out.println("2/3 suchid Success");
+			System.out.println("2/3 Suchid Success");
 
 			rs = psmt.executeQuery();
 
@@ -194,24 +193,67 @@ public class MemberManager implements iMemberManager {
 				int blacklist = rs.getShort(6);
 				int auth = rs.getInt(7);
 
-				mem = new MemberDto(id, pwd, null, null, null, blacklist, auth);
+				mem = new MemberDto(id, null, null, email, null, blacklist, auth);
 			}
-			System.out.println("3/3 suchid Success");
+			System.out.println("3/3 Suchid Success");
 
 		} catch (Exception e) {
-			System.out.println("login fail");
+			System.out.println("Suchid fail");
 			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, rs);			
 		}
 
-		
-		
-		
-	return dto;
-		
+		return mem;
 	}
 
+	
+	public MemberDto suchpwd(MemberDto dto) {
+		String sql = " SELECT ID, PWD, NAME, EMAIL, PHONE, BLACKLIST, AUTH "
+				+ " FROM MEMBER "
+				+ " WHERE ID=? AND PHONE=?";
 
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 
+		MemberDto mem = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+
+			System.out.println("1/3 Suchid Success");
+
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getPhone());
+
+			System.out.println("2/3 Suchid Success");
+
+			rs = psmt.executeQuery();
+
+			if(rs.next()) {
+				String id = rs.getString(1);
+				String pwd = rs.getString(2);
+				/*String name = rs.getString(3);
+				String email = rs.getString(4);	*/
+				String phone = rs.getString(5);	
+				int blacklist = rs.getShort(6);
+				int auth = rs.getInt(7);
+
+				mem = new MemberDto(id, pwd, null, null, phone, blacklist, auth);
+			}
+			System.out.println("3/3 Suchid Success");
+
+		} catch (Exception e) {
+			System.out.println("Suchpwd fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);			
+		}
+
+		return mem;
+	}
+
+	
 }

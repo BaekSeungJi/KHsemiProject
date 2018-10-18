@@ -9,6 +9,14 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
 <welcome-file>login.jsp</welcome-file>
 <welcome-file>Signup.jsp</welcome-file>
 <welcome-file>SignupAf.jsp</welcome-file>
+<welcome-file>Suchidview.jsp</welcome-file>
+<welcome-file>SuchidAf.jsp</welcome-file>
+<welcome-file>Suchpwdview.jsp</welcome-file>
+<welcome-file>SuchpwdAf.jsp</welcome-file>
+
+
+
+
  </welcome-file-list>
 
   <servlet>

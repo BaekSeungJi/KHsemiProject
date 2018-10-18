@@ -13,6 +13,8 @@ public interface iMemberManager {
 	
 	public MemberDto login(MemberDto dto);
 		
-		
+	public MemberDto suchid(MemberDto dto);
+	
+	public MemberDto suchpwd(MemberDto dto);
 	
 }

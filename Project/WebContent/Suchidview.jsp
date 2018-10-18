@@ -14,25 +14,26 @@
 
 </head>
 <body>
-<%
-System.out.println("suchid");
-%>
+
 		<fieldset>
 			<h1>
 				E-mail정보를 입력 해 주세요
 			</h1>
-			<form action="ControlMember">
+			<form action="MemberControl">
 			
 				<label
 				for="mail">Email:</label> <input type="email" id="email"
-				name="email" required  value="E-mail"
+				name="email" value="E-mail"
 				onBlur="if(this.value=='')this.value='E-mail'"
 				onFocus="if(this.value=='E-mail')this.value='' "> 
 				
-				<button type="submit" name = "command" id = "Login" value="IDSUCH">아이디 확인</button>
+				<button type="submit" name = "command" id = "아이디확인" value="아이디확인">아이디확인</button>
 				
-			<!-- 	<input type="submit" name = "command" id = "Login" value="IDSUCH"> -->
-
+		
 			</form>
+			
+			<%
+			System.out.println("아이디찾기뷰 완료");
+			%>
 </body>
 </html>

@@ -49,7 +49,9 @@
 			<a href="MemberControl?command=비밀번호찾기" style="margin-left: 40px;" name="command" id = "Suchpwd" value="비밀번호찾기">비밀번호찾기</a>
 
 	</div> 
-
+<%
+System.out.println("로그인뷰 완료");
+%>
 </body>	
 </html>
   
