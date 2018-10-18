@@ -13,7 +13,7 @@ String maxpeople = request.getParameter("maxpeople");
 String price = request.getParameter("price");
 String hotelphone = request.getParameter("hotelphone");
 String readcount = request.getParameter("readcount");
-
+String image = request.getParameter("image");
 
 %>
 
@@ -220,7 +220,7 @@ String readcount = request.getParameter("readcount");
 
 <!-- 맨 위 이미지 / 탭부분 -->
 <div class="wrapper">
-	<div id="banner" class="container"><img src="images/banner.jpg" width="1200" height="500" alt="" /></div>
+	<div id="banner" class="container"><img src="<%=image %>" width="1200" height="500" alt="" /></div>
 	<div id="header-wrapper" style="background-color: #FA8072">
 	<div id="header" class="container">
 		<div id="logo">
