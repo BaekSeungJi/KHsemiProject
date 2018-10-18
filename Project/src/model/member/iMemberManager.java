@@ -1,5 +1,7 @@
 package model.member;
 
+import java.util.List;
+
 import dto.MemberDto;
 
 public interface iMemberManager {
@@ -11,4 +13,6 @@ public interface iMemberManager {
 	
 	public MemberDto login(MemberDto dto);
 		
+		
+	
 }

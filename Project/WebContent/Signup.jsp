@@ -63,11 +63,7 @@
 				onFocus="if(this.value=='Phone')this.value='' ">
 			
 	
-			<!-- 	<form action="MemberControl">
-				<input type="submit" name="command" id = "SignupAf" value="회원가입">
-				<br>
-			 	 -->
-					
+			
 	
 	 
 			 <button type="submit" name = "command" id = "SignupAf" value = "회원가입">회원가입</button> 

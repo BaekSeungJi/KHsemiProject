@@ -68,7 +68,6 @@ public class MemberManager implements iMemberManager {
 
 	}
 
-
 	@Override
 	public MemberDto login(MemberDto dto) {
 		String sql = " SELECT ID, PWD, NAME, EMAIL, PHONE, BLACKLIST, AUTH "
@@ -159,6 +158,58 @@ public class MemberManager implements iMemberManager {
 		}
 		System.out.println("findId = " + findId);
 		return findId;
+	}
+
+	public MemberDto getid(MemberDto dto) {
+		
+		String sql = " SELECT ID, PWD, NAME, EMAIL, PHONE, BLACKLIST, AUTH "
+				+ " FROM MEMBER "
+				+ " WHERE ID=? AND EMAIL=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		MemberDto mem = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+
+			System.out.println("1/3 suchid Success");
+
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getPwd());
+
+			System.out.println("2/3 suchid Success");
+
+			rs = psmt.executeQuery();
+
+			if(rs.next()) {
+				String id = rs.getString(1);
+				/*String pwd = rs.getString(2);
+				String name = rs.getString(3);
+				String phone = rs.getString(5);	*/	
+				String email = rs.getString(4);
+				int blacklist = rs.getShort(6);
+				int auth = rs.getInt(7);
+
+				mem = new MemberDto(id, pwd, null, null, null, blacklist, auth);
+			}
+			System.out.println("3/3 suchid Success");
+
+		} catch (Exception e) {
+			System.out.println("login fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);			
+		}
+
+		
+		
+		
+	return dto;
+		
 	}
 
 

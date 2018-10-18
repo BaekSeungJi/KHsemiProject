@@ -19,18 +19,6 @@
 <title>login view</title>
    <link rel="stylesheet" href="css/login.css">
 </head>
-<!-- <body>
-
-  <html>
-<head>
-	
-	<title>Login_03</title>
-
-	[if lt IE 9]>
-		<script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]
-
-</head> -->
 
 <body>
 
@@ -57,6 +45,8 @@
 			<input type="submit" name="command" id = "Signup" value="Signup">
 			<br>
 		 	</form>
+			<a href="MemberControl?command=아이디찾기" style="margin-left: 20px;" name="command" id = "Suchid" value="아이디찾기">아이디찾기</a>
+			<a href="MemberControl?command=비밀번호찾기" style="margin-left: 40px;" name="command" id = "Suchpwd" value="비밀번호찾기">비밀번호찾기</a>
 
 	</div> 
 

@@ -18,7 +18,7 @@ public class MemberControl extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		
+
 		try {
 			doProcess(req, resp);
 		} catch (Exception e) {
@@ -29,7 +29,7 @@ public class MemberControl extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
+
 
 		try {
 			doProcess(req, resp);
@@ -59,7 +59,7 @@ public class MemberControl extends HttpServlet {
 			String phone = req.getParameter("phone");
 			int blacklist = Integer.parseInt("0");
 			int auth = Integer.parseInt("3");
-			
+
 			req.setAttribute("id", id);
 			req.setAttribute("pwd", pwd);
 			req.setAttribute("name", name);
@@ -67,13 +67,13 @@ public class MemberControl extends HttpServlet {
 			req.setAttribute("phone", phone);
 			req.setAttribute("blacklist", 0);
 			req.setAttribute("auth", 3);
-			
-		//	MemberDto dto = new MemberDto(id, pwd, name, email, phone, 0, 3);
-						
+
+			//	MemberDto dto = new MemberDto(id, pwd, name, email, phone, 0, 3);
+
 			//req.setAttribute("dto", dto);//여기 하는중
-			
+
 			dispatch("SignupAf.jsp", req, resp);
-	
+
 		}
 		else if(command.equals("Login")) {		//로그인
 			String id = req.getParameter("id");
@@ -83,10 +83,10 @@ public class MemberControl extends HttpServlet {
 			String phone = req.getParameter("phone");
 			int blacklist = Integer.parseInt("0");
 			int auth = Integer.parseInt("3");
-									
+
 			//MemberDto dto = new MemberDto(id, pwd, name, email, phone, 0, 3);
 			//req.setAttribute("dto", dto);
-			
+
 			req.setAttribute("id", id);
 			req.setAttribute("pwd", pwd);
 			req.setAttribute("name", name);
@@ -95,12 +95,21 @@ public class MemberControl extends HttpServlet {
 			req.setAttribute("blacklist", 0);
 			req.setAttribute("auth", 3);
 			dispatch("login.jsp", req, resp);	
-		
+		}
+		else if (command.equals("아이디찾기")) {
+			resp.sendRedirect("Suchidview.jsp");
+		}else if (command.equals("비밀번호찾기")) {
+			resp.sendRedirect("Suchpwdview.jsp");
+
+		}
+
+		else if (command.equals("IDSUCH")) {
+			String email = req.getParameter("email");
 			
+			req.setAttribute("email", email);
 			
 		}
 
-		
 
 
 	}
