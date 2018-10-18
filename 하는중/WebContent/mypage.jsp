@@ -15,7 +15,6 @@ session.setMaxInactiveInterval(30*60);
 
 Object ologin = session.getAttribute("login");
 String id = request.getParameter("id");
-
 %>
 
 
