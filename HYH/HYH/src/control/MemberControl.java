@@ -14,6 +14,8 @@ import dto.ReserveDto;
 import dto.ReviewDto;
 
 import javax.servlet.RequestDispatcher;
+
+import model.hotel.HotelService;
 import model.member.MemberService;
 import model.reserve.ReserveService;
 
@@ -41,15 +43,18 @@ public class MemberControl extends HttpServlet {
 		
 		if(command.equals("mypage")) {
 			String id = req.getParameter("id");
+			
 			MemberService service = MemberService.getInstance();
+			ReserveService ser = ReserveService.getInstance();
+			HotelService Hser = HotelService.getInstance();
+			
+			String hotelname= service.getHotelname(id);
 			
 			MemberDto dto = service.login(id);
 
-		
-			
-			
+
 			List<ReserveDto> reserveList = service.reserveList(id); 
-		
+	
 			req.setAttribute("dto", dto);
 			req.setAttribute("reserveList", reserveList);
 			dispatch("mypage.jsp", req, resp);

@@ -35,10 +35,10 @@ public class MemberService {
 			return manager.ad_reserveList(id);
 		}
 	
-	//admin 해당 id 예약 리스트 가져오기
-	public List<ReserveDto> ad_reserveList(String id){
-		return manager.ad_reserveList(id);
-	}
+		//admin 해당 id 예약 리스트 가져오기
+		public List<ReserveDto> ad_reserveList(String id){
+			return manager.ad_reserveList(id);
+		}
 	
 	//admin 해당 id 리뷰 리스트 가져오기
 		public List<ReviewDto> ad_reviewList(String id){

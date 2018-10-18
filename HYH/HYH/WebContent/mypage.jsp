@@ -1,5 +1,6 @@
 <%@page import="dto.MemberDto"%>
 <%@page import="dto.ReserveDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -13,6 +14,8 @@ request.setCharacterEncoding("utf-8");
 MemberDto mem = (MemberDto)request.getAttribute("dto");
 session.setAttribute("login", mem);
 session.setMaxInactiveInterval(30*60);
+
+List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("reserveList");
 
 Object ologin = session.getAttribute("login");
 String id = request.getParameter("id");
@@ -118,47 +121,91 @@ public String whour(int Auth){
     </table>
   </div>
   <a href="MemberControl?command=profileedit&id=<%=id%>">프로필 업데이트</a>
-  
-  
-  <h1>최근 이용한 호텔</h1>
-  <br>
+ 
+
+
+
+
+<section>
+
+
+
+
+
+		<div class="rad-body-wrapper rad-nav-min">
+			<div class="container-fluid">
+
+
+
+  <h1>예약 내역</h1>
+
   <div class="tbl-header">
-    <table cellpadding="0" cellspacing="0" border="0">
+    <table>
       <thead>
         <tr>
-          <th>호텔 이름</th>
-          <th>지역</th>
           <th>예약 날짜</th>
-          <th>이용 시작 시각</th>
-          <th>이용 완료 시각</th>	
+          <th>호텔 이름</th>
+          <th>요구 사항</th>
+          <th>등록일</th>
+          <th>수정</th>
+          <th>취소</th>
         </tr>
       </thead>
     </table>
   </div>
+  
+   <form action="ReserveControl">
   <div class="tbl-content">
-    <table cellpadding="0" cellspacing="0" border="0">
+  
+    <table cellpadding="0" cellspacing="0" border=" ">
       <tbody>
-        <tr><!-- bbslist 참고하기 -->
-          <td><a href="index.jsp">호텔 이름</a></td>
-          <td>지역</td>
-          <td>날짜</td>
-          <td>시각</td>
-          <td>시각</td>
-        </tr>
-        
-
-      <tr>
+ 	  <% 
+       for(int i= 0; i<list.size();i++){
+    	   ReserveDto dto = list.get(i);
+      %>
+      <tr onmouseover="this.style.background='#f0f0f0'"
+        	onmouseout="this.style.background='white'">
+          <td>
       
-      </tr>
-       
+          <input type="hidden" name="command" value="ad_reserveUpdate">
+          <input type="hidden" name="seq" value="<%=dto.getSeq()%>">
+          <input type="hidden" name="id" value="<%=dto.getId()%>">
+          
+          
+          <input type="text" value="<%=dto.getRealdate() %>" name="regdate"></td>
+          <td><%=dto.getHotelname() %></td>
+          <td><input type="text" value="<%=dto.getRequest() %>" name="request"></td>
+          <td><%=dto.getRegdate() %></td>
+           
+          <td>
+           <%if(dto.getDel() == 0){
+        	  %><input type="submit" value="수정">
+        	   <%  }else{
+        	%> 취소된 예약입니다
+        	<%
+      		 }
+          %>
+          </td>
+          <td>
+          <%if(dto.getDel() == 0){
+        	  %><input type="button" value="예약취소" onclick="location.href='ReserveControl?command=ad_reserveDelete&seq=<%=dto.getSeq() %>&id=<%=dto.getId()%>'">
+        <%  }else{
+        	%> 취소된 예약입니다
+        	<%
+      		 }
+          %>
+
+          </td>
+          
+        </tr>
+       <%
+       }
+       %>
       </tbody>
     </table>
+   
   </div>
-</section>
-
-
-
-
+</form>
 
 
 

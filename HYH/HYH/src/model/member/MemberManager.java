@@ -32,54 +32,57 @@ public class MemberManager implements iMemberManager {
 	}
 
 	// 예약 리스트 가져오기
-	@Override
-	public List<ReserveDto> ad_reserveList(String id) {
+		@Override
+		public List<ReserveDto> ad_reserveList(String id) {
 
-		String sql = " SELECT seq, hotelname, request, realdate, regdate, del from reserve where id = ? ";
-		List<ReserveDto> list = new ArrayList<>();
-
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-
-		try {
-			conn = DBConnection.getConnection();
-			System.out.println("1/6 ad_reserveList Success");
-			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 ad_reserveList Success");
-			System.out.println(id);
-
-			psmt.setString(1, id);
-
-			System.out.println("3/6 ad_reserveList Success");
-
-			rs = psmt.executeQuery();
-			System.out.println("4/6 ad_reserveList Success");
-
-			if (rs.next()) {
-				System.out.println("5/6 ad_reserveList Success");
-
-				int seq = rs.getInt(1);
-				String _id = id;
-				String hotelname = rs.getString(2);
-				String request = rs.getString(3);
-				String realdate = rs.getString(4);
-				String regdate = rs.getString(5);
-				int del = rs.getInt(6);
-				ReserveDto dto = new ReserveDto(seq, _id, hotelname, request, realdate, regdate, del);
-				list.add(dto);
-
+			String sql = " SELECT seq, hotelname, request, realdate, regdate, del from reserve where id = ? ";
+			List<ReserveDto> list = new ArrayList<>();
+			
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			ResultSet rs = null;
+			
+			try {
+				conn = DBConnection.getConnection();
+				System.out.println("1/6 ad_reserveList Success");
+				psmt = conn.prepareStatement(sql);
+				System.out.println("2/6 ad_reserveList Success");
+				System.out.println(id);
+				
+				psmt.setString(1, id);
+				
+				System.out.println("3/6 ad_reserveList Success");
+				
+				rs = psmt.executeQuery();
+				System.out.println("4/6 ad_reserveList Success");
+				
+				
+				while(rs.next()){			
+					System.out.println("5/6 ad_reserveList Success");
+					
+				
+					int seq = rs.getInt(1);
+					String _id = id;
+					String hotelname = rs.getString(2);
+					String request = rs.getString(3);
+					String realdate = rs.getString(4);
+					String regdate = rs.getString(5);
+					int del = rs.getInt(6);
+					ReserveDto dto = new ReserveDto(seq, _id, hotelname, request, realdate, regdate, del);
+					list.add(dto);
+				
+				}
+			} catch (Exception e1) {
+				System.out.println("ad_reserveList Fail");
+				e1.printStackTrace();
+				
+			}	finally{			
+				DBClose.close(psmt, conn, rs);			
 			}
-		} catch (Exception e1) {
-			System.out.println("ad_reserveList Fail");
-			e1.printStackTrace();
-
-		} finally {
-			DBClose.close(psmt, conn, rs);
+			
+			return list;
 		}
-
-		return list;
-	}
+		
 
 	// 후기 리스트 가져오기
 	@Override
