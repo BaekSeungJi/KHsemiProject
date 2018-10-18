@@ -13,7 +13,7 @@ import dto.ReserveDto;
 import dto.ReviewDto;
 
 public class MemberManager implements iMemberManager {
-	
+
 	// 생성할 때 db연결
 	public MemberManager() {
 		DBConnection.initConnect();
@@ -31,38 +31,34 @@ public class MemberManager implements iMemberManager {
 		return false;
 	}
 
-
-	
 	// 예약 리스트 가져오기
 	@Override
 	public List<ReserveDto> ad_reserveList(String id) {
 
 		String sql = " SELECT seq, hotelname, request, realdate, regdate, del from reserve where id = ? ";
 		List<ReserveDto> list = new ArrayList<>();
-		
+
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			conn = DBConnection.getConnection();
 			System.out.println("1/6 ad_reserveList Success");
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 ad_reserveList Success");
 			System.out.println(id);
-			
+
 			psmt.setString(1, id);
-			
+
 			System.out.println("3/6 ad_reserveList Success");
-			
+
 			rs = psmt.executeQuery();
 			System.out.println("4/6 ad_reserveList Success");
-			
-			
-			if(rs.next()){			
+
+			if (rs.next()) {
 				System.out.println("5/6 ad_reserveList Success");
-				
-			
+
 				int seq = rs.getInt(1);
 				String _id = id;
 				String hotelname = rs.getString(2);
@@ -72,49 +68,47 @@ public class MemberManager implements iMemberManager {
 				int del = rs.getInt(6);
 				ReserveDto dto = new ReserveDto(seq, _id, hotelname, request, realdate, regdate, del);
 				list.add(dto);
-			
+
 			}
 		} catch (Exception e1) {
 			System.out.println("ad_reserveList Fail");
 			e1.printStackTrace();
-			
-		}	finally{			
-			DBClose.close(psmt, conn, rs);			
+
+		} finally {
+			DBClose.close(psmt, conn, rs);
 		}
-		
+
 		return list;
 	}
-	
+
 	// 후기 리스트 가져오기
 	@Override
 	public List<ReviewDto> ad_reviewList(String id) {
 
 		String sql = " SELECT num, hotelname, TITLE, CONTENT, regdate, del from REVIEW where id = ? ";
 		List<ReviewDto> list = new ArrayList<>();
-		
+
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			conn = DBConnection.getConnection();
 			System.out.println("1/6 ad_reviewList Success");
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 ad_reviewList Success");
 			System.out.println(id);
-			
+
 			psmt.setString(1, id);
-			
+
 			System.out.println("3/6 ad_reviewList Success");
-			
+
 			rs = psmt.executeQuery();
 			System.out.println("4/6 ad_reviewList Success");
-			
-			
-			if(rs.next()){			
+
+			if (rs.next()) {
 				System.out.println("5/6 ad_reviewList Success");
-				
-			
+
 				int seq = rs.getInt(1);
 				String _id = id;
 				String hotelname = rs.getString(2);
@@ -124,86 +118,77 @@ public class MemberManager implements iMemberManager {
 				int del = rs.getInt(6);
 				ReviewDto dto = new ReviewDto(seq, _id, hotelname, title, content, 0, del, 0, regdate);
 				list.add(dto);
-			
+
 			}
 		} catch (Exception e1) {
 			System.out.println("ad_reviewList Fail");
 			e1.printStackTrace();
-			
-		}	finally{			
-			DBClose.close(psmt, conn, rs);			
+
+		} finally {
+			DBClose.close(psmt, conn, rs);
 		}
-		
+
 		return list;
 	}
 
 	@Override
 	public boolean ad_MemberUpdate(String id, String pw, String name, String email, String phone) {
-		String sql = " UPDATE member SET "
-				+ " pwd=?, name=?, email=?, phone=? "
-				+ " WHERE id=? ";
-		
+		String sql = " UPDATE member SET " + " pwd=?, name=?, email=?, phone=? " + " WHERE id=? ";
+
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		int count = 0;
-		
-	
-			try {
+
+		try {
 			conn = DBConnection.getConnection();
-		
-			
-		
+
 			System.out.println("2/6  ad_MemberUpdate");
-			
+
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, pw);
 			psmt.setString(2, name);
 			psmt.setString(3, email);
 			psmt.setString(4, phone);
 			psmt.setString(5, id);
-			
-			
+
 			System.out.println("3/6  ad_MemberUpdate");
-			
+
 			count = psmt.executeUpdate();
 			System.out.println("4/6 ad_MemberUpdate");
-			
-		} catch (Exception e) {			
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally{
-			DBClose.close(psmt, conn, null);	
+		} finally {
+			DBClose.close(psmt, conn, null);
 			System.out.println("5/6 ad_MemberUpdate");
-		}		
-		
-		return count>0?true:false;
+		}
+
+		return count > 0 ? true : false;
 	}
 
 	@Override
 	public MemberDto ad_login(String id) {
-		String sql = " SELECT ID, pwd, name, email , phone, blacklist, auth "
-				+ " FROM MEMBER "
-				+ " WHERE ID=? ";
-		
+		String sql = " SELECT ID, pwd, name, email , phone, blacklist, auth " + " FROM MEMBER " + " WHERE ID=? ";
+
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		
+
 		MemberDto mem = null;
-		
+
 		try {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
-			
+
 			System.out.println("1/6 login Success");
-			
+
 			psmt.setString(1, id);
-			
-			
+
 			System.out.println("2/6 login Success");
-			
+
 			rs = psmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				String _id = rs.getString(1);
 				String pwd = rs.getString(2);
 				String name = rs.getString(3);
@@ -211,18 +196,18 @@ public class MemberManager implements iMemberManager {
 				String phone = rs.getString(5);
 				int blacklist = rs.getInt(6);
 				int auth = rs.getInt(7);
-				
+
 				mem = new MemberDto(_id, pwd, name, email, phone, blacklist, auth);
 			}
 			System.out.println("3/6 login Success");
-			
+
 		} catch (Exception e) {
 			System.out.println("login fail");
 			e.printStackTrace();
 		} finally {
-			DBClose.close(psmt, conn, rs);			
+			DBClose.close(psmt, conn, rs);
 		}
-		
+
 		return mem;
 	}
 
@@ -234,30 +219,27 @@ public class MemberManager implements iMemberManager {
 
 	@Override
 	public MemberDto login(String id) {
-		String sql = " SELECT ID, pwd, name, email , phone, blacklist, auth "
-				+ " FROM MEMBER "
-				+ " WHERE ID=? ";
-		
+		String sql = " SELECT ID, pwd, name, email , phone, blacklist, auth " + " FROM MEMBER " + " WHERE ID=? ";
+
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		
+
 		MemberDto mem = null;
-		
+
 		try {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
-			
+
 			System.out.println("1/6 login Success");
-			
+
 			psmt.setString(1, id);
-			
-			
+
 			System.out.println("2/6 login Success");
-			
+
 			rs = psmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				String _id = rs.getString(1);
 				String pwd = rs.getString(2);
 				String name = rs.getString(3);
@@ -265,61 +247,60 @@ public class MemberManager implements iMemberManager {
 				String phone = rs.getString(5);
 				int blacklist = rs.getInt(6);
 				int auth = rs.getInt(7);
-				
+
 				mem = new MemberDto(_id, pwd, name, email, phone, blacklist, auth);
 			}
 			System.out.println("3/6 login Success");
-			
+
 		} catch (Exception e) {
 			System.out.println("login fail");
 			e.printStackTrace();
 		} finally {
-			DBClose.close(psmt, conn, rs);			
+			DBClose.close(psmt, conn, rs);
 		}
-		
+
 		return mem;
 	}
 
 	@Override
 	public boolean profileedit(String id, String pw, String name, String email, String phone) {
-		String sql = " UPDATE member SET "
-				+ " pwd=?, name=?, email=?, phone=? "
-				+ " WHERE id=? ";
-		
+		String sql = " UPDATE member SET " + " pwd=?, name=?, email=?, phone=? " + " WHERE id=? ";
+
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		int count = 0;
-		
-	
-			try {
+
+		try {
 			conn = DBConnection.getConnection();
-		
-			
-		
+
 			System.out.println("2/6  profile update");
-			
+
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, pw);
 			psmt.setString(2, name);
 			psmt.setString(3, email);
 			psmt.setString(4, phone);
 			psmt.setString(5, id);
-			
-			
+
 			System.out.println("3/6  profile update");
-			
+
 			count = psmt.executeUpdate();
 			System.out.println("4/6 profile update");
-			
-		} catch (Exception e) {			
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally{
-			DBClose.close(psmt, conn, null);	
+		} finally {
+			DBClose.close(psmt, conn, null);
 			System.out.println("5/6 profile update");
-		}		
-		
-		return count>0?true:false;
+		}
+
+		return count > 0 ? true : false;
 	}
-	
+
+	@Override
+	public List<ReserveDto> reserveList(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

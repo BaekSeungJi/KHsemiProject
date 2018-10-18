@@ -17,6 +17,8 @@ public interface iMemberManager {
 	
 	public String ad_getHotelname(String id);
 	
+	public List<ReserveDto> reserveList(String id);
+	
 	public List<ReserveDto> ad_reserveList(String id);
 	
 	public List<ReviewDto> ad_reviewList(String id);

@@ -1,4 +1,5 @@
 <%@page import="dto.MemberDto"%>
+<%@page import="dto.ReserveDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -52,6 +53,8 @@ public String whour(int Auth){
 }
 
 
+/* List<ReserveDto> reservelist = dao.getBbsList();
+ */
 %>
 
     
@@ -143,7 +146,10 @@ public String whour(int Auth){
           <td>시각</td>
         </tr>
         
-      <!--   강사님 bbslist 보고 수정! -->
+
+      <tr>
+      
+      </tr>
        
       </tbody>
     </table>

@@ -1,4 +1,9 @@
+ 
 package model.reserve;
+
+import java.util.List;
+
+import dto.ReserveDto;
 
 public class ReserveService {
 	
@@ -15,5 +20,9 @@ public class ReserveService {
 		}
 		return reserveManager;
 	}
+	
+	
+	
+
 	
 }

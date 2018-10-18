@@ -15,6 +15,7 @@ import dto.ReviewDto;
 
 import javax.servlet.RequestDispatcher;
 import model.member.MemberService;
+import model.reserve.ReserveService;
 
 public class MemberControl extends HttpServlet {
 
@@ -45,9 +46,15 @@ public class MemberControl extends HttpServlet {
 			MemberDto dto = service.login(id);
 
 		
-			req.setAttribute("dto", dto);
+			
+			
+			List<ReserveDto> reserveList = service.reserveList(id); 
 		
+			req.setAttribute("dto", dto);
+			req.setAttribute("reserveList", reserveList);
 			dispatch("mypage.jsp", req, resp);
+			
+			
 		}
 		
 		else if(command.equals("profileedit")) {
@@ -61,6 +68,9 @@ public class MemberControl extends HttpServlet {
 		
 			dispatch("profileedit.jsp", req, resp);
 		}
+	
+		
+		
 		
 		else if(command.equals("profileeditaf")) {
 			String id = req.getParameter("id");

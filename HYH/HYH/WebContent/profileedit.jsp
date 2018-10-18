@@ -90,7 +90,7 @@ public String whour(int Auth){
       <tbody>
         <tr>
           <td>ID</td>
-          <td><input type="text" id="id" name="id" readonly="readonly" value="<%= id%>"></td> 
+          <td><input type="text" style="background-color: #FA8072" id="id" name="id" readonly="readonly" value="<%= id%>"></td> 
         </tr>
         <tr>
           <td>비밀번호</td>
@@ -110,7 +110,7 @@ public String whour(int Auth){
         </tr>
         <tr>
         <td>권한</td>
-        <td><input type="text" id="auth" name="auth" readonly="readonly" value="<%=whour(dto.getAuth()) %>"></td> 
+        <td><input type="text" id="auth" style="background-color: #FA8072" name="auth" readonly="readonly" value="<%=whour(dto.getAuth()) %>"></td> 
          </tr>
        
       </tbody>
