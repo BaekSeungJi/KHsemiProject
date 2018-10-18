@@ -1,17 +1,35 @@
-
+<%@page import="model.member.MemberService"%>
+<%@page import="dto.MemberDto"%>
+<%@page import="model.member.MemberManager"%>
+<%@page import="model.member.iMemberManager"%>
 <%@page import="control.MemberControl"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+
 
 <%
-request.setCharacterEncoding("utf-8");
+	request.setCharacterEncoding("utf-8");
 %>
+
 <%
-String name = request.getParameter("name");
-String email = request.getParameter("email");
-String phone = request.getParameter("phone");
-%>      
-    
+	String id = request.getParameter("id");
+	String pwd = request.getParameter("pwd");
+	String name = request.getParameter("name");
+	String email = request.getParameter("email");
+	String phone = request.getParameter("phone");
+%>
+
+
+<%
+	MemberService service = MemberService.getInstance();
+	MemberDto dto = (MemberDto) request.getAttribute("dto");
+	session.setAttribute("login", dto);
+	session.setMaxInactiveInterval(30 * 60);
+
+	Object ologin = session.getAttribute("login");
+%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,44 +37,31 @@ String phone = request.getParameter("phone");
 <title>profileeditaf.jsp</title>
 </head>
 <body>
-<%-- 
-<%
-MemberControl memcon = MemberControl.
-iMemberDao dao = MemberDao.getInstance();
 
-boolean isS = dao.addMember(new MemberDto(id, pwd, name, email, 0));
+	<%
+		boolean isS = service.profileedit(id, pwd, name, email, phone);
 
-if(isS){
-%>
+		if (isS) {
+	%>
 	<script type="text/javascript">
-	alert("성공적으로 가입하셨습니다");
-	location.href = "index.jsp";
-	</script>
-<%
-}else{
-%>
+	alert("변경 완료!");
+	location.href = "MemberControl?command=profileedit&id=<%=id%>";
+	 </script>
+
+
+	<%
+		} else {
+	%>
 	<script type="text/javascript">
-	alert("다시 가입해 주십시오");
-	location.href = "regi.jsp";
+	alert("변경 실패!");
+	location.href = "MemberControl?command=profileedit&id=<%=id%>";
 	</script>
-<%
-}
-%>
+	<%
+		}
+	%>
 
- --%>
- 
-<%
-String str = name + email + phone; 
- 
-%>
 
-<script type="text/javascript">
-alert("수정 구현중");
-
-/* dao.update 이용해서 멤버정보 변경 */
-
-location.href = 'profileedit.jsp';
-</script>
+	</script>
 
 </body>
 </html>

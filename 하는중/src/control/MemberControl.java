@@ -62,7 +62,7 @@ public class MemberControl extends HttpServlet {
 			dispatch("profileedit.jsp", req, resp);
 		}
 		
-		else if(command.equals("profileedit")) {
+		else if(command.equals("profileeditaf")) {
 			String id = req.getParameter("id");
 			MemberService service = MemberService.getInstance();
 			
@@ -71,7 +71,7 @@ public class MemberControl extends HttpServlet {
 			
 			req.setAttribute("dto", dto);
 		
-			dispatch("profileedit.jsp", req, resp);
+			dispatch("profileeditaf.jsp", req, resp);
 		}
 		
 		

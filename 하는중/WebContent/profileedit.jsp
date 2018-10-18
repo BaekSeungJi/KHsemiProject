@@ -13,6 +13,9 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 Object ologin = session.getAttribute("login");
 String id = request.getParameter("id");
 
+session.setAttribute("login", dto);
+session.setMaxInactiveInterval(30*60);
+
 %>
 
 
@@ -67,7 +70,7 @@ public String whour(int Auth){
 </head>
 <body>
 
-
+<form action="profileeditaf.jsp">
 <section>
   <!--for demo wrap-->
   <h1>나의 프로필</h1>
@@ -86,33 +89,35 @@ public String whour(int Auth){
       <tbody>
         <tr>
           <td>ID</td>
-          <td><%=dto.getId() %></td> 
+          <td><input type="text" id="id" readonly="readonly" value="<%= id%>"></td> 
         </tr>
         <tr>
           <td>비밀번호</td>
-          <td><%=  pw2change(dto.getPwd()) %></td> <!-- 1일시 일반, 2일시 정지회원 -->
+          <td><input type="text" id="pwd" value="<%= pw2change(dto.getPwd())%>"></td> <!-- 1일시 일반, 2일시 정지회원 -->
         </tr>
         <tr>
           <td>이름</td>
-          <td><input type="text" value="<%=dto.getName()%>"> </td>
+          <td><input type="text" id="name" value="<%=dto.getName()%>"> </td>
         </tr>
         <tr>
           <td>이메일</td>
-          <td><input type="text" value="<%=dto.getEmail()%>"> </td>
+          <td><input type="text" id="email" value="<%=dto.getEmail()%>"> </td>
         </tr>
         <tr>
           <td>전화번호</td>
-          <td><input type="text" value="<%=dto.getPhone()%>"> </td>
+          <td><input type="text" id="phone" value="<%=dto.getPhone()%>"> </td>
         </tr>
         <tr>
-          <td>권한</td>
-          <td><%=whour(dto.getAuth()) %></td> <!-- 1일시 일반, 2일시 관리자, 3일시 운영자 -->
-        </tr>
+        <td>권한</td>
+        <td><input type="text" id="auth" readonly="readonly" value="<%=whour(dto.getAuth()) %>"></td> 
+         </tr>
        
       </tbody>
     </table>
   </div>
-  <a href="MemberControl?command=profileeditaf&id=<%=id%>">수정</a>
+ </form>
+ 	<input type="submit" id="edit" value="수정하기">
+ 
   <a href="MemberControl?command=mypage&id=<%=id%>">돌아가기</a>
 
 

@@ -53,7 +53,13 @@ public class MemberService {
 		
 		
 	//유저 임시 로그인
-			public MemberDto login(String id) {
-				return manager.login(id);
-			}
+		public MemberDto login(String id) {
+			return manager.login(id);
+		}
+			
+	//admin 회원 정보 수정
+	public boolean profileedit(String id, String pw, String name, String email, String phone) {
+		return manager.profileedit(id, pw, name, email, phone);
+		}		
+			
 }

@@ -9,7 +9,10 @@ request.setCharacterEncoding("utf-8");
     
 <%
 
-MemberDto dto = (MemberDto)request.getAttribute("dto");
+MemberDto mem = (MemberDto)request.getAttribute("dto");
+session.setAttribute("login", mem);
+session.setMaxInactiveInterval(30*60);
+
 Object ologin = session.getAttribute("login");
 String id = request.getParameter("id");
 
@@ -86,27 +89,27 @@ public String whour(int Auth){
       <tbody>
         <tr>
           <td>ID</td>
-          <td><%=dto.getId() %></td> 
+          <td><%=mem.getId() %></td> 
         </tr>
         <tr>
           <td>비밀번호</td>
-          <td><%=  pw2change(dto.getPwd()) %></td> <!-- 1일시 일반, 2일시 정지회원 -->
+          <td><%=  pw2change(mem.getPwd()) %></td> <!-- 1일시 일반, 2일시 정지회원 -->
         </tr>
         <tr>
           <td>이름</td>
-          <td>${dto.name }</td>
+          <td><%=mem.getName()%></td>
         </tr>
         <tr>
           <td>이메일</td>
-          <td><%=dto.getEmail() %></td>
+          <td><%=mem.getEmail() %></td>
         </tr>
         <tr>
           <td>전화번호</td>
-          <td><%=dto.getPhone()%></td>
+          <td><%=mem.getPhone()%></td>
         </tr>
         <tr>
           <td>권한</td>
-          <td><%=whour(dto.getAuth()) %></td> <!-- 1일시 일반, 2일시 관리자, 3일시 운영자 -->
+          <td><%=whour(mem.getAuth()) %></td> <!-- 1일시 일반, 2일시 관리자, 3일시 운영자 -->
         </tr>
        
       </tbody>
