@@ -44,6 +44,9 @@ String keyword = request.getParameter("keyword");
 			// 페이지 실행되자마자, 검색된 맵 불러오기.
 			updateMap(1);
 			
+			// 체크아웃 날짜칸 선택못하게
+			$("#date2").attr("disabled", true);
+			
 			// 지도이미지 바로 아래 검색버튼 클릭하면 Map 실시간 업데이트
 			$("#btn_map").click(function () {
 				updateMap(2);
@@ -103,7 +106,8 @@ String keyword = request.getParameter("keyword");
 						for(var i = 0; i< result.length; i++){
 							addList(result[i][0].value, result[i][1].value, result[i][2].value,
 									result[i][3].value, result[i][4].value, result[i][5].value,
-									result[i][6].value, result[i][7].value, result[i][8].value);
+									result[i][6].value, result[i][7].value, result[i][8].value,
+									result[i][9].value);
 						}
 					},
 					error : function(){
@@ -115,12 +119,14 @@ String keyword = request.getParameter("keyword");
 			
 			
 			// json으로 잘라온 리스트를 실제로 태그와 함께 동적생성하며 ul에 뿌려주는 함수
-			function addList(SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT) {
+			function addList(SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT, IMAGE) {
 				
 				// 0 == 노삭제
 				if(DEL == 0){
 					
-					$("#searchHotelList").append('<li>'+
+					$("#searchHotelList").append(
+							'<img alt="" src="'+ IMAGE +'" align="right" hspace="10" width="80px" height="70px">' +
+							'<li>'+
 							'<h3>' + HOTELNAME +
 							'</h3>' +
 							'<p>'+ 
@@ -161,7 +167,9 @@ String keyword = request.getParameter("keyword");
 			
 			
 			// 달력 만들기(체크인)
+			// 오늘 이후 날짜만 선택 ==> minDate : 0
 			$("#date1").datepicker({
+				minDate : 0,
 				dateFormat:"yy/mm/dd",
 				dayNamesMin:["일", "월", "화", "수", "목", "금", "토"],	// 배열을 잡은것.
 				monthNames:["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
@@ -179,6 +187,16 @@ String keyword = request.getParameter("keyword");
 					
 					var week = new Array("일", "월", "화", "수", "목", "금", "토");
 					$("#date1").append( week[ date.getDay() ] );
+				},
+				onClose : function (selectedDate) {
+					if( selectedDate != "" ) {
+						// 체크아웃(퇴실일)을 체크인(입실일)의 다음날부터 가능하게
+						var curDate = $("#date1").datepicker("getDate");  // Date return
+						curDate.setDate( curDate.getDate() + 1 );
+						$("#date2").datepicker("option", "minDate", curDate);
+						// 체크아웃 태그 활성화
+						$("#date2").attr("disabled", false);
+					}
 				}
 			});
 			
@@ -201,7 +219,14 @@ String keyword = request.getParameter("keyword");
 					
 					var week = new Array("일", "월", "화", "수", "목", "금", "토");
 					$("#date2").append( week[ date.getDay() ] );
-				}
+				},
+				onClose : function( selectedDate ) {  // 날짜를 설정 후 달력이 닫힐 때 실행
+                    if( selectedDate != "" ) {
+                        // xxx의 maxDate를 yyy의 날짜로 설정
+                        $("#date1").datepicker("option", "maxDate", selectedDate);
+                    }
+                }
+
 			});
 			
 			
@@ -243,6 +268,7 @@ String keyword = request.getParameter("keyword");
 		
 	</head>
 	<body class="homepage">
+	
 		<!-- Header(로고) -->
 		<div id="header-wrapper">
 		
@@ -290,10 +316,10 @@ String keyword = request.getParameter("keyword");
 							<section>
 								<h2>호텔 검색 결과</h2>
 								<ul class="style4" id="searchHotelList">
-									<li class="first">
+									<!-- <li class="first">
 										<h3>Mauris vulputate dolor sit amet</h3>
 										<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum. </a></p>
-									</li>
+									</li> -->
 									<!-- 검색된 호텔 리스트가 addList 함수를 통해 이 부분에 append됨. -->
 								</ul>
 								</section>

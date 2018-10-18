@@ -98,7 +98,7 @@ public class HotelControl extends HttpServlet {
 		
 		for (int i = 0; i < searchList.size(); i++) {
 			System.out.println("호텔리스트 json으로 변경중");
-			// SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT
+			// SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT, IMAGE
 			result.append("[{\"value\": \"" + searchList.get(i).getSeq() + "\"},");
 			result.append("{\"value\": \"" + searchList.get(i).getId() + "\"},");
 			result.append("{\"value\": \"" + searchList.get(i).getHotelname() + "\"},");
@@ -107,7 +107,8 @@ public class HotelControl extends HttpServlet {
 			result.append("{\"value\": \"" + searchList.get(i).getPrice() + "\"},");
 			result.append("{\"value\": \"" + searchList.get(i).getHotelphone() + "\"},");
 			result.append("{\"value\": \"" + searchList.get(i).getDel() + "\"},");
-			result.append("{\"value\": \"" + searchList.get(i).getReadcount() + "\"}]");
+			result.append("{\"value\": \"" + searchList.get(i).getReadcount() + "\"},");
+			result.append("{\"value\": \"" + searchList.get(i).getImage() + "\"}]");
 			if(i != searchList.size() -1) result.append(",");
 		}
 		result.append("]}");

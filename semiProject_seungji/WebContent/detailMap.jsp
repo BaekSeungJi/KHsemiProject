@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%
-String address = "경기도 부천시 오정구 내동 333-3";
+String address = request.getParameter("address");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,7 +19,7 @@ String address = "경기도 부천시 오정구 내동 333-3";
 
 <script>
 $(document).ready(function () {
-	
+	// 호텔 디테일에서 '오시는 길' 탭 누르면 나오는 호텔약도
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {

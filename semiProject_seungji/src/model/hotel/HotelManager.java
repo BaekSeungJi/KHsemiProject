@@ -18,7 +18,7 @@ public class HotelManager implements iHotelManager {
 	public List<HotelDto> getSearchHotelList(String place, String price, String people, String date1, String date2) {
 		
 		
-		String sql = " SELECT SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT "
+		String sql = " SELECT SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT, IMAGE "
 				+ " FROM HOTEL "
 				+ " WHERE REGION LIKE '%'||?||'%' "
 				+ " AND PRICE >=? "
@@ -63,8 +63,8 @@ public class HotelManager implements iHotelManager {
 						rs.getString(i++),
 						rs.getInt(i++),
 						rs.getInt(i++),
-						""
-						);
+						"",
+						rs.getString(i++));
 				
 				list.add(d);
 				

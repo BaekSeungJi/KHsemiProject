@@ -28,6 +28,8 @@ String readcount = request.getParameter("readcount");
 <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=916ea874e228791dbf525372ff0244e5&libraries=services"></script>
+
 <script type="text/javascript">
 	$(document).ready(function () {
 		
@@ -35,6 +37,8 @@ String readcount = request.getParameter("readcount");
 		getDetail();
 		// 리뷰 div("우리 호텔을 다녀간 사람들의 리뷰를 확인하세요!")안보이게
 		$("#reviewDiv").hide();
+		// 주소 div("저희 호텔은 이곳에 위치해 있습니다!") 안보이게
+		$("#addressDiv").hide();
 		
 		// [1] '호텔정보' 탭
 		$("#btn_detail").click(function () {
@@ -96,11 +100,14 @@ String readcount = request.getParameter("readcount");
 		$(document).on("click", "#btn_review", function () {
 			//alert("리뷰내놔");
 			
-			// 기존 중간영역 콘텐츠(호텔정보) 비우기
+			// 기존 중간영역 콘텐츠(호텔정보/오시는길) 비우기
 			//$("#centerContents").empty();
 			$("#detailDiv").remove();
 			$("#hotel_description").remove();
 			$(".tbox").remove();
+			
+			$("#addressDiv").hide();
+			$("#addressMapHere").hide();
 			
 			// 리뷰탭 선택 표시(클래스 삭제/클래스 추가)
 			$("#tap1").removeAttr("class");
@@ -134,9 +141,22 @@ String readcount = request.getParameter("readcount");
 					var parsed = JSON.parse(data);
 					
 					$.each(parsed, function (i, item) { // i는 iterator, item은 각 아이템
-	                    $("#centerContents").append(
-	                    		i + " num : " + item.num + " title : " + item.title + 
-	                    		" CONTENT = " + item.content + "<br>");
+						// NUM, ID, TITLE, CONTENT, SCORE, DEL, REGDATE를 가져옴
+						
+						if(item.del == 0){
+		                    $("#centerContents").append(
+		                    		"<div class='addReviewList' align='center'> 번호 : " + (i+1) + "<br>" +
+		                    		" 작성자 : " + item.id + "<br>" +
+		                    		" 제목 : " + item.title + "<br>" +
+		                    		" 내용 = " + item.content + "<br>" +
+		                    		" 별점 = " + item.score + "<br>" +
+		                    		" 등록일 = " + item.regdate + "</div><br><br>");
+						}else if(item.del == 1){
+							$("#centerContents").append(
+		                    		"<div class='addReviewList' align='center'> 번호 : " + (i+1) + "<br>" +
+		                    		" 작성자 : " + item.id + "<br>" +
+		                    		" 해당 후기는 관리자에 의해 삭제됐습니다." + "</div><br><br>");
+						}
 	                });
 					
 				},
@@ -146,56 +166,38 @@ String readcount = request.getParameter("readcount");
 			});
 		};
 		
-		// json으로 잘라온 리스트를 실제로 태그와 함께 동적생성하며 ul에 뿌려주는 함수
-		function addReviewList(NUM, ID, TITLE, CONTENT, SCORE, DEL, REGDATE) {
-			alert(NUM);
-			alert(ID);
-			alert(TITLE);
-			alert(CONTENT);
-			alert(SCORE);
-			alert(DEL);
-			alert(REGDATE);
-			
-			// 0 == 노삭제
-			if(DEL == 0){
-				alert("삭제되지 않은 리뷰");
-				$("#centerContents").append(
-						'<div class="tbox">' + 
-						'<div class="title">' + 
-							'<h2>리뷰작성자 아이디</h2>' + 
-						'</div>' + 
-						'<p>' + ID + ' 님</p>'
-					);
-			// 1 == 삭제 
-			}else if(DEL == 1){
-				$("#centerContents").append('<li>'+
-						'<h3>관리자에 의해 삭제된 호텔입니다.</h3>' +
-						'<p>'+ 
-						'<a href="#">죄송합니다. 해당 호텔은 이용하실 수 없습니다. 더 훌륭한 호텔들이 당신을 기다리고 있습니다.</a>' + 
-						'</p>' + 
-						'</li>'
-				);
-			}
-		};
 		
 		// [3] '오시는 길' 탭
 		$("#btn_place").click(function () {
 			alert("길내놔");
 			
-			// 기존 중간영역 콘텐츠(호텔정보) 비우기
-			$("#detailDiv").remove();
+			// 기존 중간영역 콘텐츠(호텔정보/리뷰정보) 비우기
+			$("#detailDiv").hide();
 			$("#hotel_description").remove();
 			$(".tbox").remove();
 			
-			$("#reviewDiv").remove();
-			$("#centerContents").empty();
+			$("#reviewDiv").hide();
+			$(".addReviewList").remove();
+			//$("#centerContents").empty();
 			
 			// 리뷰탭 선택 표시(클래스 삭제/클래스 추가)
 			$("#tap1").removeAttr("class");
 			$("#tap2").removeAttr("class");
 			$("#tap3").attr("class", "active");
 			
+			// 주소 div("저희 호텔은 이곳에 위치해 있습니다!") 보이게
+			$("#addressDiv").show();
 			
+			// 맵 영역 보이게
+			$("#addressMapHere").show();
+			
+			// 맵 깔아주기
+			getAddressMap();
+			
+		});
+		
+		
+		function getAddressMap() {
 			var address = "<%=region %>";
 			
 			$.ajax({
@@ -204,13 +206,13 @@ String readcount = request.getParameter("readcount");
 				data : "address="+address,
 				success : function(data){
 					alert("통신성공!");
-					$("#centerContents").html(data);
+					$("#addressMapHere").html(data);
 				},
 				error : function(){
 					alert("통신실패!");
 				}
 			});
-		});
+		}
 	});
 </script>
 </head>
@@ -249,6 +251,7 @@ String readcount = request.getParameter("readcount");
 		<div><span id="hotel_description" class="arrow-down"></span></div>
 		<!-- ajax를 통해 이부분에 호텔정보가 출력됨. -->
 
+<!-- '사용자 후기' 탭 상단노출 -->
 <div id="reviewDiv">
 	<div class="title">
 	<div id="welcome" class="container">
@@ -257,6 +260,18 @@ String readcount = request.getParameter("readcount");
 	</div>
 	<div id="three-column" class="container">
 	</div>
+</div>
+
+<!-- '오시는 길' 탭 상단노출 -->
+<div id="addressDiv">
+	<div class="title">
+	<div id="welcome" class="container">
+	  <h2>저희 호텔은 이곳에 위치해 있습니다!</h2>
+		</div>
+	</div>
+	<div id="three-column" class="container">
+	</div>
+	<div id="addressMapHere"></div>
 </div>
 	
 	</div>
@@ -278,7 +293,7 @@ String readcount = request.getParameter("readcount");
 		</div>
 		<div class="fbox1">
 			<span class="icon icon-envelope"></span>
-			<span>businessname@business.com</span>	<!-- 여기에 관리자와 채팅기능 추가하면 좋을듯. -->
+			<span>businessname@business.com</span>	<!-- 관리자 이메일을 받아와야 하는데... -->
 		</div>
 	</div>
 </div>
