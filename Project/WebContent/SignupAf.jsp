@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="model.member.MemberService"%>
 <%@page import="model.member.MemberManager"%>
 <%@page import="model.member.iMemberManager"%>
@@ -28,6 +29,7 @@ String email = request.getParameter("email");
 String phone = request.getParameter("phone");
 int blacklist = Integer.parseInt("0");
 int auth = Integer.parseInt("3");
+
 
 System.out.println(id);
 /*

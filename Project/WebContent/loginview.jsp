@@ -39,11 +39,11 @@
 	<form action="MemberControl">
 
 			<span class="fontawesome-user"></span>
-			<input type="text"  value="Username" onBlur="if(this.value=='')this.value='Username'" 
-			onFocus="if(this.value=='Username')this.value='' "> 
+			<input type="text"  id = "id" name = "id"value="User_ID" onBlur="if(this.value=='')this.value='User_Id'" 
+			onFocus="if(this.value=='User_ID')this.value='' "> 
 		
 			<span class="fontawesome-lock"></span>
-			<input type="password"  value="Password" onBlur="if(this.value=='')this.value='Password'" 
+			<input type="password" id = "pwd" name = "pwd" value="Password" onBlur="if(this.value=='')this.value='Password'" 
 			onFocus="if(this.value=='Password')this.value='' ">
 			
 			

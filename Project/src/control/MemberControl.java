@@ -60,9 +60,17 @@ public class MemberControl extends HttpServlet {
 			int blacklist = Integer.parseInt("0");
 			int auth = Integer.parseInt("3");
 			
-			MemberDto dto = new MemberDto(id, pwd, name, email, phone, 0, 3);
+			req.setAttribute("id", id);
+			req.setAttribute("pwd", pwd);
+			req.setAttribute("name", name);
+			req.setAttribute("email", email);
+			req.setAttribute("phone", phone);
+			req.setAttribute("blacklist", 0);
+			req.setAttribute("auth", 3);
+			
+		//	MemberDto dto = new MemberDto(id, pwd, name, email, phone, 0, 3);
 						
-			req.setAttribute("dto", dto);//여기 하는중
+			//req.setAttribute("dto", dto);//여기 하는중
 			
 			dispatch("SignupAf.jsp", req, resp);
 	
@@ -70,9 +78,22 @@ public class MemberControl extends HttpServlet {
 		else if(command.equals("Login")) {		//로그인
 			String id = req.getParameter("id");
 			String pwd = req.getParameter("pwd");
+			String name = req.getParameter("name");
+			String email = req.getParameter("email");
+			String phone = req.getParameter("phone");
+			int blacklist = Integer.parseInt("0");
+			int auth = Integer.parseInt("3");
+									
+			//MemberDto dto = new MemberDto(id, pwd, name, email, phone, 0, 3);
+			//req.setAttribute("dto", dto);
 			
 			req.setAttribute("id", id);
 			req.setAttribute("pwd", pwd);
+			req.setAttribute("name", name);
+			req.setAttribute("email", email);
+			req.setAttribute("phone", phone);
+			req.setAttribute("blacklist", 0);
+			req.setAttribute("auth", 3);
 			dispatch("login.jsp", req, resp);	
 		
 			

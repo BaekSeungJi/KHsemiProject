@@ -7,10 +7,14 @@
 
    <%
 String id = request.getParameter("id");
-   System.out.println("확인 id ="+id);
+//System.out.println("login확인 id ="+id);
 String pwd = request.getParameter("pwd");
-int blacklist =0;
-int auth = 0;
+String name = request.getParameter("name");
+String email = request.getParameter("email");
+String phone = request.getParameter("phone");
+int blacklist = Integer.parseInt("0");
+int auth = Integer.parseInt("3");
+
 %>
 <% 
 MemberService dao = MemberService.getInstance();
@@ -26,15 +30,10 @@ MemberDto mem = dao.manager.login(new MemberDto(id, pwd, null, null, null, black
 <title>login.jsp</title>
 </head>
 <body>
-<!-- 
-DB 접속
-bbslist.jsp
- -->
+
 <%
 System.out.println("확인 mem ="+mem);
 %><% 
-
-
 
 %>
 <%
