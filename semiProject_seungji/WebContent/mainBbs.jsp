@@ -234,7 +234,7 @@ String keyword = request.getParameter("keyword");
 			var currentPosition = parseInt($("#sidebox").css("top"));
 			$(window).scroll(function() { 
 				var position = $(window).scrollTop(); 
-				console.log("스크롤 위치 = "+position);
+				//console.log("스크롤 위치 = "+position);
 				$("#sidebox").stop().animate({"top":position+currentPosition+"px"},500); 
 				
 				if(position > 370){
