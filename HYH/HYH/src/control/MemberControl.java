@@ -33,10 +33,10 @@ public class MemberControl extends HttpServlet {
 		
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/html; charset=UTF-8");
+				
+		String command = req.getParameter("command");
 		
-		req.getParameter("command");
-		
-		String command =req.getParameter("command");
+		System.out.println("command:" + command);
 		
 		if(command.equals("mypage")) {
 			String id = req.getParameter("id");

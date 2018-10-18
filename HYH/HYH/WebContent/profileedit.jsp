@@ -70,7 +70,8 @@ public String whour(int Auth){
 </head>
 <body>
 
-<form action="profileeditaf.jsp">
+<form action="MemberControl">
+	<input type="hidden" name="command" value="profileeditaf">
 <section>
   <!--for demo wrap-->
   <h1>나의 프로필</h1>
@@ -89,27 +90,27 @@ public String whour(int Auth){
       <tbody>
         <tr>
           <td>ID</td>
-          <td><input type="text" id="id" readonly="readonly" value="<%= id%>"></td> 
+          <td><input type="text" id="id" name="id" readonly="readonly" value="<%= id%>"></td> 
         </tr>
         <tr>
           <td>비밀번호</td>
-          <td><input type="text" id="pwd" value="<%= pw2change(dto.getPwd())%>"></td> <!-- 1일시 일반, 2일시 정지회원 -->
+          <td><input type="text" id="pwd" name="pwd" value="<%= pw2change(dto.getPwd())%>"></td> <!-- 1일시 일반, 2일시 정지회원 -->
         </tr>
         <tr>
           <td>이름</td>
-          <td><input type="text" id="name" value="<%=dto.getName()%>"> </td>
+          <td><input type="text" id="name" name="name" value="<%=dto.getName()%>"> </td>
         </tr>
         <tr>
           <td>이메일</td>
-          <td><input type="text" id="email" value="<%=dto.getEmail()%>"> </td>
+          <td><input type="text" id="email" name="email" value="<%=dto.getEmail()%>"> </td>
         </tr>
         <tr>
           <td>전화번호</td>
-          <td><input type="text" id="phone" value="<%=dto.getPhone()%>"> </td>
+          <td><input type="text" id="phone" name="phone" value="<%=dto.getPhone()%>"> </td>
         </tr>
         <tr>
         <td>권한</td>
-        <td><input type="text" id="auth" readonly="readonly" value="<%=whour(dto.getAuth()) %>"></td> 
+        <td><input type="text" id="auth" name="auth" readonly="readonly" value="<%=whour(dto.getAuth()) %>"></td> 
          </tr>
        
       </tbody>

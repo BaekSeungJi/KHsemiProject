@@ -58,8 +58,8 @@ public class MemberService {
 		}
 			
 	//admin 회원 정보 수정
-	public boolean profileedit(String id, String pw, String name, String email, String phone) {
-		return manager.profileedit(id, pw, name, email, phone);
+	public boolean profileedit(String id, String pwd, String name, String email, String phone) {
+		return manager.profileedit(id, pwd, name, email, phone);
 		}		
 			
 }
