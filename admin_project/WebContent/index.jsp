@@ -105,7 +105,7 @@ Mdto = (MonthlysalesDto)request.getAttribute("Mdto");
 				</a>
 			</li>
 			<li><a href="HotelControl?command=ad_chart&hotelname=<%=hotelname%>" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a></li>
-			<li><a href="ad_notice.jsp" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a></li>
+			<li><a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a></li>
 			
 		</ul>
 	</nav>
@@ -119,7 +119,7 @@ Mdto = (MonthlysalesDto)request.getAttribute("Mdto");
 			<div class="container-fluid">
 			
 				<header class="rad-page-title">
-					<span><!--  <%=mem.getName() %>--> 님 환영합니다</span>
+					<span> <%=mem.getName() %> 님 환영합니다</span>
 					<small class="md-txt"><%=hotelname %> <a href="https://www.google.com/maps/place/3720+Emerald+St,+Torrance,+CA+90503/@33.8403836,-118.3543828,17z/data=!4m18!1m15!4m14!1m6!1m2!1s0x80c2b4d407f58b11:0xdedca55964c89054!2s3720+Emerald+St,+Torrance,+CA+90503!2m2!1d-118.3520761!2d33.8403792!1m6!1m2!1s0x80c2b4d407f58b11:0xdedca55964c89054!2s3720+Emerald+St,+Torrance,+CA+90503!2m2!1d-118.3520761!2d33.8403792!3m1!1s0x80c2b4d407f58b11:0xdedca55964c89054" target="_blank"><i class="fa fa-map-marker color-main"></i> 서울</a></small>					
 				</header>
 				

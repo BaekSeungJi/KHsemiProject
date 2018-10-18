@@ -1,3 +1,5 @@
+<%@page import="dto.PdsfileDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
@@ -22,6 +24,10 @@
 </head>
 
 <body>
+<%
+List<PdsfileDto> list = (List<PdsfileDto>)request.getAttribute("list");
+%>  
+
 
   <section>
 	<header>
@@ -78,8 +84,8 @@
 </tr>
 
 <%
-for(int i = 0;i < 5; i++){
-//	PdsDto pds = list.get(i);
+for(int i = 0;i < list.size(); i++){
+	PdsfileDto pds = list.get(i);
 	String bgcolor = "";
 	if(i % 2 == 0){
 		bgcolor = "#ddeebb";
@@ -87,21 +93,21 @@ for(int i = 0;i < 5; i++){
 		bgcolor = "#ddddcc";
 	}
 	%>
-	<tr  align="center" height="5">
+	<tr  bgcolor="<%=bgcolor %> align="center" height="5">
 		<td><%=i + 1 %></td>
-		<td>id</td>
+		<td><%=pds.getId() %></td>
 		<td align="left">
 			<a href="pdsdetail.jsp?seq=1">
-				title
+					<%=pds.getTitle() %>
 			</a>
 		</td>
 		<td>
 			<input type="button" name="btnDown" value="파일"
 				onclick="location.href='filedown?filename=파일이름&seq=2'">
 		</td>
-		<td>0</td>
-		<td>0</td>
-		<td>20181002</td>	
+		<td><%=pds.getReadcount() %></td>
+		<td><%=pds.getDowncount() %></td>
+		<td><%=pds.getRegdate() %></td>	
 	</tr>
 	<%
 }
@@ -109,7 +115,7 @@ for(int i = 0;i < 5; i++){
 </table>
 </div>
 
-<a href="pdswrite.jsp">자료 올리기</a>
+<a href="ad_notice_write.jsp">자료 올리기</a>
 <br><br>
 
 <a href="bbslist.jsp">Home</a>

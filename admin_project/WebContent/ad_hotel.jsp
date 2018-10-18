@@ -34,7 +34,7 @@
 ._tablee{
 background-color: #FFFAFA;
   display:inline-block;
-float: left;
+
 
 }
 
@@ -107,7 +107,7 @@ List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 								
 				</header>
 
-<div>
+<div align="center">
 
 <table class="_tablee">
 <col width="100"><col width="100"><col width="100"><col width="100">
@@ -125,24 +125,24 @@ int month = (int)request.getAttribute("month");
 Calendar cal = (Calendar)request.getAttribute("cal");
 			
 			// <<
-			String pp = String.format("<a href='%s?year=%d&month=%d'>"
+			String pp = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
 										+ "<img src='image/left.gif'></a>", 
-											"calendar.jsp", year-1, month);
+											"HotelControl","ad_hotel", year-1, month,hotelname);
 
 			// <
-			String p = String.format("<a href='%s?year=%d&month=%d'>"
+			String p = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
 										+ "<img src='image/prec.gif'></a>", 
-											"calendar.jsp", year, month-1);
+											"HotelControl","ad_hotel", year, month-1,hotelname,"ad_hotel");
 
 			// >
-			String n = String.format("<a href='%s?year=%d&month=%d'>"
+			String n = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
 										+ "<img src='image/next.gif'></a>", 
-											"calendar.jsp", year, month+1);
+											"HotelControl","ad_hotel", year, month+1,hotelname,"ad_hotel");
 
 			// >>
-			String nn = String.format("<a href='%s?year=%d&month=%d'>"
+			String nn = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
 										+ "<img src='image/last.gif'></a>", 
-										"calendar.jsp", year+1, month);
+										"HotelControl","ad_hotel", year+1, month,hotelname,"ad_hotel");
 
 
 %>
@@ -182,7 +182,7 @@ for(int i = 1;i < dayOfWeek; i++){
 int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 for(int i = 1;i <= lastDay; i++){
 	%>
-	<td><%= util.callist(year, month, i) %>
+	<td><%= util.callist(year, month, i,hotelname) %>
 	<%=util.makeTable(year, month, i, list) %>
 	</td>
 	<%
@@ -211,13 +211,6 @@ for(int i = 0;i < (7 - (dayOfWeek + lastDay - 1) % 7 ) % 7; i++){
 </div>
 	
 <div>
-
-<table style=" float:left;" >
-<tr>
-<td>test</td>
-</tr>
-
-</table>
 
 </div>
 					

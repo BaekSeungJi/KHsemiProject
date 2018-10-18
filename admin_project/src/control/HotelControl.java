@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class HotelControl extends HttpServlet {
 		
 		
 		String command =req.getParameter("command");
-		
+		PrintWriter out = resp.getWriter();
 		
 
 		// admin 호텔 정보 수정
@@ -65,11 +66,12 @@ public class HotelControl extends HttpServlet {
 			boolean b = service.ad_HotelUpdate(hotelname, DESCRIPTION, MAXPEOPLE, PRICE, HOTELPHONE);
 			
 			if(b == true) {
-				JOptionPane.showMessageDialog(null, "수정 완료되었습니다");
-				resp.sendRedirect("ad_hotel.jsp");
+				out.println("alert('수정 완료되었습니다');");
+			
+				resp.sendRedirect("HotelControl?command=ad_hotel&hotelname="+hotelname);
 			}else {
-				JOptionPane.showMessageDialog(null,"수정 실패하였습니다");
-				resp.sendRedirect("ad_hotel.jsp");
+				out.println("alert('수정 실패하였습니다');");
+				resp.sendRedirect("HotelControl?command=ad_hotel&hotelname="+hotelname);
 			}
 			
 		}
@@ -159,6 +161,15 @@ public class HotelControl extends HttpServlet {
 			
 			dispatch("ad_chart.jsp", req, resp);
 			
+		}
+		
+		else if (command.equals("ad_caldetail")) {	
+			String hotelname= req.getParameter("hotelname"); 
+			
+			String year= req.getParameter("year"); 
+			String month= req.getParameter("month"); 
+			String day= req.getParameter("day"); 
+			dispatch("ad_caldetail.jsp", req, resp);
 		}
 	}
 	

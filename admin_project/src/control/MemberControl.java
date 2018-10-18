@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JOptionPane;
+
+
 
 import dto.MemberDto;
 import dto.MonthlysalesDto;
@@ -128,12 +131,15 @@ public class MemberControl extends HttpServlet {
 			MemberService service = MemberService.getInstance();
 			
 			boolean b = service.ad_MemberUpdate(id, pw, name, email, phone);
-			
+			PrintWriter out = resp.getWriter();
 			if(b == true) {
-				JOptionPane.showMessageDialog(null, "수정 완료되었습니다");
+			
+		
+				out.println("alert('수정 완료되었습니다');");
+				
 				resp.sendRedirect("MemberControl?command=ad_admin&id="+id);
 			}else {
-				JOptionPane.showMessageDialog(null,"수정 실패하였습니다");
+				out.println("alert('수정 실패하였습니다');");
 				resp.sendRedirect("MemberControl?command=ad_admin&id="+id);
 			}
 			

@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +34,7 @@ public class ReviewControl extends HttpServlet {
 		String command =req.getParameter("command");
 		
 		
-		
+		PrintWriter out = resp.getWriter();
 		// 관리자_리뷰삭제
 		if(command.equals("ad_reviewDelete")) {
 			
@@ -46,10 +47,10 @@ public class ReviewControl extends HttpServlet {
 			boolean b = service.reviewdelete(seq);
 	
 			if(b == true) {
-				JOptionPane.showMessageDialog(null, "삭제 완료되었습니다");
+				out.println("alert('삭제 완료되었습니다');");
 				resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
 			}else {
-				JOptionPane.showMessageDialog(null,"삭제 실패하였습니다");
+				out.println("alert('삭제 실패하였습니다');");
 				resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
 			}
 		}

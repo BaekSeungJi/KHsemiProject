@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -34,7 +35,7 @@ public class ReserveControl extends HttpServlet {
 		
 		String command =req.getParameter("command");
 		
-		
+		PrintWriter out = resp.getWriter();
 		
 		// 관리자_리뷰삭제
 		if(command.equals("ad_reserveDelete")) {
@@ -48,10 +49,12 @@ public class ReserveControl extends HttpServlet {
 			boolean b = service.ad_reservedelete(seq);
 			
 			if(b == true) {
-				JOptionPane.showMessageDialog(null, "삭제 완료되었습니다");
+			
+				out.println("alert('삭제 완료되었습니다');");
 				resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
 			}else {
-				JOptionPane.showMessageDialog(null,"삭제 실패하였습니다");
+		
+				out.println("alert('삭제 실패하였습니다');");
 				resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
 			}
 		}
@@ -70,10 +73,10 @@ public class ReserveControl extends HttpServlet {
 			boolean b = service.ad_reserveUpdate(seq, regdate, request);
 			
 			if(b == true) {
-				JOptionPane.showMessageDialog(null, "수정 완료되었습니다");
+				out.println("alert('수정 완료되었습니다');");
 				resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
 			}else {
-				JOptionPane.showMessageDialog(null,"수정 실패하였습니다");
+				out.println("alert('수정 실패하였습니다');");
 				resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
 			}
 		}
