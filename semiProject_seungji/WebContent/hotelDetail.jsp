@@ -14,13 +14,6 @@ String price = request.getParameter("price");
 String hotelphone = request.getParameter("hotelphone");
 String readcount = request.getParameter("readcount");
 
-List<ReviewDto> reviewList = (List<ReviewDto>)request.getAttribute("reviewList");
-if(reviewList != null ){
-	for(int i=0; i<reviewList.size(); i++){
-		System.out.println("타이틀 = " + reviewList.get(i).getTitle());
-		System.out.println("내용 = " + reviewList.get(i).getContent());
-	}
-}
 
 %>
 
@@ -111,6 +104,7 @@ if(reviewList != null ){
 			
 			// 리뷰탭 선택 표시(클래스 삭제/클래스 추가)
 			$("#tap1").removeAttr("class");
+			$("#tap3").removeAttr("class");
 			$("#tap2").attr("class", "active");
 			
 			// 리뷰 내용으로 다시 채우기
@@ -184,8 +178,38 @@ if(reviewList != null ){
 			}
 		};
 		
+		// [3] '오시는 길' 탭
 		$("#btn_place").click(function () {
 			alert("길내놔");
+			
+			// 기존 중간영역 콘텐츠(호텔정보) 비우기
+			$("#detailDiv").remove();
+			$("#hotel_description").remove();
+			$(".tbox").remove();
+			
+			$("#reviewDiv").remove();
+			$("#centerContents").empty();
+			
+			// 리뷰탭 선택 표시(클래스 삭제/클래스 추가)
+			$("#tap1").removeAttr("class");
+			$("#tap2").removeAttr("class");
+			$("#tap3").attr("class", "active");
+			
+			
+			var address = "<%=region %>";
+			
+			$.ajax({
+				url : "detailMap.jsp",
+				type : "get",
+				data : "address="+address,
+				success : function(data){
+					alert("통신성공!");
+					$("#centerContents").html(data);
+				},
+				error : function(){
+					alert("통신실패!");
+				}
+			});
 		});
 	});
 </script>

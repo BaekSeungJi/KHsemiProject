@@ -42,9 +42,6 @@ public class ReviewControl extends HttpServlet {
 			ReviewService service = ReviewService.getInstance();
 			List<ReviewDto> reviewList = service.getReviewList(hotelname);
 			
-			/*req.setAttribute("reviewList", reviewList);
-			dispatch("hotelDetail.jsp", req, resp);*/
-			
 			// 밑에 따로 만든 getSearchList 함수를 실행한 결과를 write로 ajax에 보낸다.(success에 data부분으로 들어갈 것.)
 			resp.getWriter().write(reviewToJson(hotelname));
 			resp.getWriter().flush();
