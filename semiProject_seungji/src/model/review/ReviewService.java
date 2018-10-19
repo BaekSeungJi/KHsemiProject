@@ -25,5 +25,10 @@ public class ReviewService {
 	public List<ReviewDto> getReviewList(String hotelname){
 		return manager.getReviewList(hotelname);
 	}
+	
+	// 내가 쓴 리뷰 추가하기
+	public void addReview(ReviewDto inputDto) {
+		manager.addReview(inputDto);
+	}
 
 }
