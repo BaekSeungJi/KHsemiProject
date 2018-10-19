@@ -72,8 +72,52 @@ public class ReviewManager implements iReviewManager {
 			DBClose.close(psmt, conn, rs);
 		}
 		
-		
 		return list;
+	}
+	
+	
+	
+	@Override
+	public void addReview(ReviewDto inputDto) {
+		// 리뷰페이지 - 리뷰쓴거 등록
+		
+		String sql = " INSERT INTO REVIEW "
+				+ " VALUES( ?, ?, ?, ?, ?, ?, 0, 0, SYSDATE) ";
+		// ? 순서대로 NUM, ID, HOTELNAME, TITLE, CONTENT, SCORE
+		// 0, 0, SYSDATE는 순서대로 DEL, READCOUNT, REGDATE
+				
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 addReview Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 addReview Success");
+			
+			// ? 순서대로 NUM, ID, HOTELNAME, TITLE, CONTENT, SCORE
+			psmt.setInt(1, inputDto.getNum());
+			psmt.setString(2, inputDto.getId());
+			psmt.setString(3, inputDto.getHotelname());
+			psmt.setString(4, inputDto.getTitle());
+			psmt.setString(5, inputDto.getContent());
+			psmt.setInt(6, inputDto.getScore());
+			System.out.println("3/6 addReview Success");
+			
+			psmt.executeQuery();
+			System.out.println("4/6 addReview Success");
+			
+			
+		} catch(Exception e){
+			System.out.println("addReview Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		
 	}
 
 

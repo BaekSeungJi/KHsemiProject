@@ -45,6 +45,29 @@ public class ReviewControl extends HttpServlet {
 			// 밑에 따로 만든 getSearchList 함수를 실행한 결과를 write로 ajax에 보낸다.(success에 data부분으로 들어갈 것.)
 			resp.getWriter().write(reviewToJson(hotelname));
 			resp.getWriter().flush();
+			
+			
+		}else if(command.equals("addReview")) {
+			System.out.println("리뷰 컨트롤러 -> addReview 들어옴");
+			
+			// review.jsp 페이지에서 넘겨받은 값.
+			String sseq = req.getParameter("seq");
+			int seq = Integer.parseInt(sseq);
+			String name = req.getParameter("name");
+			String hotel = req.getParameter("hotel");
+			String title = req.getParameter("title");
+			String content = req.getParameter("message");
+			String sscore = req.getParameter("score");
+			int score = Integer.parseInt(sscore);
+			
+			
+			// dto로 묶어서
+			ReviewDto inputDto = new ReviewDto(seq, name, hotel, title, content, score, 0, 0, "");
+			
+			// 리뷰 DB에 추가
+			ReviewService service = ReviewService.getInstance();
+			service.addReview(inputDto);
+			
 		}
 		
 	}
