@@ -72,9 +72,8 @@ public class ReviewControl extends HttpServlet {
 			}
 			
 			 result.append("]");
-			//result.append("]");
-			
-			System.out.println(result.toString());
+			 
+			System.out.println("파싱한 리뷰데이터 : " + result.toString());
 			
 			return result.toString();
 			

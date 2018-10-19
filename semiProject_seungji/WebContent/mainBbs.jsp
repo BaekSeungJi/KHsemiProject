@@ -79,6 +79,10 @@ String keyword = request.getParameter("keyword");
 			
 			// 조건에 맞는 호텔목록 불러오기 (검색옵션 -> search more 버튼클릭) 
 			$("#btn_search").click(function () {
+				
+				$("#hotelImage").empty();
+				$("#searchHotelList").empty();
+				
 				var place = $("#searchText").val();
 				var price = $("#opa").text().replace(/[^0-9\.]+/g, "");
 				var people = $("#sel_people").val();
@@ -121,12 +125,12 @@ String keyword = request.getParameter("keyword");
 			// json으로 잘라온 리스트를 실제로 태그와 함께 동적생성하며 ul에 뿌려주는 함수
 			function addList(SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT, IMAGE) {
 				
+				
 				// 0 == 노삭제
 				if(DEL == 0){
 					
 					$("#hotelImage").append(
-							'<section>'
-							+ '<img alt="" src="'+ IMAGE +'" align="right" hspace="10" width="40%" height="100%" '
+							'<img alt="" src="'+ IMAGE +'" align="right" hspace="10" width="36%" height="100%" '
 							+ "onclick=location.href='"+"hotelDetail.jsp?seq=" + SEQ 
 							+ "&id=" + ID + "&hotelname=" + HOTELNAME.replace(/ /gi, "&nbsp;")
 							+ "&region=" + REGION.replace(/ /gi, "&nbsp;") + "&maxpeople=" + MAXPEOPLE
@@ -149,7 +153,7 @@ String keyword = request.getParameter("keyword");
 							'</a>' + 
 							'</p>' + 
 							'</li>'+
-							'</section>'
+							'<br clear="both">'
 						);
 				// 1 == 삭제 
 				}else if(DEL == 1){
@@ -158,7 +162,8 @@ String keyword = request.getParameter("keyword");
 							'<p>'+ 
 							'<a href="#">죄송합니다. 등록된 리뷰가 없습니다.</a>' + 
 							'</p>' + 
-							'</li>'
+							'</li>'+
+							'<br clear="both">'
 					);
 				}
 			};
@@ -281,7 +286,6 @@ String keyword = request.getParameter("keyword");
 	
 		<!-- Header(로고) -->
 		<div id="header-wrapper">
-		
 			<div class="container">
 				<div id="header">
 					<div id="logo">
@@ -312,7 +316,7 @@ String keyword = request.getParameter("keyword");
 					<!-- Main Content Area(왼쪽 상단. 지도부분) -->
 					<section>
 						<h2>어느 숙소에 묵으시겠습니까?</h2>
-						<p id="mainMap"><a href="#"><img src="images/pics02.jpg" alt=""></a></p>
+						<p id="mainMap"><a href="#"><img src="mainImages/pics02.jpg" alt=""></a></p>
 						<input type="text" id="newMapKeyword">
 						<button type="button" id="btn_map">검색</button>
 					</section>
@@ -337,7 +341,7 @@ String keyword = request.getParameter("keyword");
 							</div>
 							</div>
 						</div>					
-					</section>			
+					</section>					
 
 	
 				</div>

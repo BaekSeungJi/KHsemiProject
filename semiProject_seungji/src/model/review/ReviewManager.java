@@ -16,6 +16,8 @@ public class ReviewManager implements iReviewManager {
 	public List<ReviewDto> getReviewList(String hotelname) {
 		// 해당 호텔 후기 전부 가져오기
 		
+		System.out.println("getReviewList 다오에 넘어온 호텔이름 = " + hotelname);
+		
 		String sql = " SELECT NUM, ID, TITLE, CONTENT, SCORE, DEL, REGDATE "
 				+ " FROM REVIEW "
 				+ " WHERE HOTELNAME = ? "
@@ -69,6 +71,7 @@ public class ReviewManager implements iReviewManager {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
+		
 		
 		return list;
 	}

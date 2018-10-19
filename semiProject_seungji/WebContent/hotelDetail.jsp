@@ -15,6 +15,8 @@ String hotelphone = request.getParameter("hotelphone");
 String readcount = request.getParameter("readcount");
 String image = request.getParameter("image");
 
+System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
+
 %>
 
     
