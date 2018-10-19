@@ -1,13 +1,29 @@
-
-<%@page import="dto.CalendarDto"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="dto.ReserveDto"%>
+<%@page import="dto.MemberDto"%>
+<%@page import="java.util.List"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+
+
+
 <%
 request.setCharacterEncoding("utf-8");
-%>  
+%>   
+
+<%
+MemberDto memdto = (MemberDto)session.getAttribute("login");
+session.setAttribute("login", memdto);
+session.setMaxInactiveInterval(30*60);
+
+Object ologin = session.getAttribute("login");
+
+List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
+
+%>     
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -43,8 +59,6 @@ int seq = Integer.parseInt(sseq);
 
 
 
-iCalendar dao = CalendarDao.getInstance();
-CalendarDto dto = dao.getDay(seq);
 
 %>
 
@@ -61,12 +75,12 @@ CalendarDto dto = dao.getDay(seq);
 
 <tr>
 	<td>아이디</td>
-	<td><%=dto.getId() %></td>
+	<td><%= %></td>
 </tr>
 
 <tr>
 	<td>제목</td>
-	<td><%=dto.getTitle() %></td>
+	<td><%= %></td>
 </tr>
 
 <tr>

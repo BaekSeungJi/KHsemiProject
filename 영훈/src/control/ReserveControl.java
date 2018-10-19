@@ -108,6 +108,24 @@ public class ReserveControl extends HttpServlet {
 
 		}
 		
+		else if(command.equals("reservedetail")) {
+			String id = req.getParameter("id");
+			
+	
+			ReserveService service = ReserveService.getInstance();
+			
+			List<ReserveDto> list = service.getreserveList(id);
+					
+			for(ReserveDto reservedto : list){
+				System.out.println(reservedto.toString());					
+			}	
+			
+			req.setAttribute("list", list);
+			
+			dispatch("reservedetail.jsp", req, resp);
+
+		}
+		
 	}
 	
 	

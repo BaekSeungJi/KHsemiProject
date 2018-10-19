@@ -1,11 +1,25 @@
 <%@page import="java.util.Calendar"%>
+<%@page import="dto.ReserveDto"%>
+<%@page import="java.util.List"%>
 <%@page import="dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+
 <%
 request.setCharacterEncoding("utf-8");
-%>  
+%>   
+
+<%
+MemberDto memdto = (MemberDto)session.getAttribute("login");
+session.setAttribute("login", memdto);
+session.setMaxInactiveInterval(30*60);
+
+Object ologin = session.getAttribute("login");
+
+List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
+
+%>     
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,8 +36,7 @@ request.setCharacterEncoding("utf-8");
 
 <%
 String id = request.getParameter("id");
-MemberDto dto = (MemberDto)session.getAttribute("login");
-session.setAttribute("login", dto);
+session.setAttribute("login", memdto);
 session.setMaxInactiveInterval(30*60);
 
 String year = request.getParameter("year");
@@ -50,8 +63,8 @@ int tmin = cal.get(Calendar.MINUTE);
 <tr>
 	<td>아이디</td>
 	<td>
-		<%=dto.getId()%>
-		<input type="hidden" name="id" value="<%=dto.getId() %>">
+		<%=memdto.getId()%>
+		<input type="hidden" name="id" value="<%=memdto.getId() %>">
 	</td>
 </tr> 
 
@@ -65,7 +78,7 @@ int tmin = cal.get(Calendar.MINUTE);
 <tr>
 	<td>일정</td>
 	<td>
-		<select name="year">
+		<select name="year1">
 		<%
 			for(int i = tyear - 5; i < tyear + 6; i++){
 				%>
@@ -76,7 +89,7 @@ int tmin = cal.get(Calendar.MINUTE);
 		%>		
 		</select>년
 		
-		<select name="month">
+		<select name="month1">
 		<%
 			for(int i = 1; i <= 12; i++){
 				%>
@@ -87,7 +100,7 @@ int tmin = cal.get(Calendar.MINUTE);
 		%>		
 		</select>월
 		
-		<select name="day" id="day">
+		<select name="day1" id="day2">
 		<%
 			for(int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
 				%>
@@ -98,29 +111,41 @@ int tmin = cal.get(Calendar.MINUTE);
 		%>		
 		</select>일
 		
-		<select name="hour">
-		<%
-			for(int i = 0; i < 24; i++){
-				%>
-				<option <%=(thour + "").equals(i + "")?"selected='selected'":"" %>
-					value="<%=i %>"><%=i %></option>
-				<%
-			}		
-		%>		
-		</select>시
+		<input type="text" value="~">
 		
-		<select name="min">
+		<select name="year2">
 		<%
-			for(int i = 0; i < 60; i++){
+			for(int i = tyear - 5; i < tyear + 6; i++){
 				%>
-				<option <%=(tmin + "").equals(i + "")?"selected='selected'":"" %>
+				<option <%=year.equals(i + "")?"selected='selected'":"" %>
 					value="<%=i %>"><%=i %></option>
 				<%
 			}		
 		%>		
-		</select>분
-			
-	</td>
+		</select>년
+		
+		<select name="month2">
+		<%
+			for(int i = 1; i <= 12; i++){
+				%>
+				<option <%=month.equals(i + "")?"selected='selected'":"" %>
+					value="<%=i %>"><%=i %></option>
+				<%
+			}		
+		%>		
+		</select>월
+		
+		<select name="day2" id="day2">
+		<%
+			for(int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
+				%>
+				<option <%=day.equals(i + "")?"selected='selected'":"" %>
+					value="<%=i %>"><%=i %></option>
+				<%
+			}		
+		%>		
+		</select>일
+	
 </tr>
 
 <tr>

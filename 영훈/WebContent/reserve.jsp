@@ -1,4 +1,4 @@
-	<%@page import="model.reserve.ReserveManager"%>
+<%@page import="model.reserve.ReserveManager"%>
 <%@page import="control.ReserveControl"%>
 <%@page import="model.reserve.ReserveService"%>
 <%@page import="model.reserve.iReserveManager"%>

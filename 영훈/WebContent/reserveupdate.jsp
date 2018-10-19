@@ -1,6 +1,7 @@
-<%@page import="dto.CalendarDto"%>
-<%@page import="dao.CalendarDao"%>
-<%@page import="dao.iCalendar"%>
+<%@page import="dto.ReserveDto"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.List"%>
+<%@page import="dto.MemberDto"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -9,9 +10,21 @@
     pageEncoding="UTF-8"%>
     
     
+
 <%
 request.setCharacterEncoding("utf-8");
-%>  
+%>   
+
+<%
+MemberDto memdto = (MemberDto)session.getAttribute("login");
+session.setAttribute("login", memdto);
+session.setMaxInactiveInterval(30*60);
+
+Object ologin = session.getAttribute("login");
+
+List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
+
+%>     
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
