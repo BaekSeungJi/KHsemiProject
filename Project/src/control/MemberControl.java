@@ -48,10 +48,10 @@ public class MemberControl extends HttpServlet {
 
 		String command = req.getParameter("command");
 
-		if(command.equals("Signup")) {			//회원가입
+		if(command.equals("Signup")) {						//회원가입
 			resp.sendRedirect("Signup.jsp");
 		}		
-		else if (command.equals("회원가입")) {	//회원가입Af
+		else if (command.equals("회원가입")) {					//회원가입Af
 			String id = req.getParameter("id");
 			String pwd = req.getParameter("pwd");
 			String name = req.getParameter("name");
@@ -59,55 +59,38 @@ public class MemberControl extends HttpServlet {
 			String phone = req.getParameter("phone");
 			int blacklist = Integer.parseInt("0");
 			int auth = Integer.parseInt("3");
-
-			req.setAttribute("id", id);
-			req.setAttribute("pwd", pwd);
-			req.setAttribute("name", name);
-			req.setAttribute("email", email);
-			req.setAttribute("phone", phone);
-			req.setAttribute("blacklist", 0);
-			req.setAttribute("auth", 3);
-
-			//	MemberDto dto = new MemberDto(id, pwd, name, email, phone, 0, 3);
-
-			//req.setAttribute("dto", dto);//여기 하는중
-
+		
+			MemberDto dto = new MemberDto(id, pwd, name, email, phone, 0, 3);
+			req.setAttribute("dto", dto);
 			dispatch("SignupAf.jsp", req, resp);
 
 		}
-		else if(command.equals("Login")) {		//로그인
+		else if(command.equals("Login")) {					//로그인
 			String id = req.getParameter("id");
 			String pwd = req.getParameter("pwd");
 			String name = req.getParameter("name");
 			String email = req.getParameter("email");
 			String phone = req.getParameter("phone");
-			int blacklist = Integer.parseInt("0");
-			int auth = Integer.parseInt("3");
+			int blacklist = Integer.parseInt("blacklist");
+			int auth = Integer.parseInt("auth");
 
-			//MemberDto dto = new MemberDto(id, pwd, name, email, phone, 0, 3);
-			//req.setAttribute("dto", dto);
+			MemberDto dto = new MemberDto(id, pwd, name, email, phone, blacklist, auth);
+			req.setAttribute("dto", dto);
 
-			req.setAttribute("id", id);
-			req.setAttribute("pwd", pwd);
-			req.setAttribute("name", name);
-			req.setAttribute("email", email);
-			req.setAttribute("phone", phone);
-			req.setAttribute("blacklist", 0);
-			req.setAttribute("auth", 3);
 			dispatch("login.jsp", req, resp);	
 		
-		}else if (command.equals("아이디찾기")) {
+		}else if (command.equals("아이디찾기")) {				//아이디찾기
 			resp.sendRedirect("Suchidview.jsp");
 			
-		}else if (command.equals("비밀번호찾기")) {
+		}else if (command.equals("비밀번호찾기")) {				//비밀번호찾기
 			resp.sendRedirect("Suchpwdview.jsp");
 			
-		}else if (command.equals("아이디확인")) {
+		}else if (command.equals("아이디확인")) {				//아이디 확인
 			String email = req.getParameter("email");
 			req.setAttribute("email", email);
 			dispatch("SuchidAf.jsp", req, resp);
 		
-		}else if (command.equals("비밀번호확인")){
+		}else if (command.equals("비밀번호확인")){				//비밀번호 확인
 			String id = req.getParameter("id");
 			String phone = req.getParameter("phone");
 			req.setAttribute("id", id);

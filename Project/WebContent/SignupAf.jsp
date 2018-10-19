@@ -22,21 +22,16 @@ request.setCharacterEncoding("utf-8");
 </head>
 <body>
 <%
-String id = request.getParameter("id");
-String pwd = request.getParameter("pwd");
-String name = request.getParameter("name");
-String email = request.getParameter("email");
-String phone = request.getParameter("phone");
-int blacklist = Integer.parseInt("0");
-int auth = Integer.parseInt("3");
+MemberDto dto = (MemberDto)request.getAttribute("dto");
 
+String id = dto.getId();
+String pwd = dto.getPwd();
+String name = dto.getName();
+String email = dto.getEmail();
+String phone = dto.getPhone();
+int blacklist = dto.getBlacklist();
+int auth = dto.getAuth();
 
-System.out.println(id);
-/*
-System.out.println(pwd);
-System.out.println(name);
-System.out.println(email);
-System.out.println(phone); */
 %> 
 <%
 MemberService service = MemberService.getInstance();
