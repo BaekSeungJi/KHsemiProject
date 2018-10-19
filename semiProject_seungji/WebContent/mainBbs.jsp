@@ -40,7 +40,7 @@ String keyword = request.getParameter("keyword");
 		
 		
 		<script type="text/javascript">
-		$(function () {
+		$(document).ready(function () {
 			// 페이지 실행되자마자, 검색된 맵 불러오기.
 			updateMap(1);
 			
@@ -124,8 +124,17 @@ String keyword = request.getParameter("keyword");
 				// 0 == 노삭제
 				if(DEL == 0){
 					
+					$("#hotelImage").append(
+							'<section>'
+							+ '<img alt="" src="'+ IMAGE +'" align="right" hspace="10" width="40%" height="100%" '
+							+ "onclick=location.href='"+"hotelDetail.jsp?seq=" + SEQ 
+							+ "&id=" + ID + "&hotelname=" + HOTELNAME.replace(/ /gi, "&nbsp;")
+							+ "&region=" + REGION.replace(/ /gi, "&nbsp;") + "&maxpeople=" + MAXPEOPLE
+							+ "&price=" + PRICE + "&hotelphone=" + HOTELPHONE
+							+ "&readcount=" + READCOUNT + "&image=" + IMAGE + "'>");
+					
+					
 					$("#searchHotelList").append(
-							'<img alt="" src="'+ IMAGE +'" align="right" hspace="10" width="80px" height="70px">' +
 							'<li>'+
 							'<h3>' + HOTELNAME +
 							'</h3>' +
@@ -139,7 +148,8 @@ String keyword = request.getParameter("keyword");
 							REGION + 
 							'</a>' + 
 							'</p>' + 
-							'</li>'
+							'</li>'+
+							'</section>'
 						);
 				// 1 == 삭제 
 				}else if(DEL == 1){
@@ -315,11 +325,12 @@ String keyword = request.getParameter("keyword");
 							<div >
 							<section>
 								<h2>호텔 검색 결과</h2>
+								<div id="hotelImage"></div>
 								<ul class="style4" id="searchHotelList">
-									<!-- <li class="first">
+									<li class="first">
 										<h3>Mauris vulputate dolor sit amet</h3>
 										<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum. </a></p>
-									</li> -->
+									</li>
 									<!-- 검색된 호텔 리스트가 addList 함수를 통해 이 부분에 append됨. -->
 								</ul>
 								</section>
@@ -330,7 +341,6 @@ String keyword = request.getParameter("keyword");
 
 	
 				</div>
-				
 	
 				<!-- Sidebar Area(오른쪽 콘텐츠들) -->
 				<div id="sidebar" class="4u">
