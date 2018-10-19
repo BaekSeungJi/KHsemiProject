@@ -95,6 +95,7 @@ public class MemberControl extends HttpServlet {
 			req.setAttribute("blacklist", 0);
 			req.setAttribute("auth", 3);
 			dispatch("login.jsp", req, resp);	
+		
 		}else if (command.equals("아이디찾기")) {
 			resp.sendRedirect("Suchidview.jsp");
 			
