@@ -99,12 +99,11 @@ public class ReserveControl extends HttpServlet {
 		else if(command.equals("reserve")) {
 			String id = req.getParameter("id");
 			
-			String yyyyMM = req.getParameter("yyyyMM");
-			
+	
 			ReserveService service = ReserveService.getInstance();
 			
-			List<ReserveDto> dto = service.getCalendarList(id, yyyyMM);
-			
+			List<ReserveDto> dto = service.getreserveList(id);
+					
 			req.setAttribute("dto", dto);
 			
 			dispatch("reserve.jsp", req, resp);

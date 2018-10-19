@@ -26,6 +26,11 @@ public class ReserveService {
 		return manager.reserve(dto);
 	}
 	
+	//해당 id 예약 리스트 가져오기
+	public List<ReserveDto> getreserveList(String id){
+		return manager.getreserveList(id);
+	}
+	
 	//admin 예약 삭제
 			public boolean ad_reservedelete(int seq){
 				return manager.ad_reservedelete(seq);

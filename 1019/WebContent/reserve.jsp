@@ -1,5 +1,8 @@
-<%@page import="dao.CalendarDao"%>
-<%@page import="dao.iCalendar"%>
+<%@page import="model.reserve.ReserveManager"%>
+<%@page import="control.ReserveControl"%>
+<%@page import="model.reserve.ReserveService"%>
+<%@page import="model.reserve.iReserveManager"%>
+<%@page import="dto.ReserveDto"%>
 <%@page import="dto.MemberDto"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="dto.CalendarDto"%>
@@ -145,14 +148,19 @@ String nn = String.format("<a href='%s?year=%d&month=%d'>"
 							+ "<img src='image/last.gif'></a>", 
 							"calendar.jsp", year+1, month);
 
-MemberDto user = (MemberDto)session.getAttribute("login");
 
-iCalendar dao = CalendarDao.getInstance();
+ReserveDto rdto = (ReserveDto)session.getAttribute("login");
+session.setAttribute("login", rdto);
+session.setMaxInactiveInterval(30*60);
 /* 
-List<CalendarDto> list = dao.getCalendarList(user.getId(), year + two(month + ""));
+List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("reserveList");
  */
- List<CalendarDto> list = dao.getCalendarList(1+"", year + two(month + ""));
- 
+Object ologin = session.getAttribute("login");
+String id = request.getParameter("id");
+
+List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("reserveList");
+
+
  
 %>
 
@@ -198,7 +206,7 @@ int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 for(int i = 1;i <= lastDay; i++){
 	%>
 	<td><%=callist(year, month, i) %>&nbsp;<%=showPen(year, month, i) %>	
-		<%=makeTable(year, month, i, list) %>
+		<%=i/* makeTable(year, month, i, list) */ %>
 	</td>
 	<%
 	if((i + dayOfWeek - 1) % 7 == 0 && i != lastDay){
