@@ -12,7 +12,7 @@ import db.DBClose;
 import db.DBConnection;
 import dto.FileDto;
 import dto.PdsDto;
-import dto.PdsfileDto;
+
 
 public class PdsManager implements iPdsManager {
 
@@ -22,17 +22,17 @@ public class PdsManager implements iPdsManager {
 	}
 
 	@Override
-	public List<PdsfileDto> getPdsList() {
-		String sql = " SELECT p.SEQ, p.ID, p.TITLE, p.CONTENT, f.FILENAME, f.REALNAME, p.READCOUNT, p.DOWNCOUNT, p.REF, p.STEP, p.DEPTH, p.DEL, p.REGDATE "
-				+ " FROM PDS p, FILE_DB f "
-				+ " where p.SEQ = f.num "
-				+ " ORDER BY REF DESC, STEP ASC  ";
+	public List<PdsDto> getPdsList() {
+		String sql = " SELECT seq,id,title,content,readcount,downcount,filename,ref,step,depth,del, regdate "
+				+ " FROM PDS "
+				+ " where del = 0 "
+				+ " ORDER BY REF DESC, STEP ASC ";
 	
 	Connection conn = null;
 	PreparedStatement psmt = null;
 	ResultSet rs = null;
 	
-	List<PdsfileDto> list = new ArrayList<PdsfileDto>();
+	List<PdsDto> list = new ArrayList<PdsDto>();
 	
 	try {
 		conn = DBConnection.getConnection();
@@ -45,12 +45,8 @@ public class PdsManager implements iPdsManager {
 		System.out.println("3/6 getPdsList Success");
 		
 		while(rs.next()) {
-			
-			PdsfileDto dto = new PdsfileDto(rs.getInt(1), rs.getString(2),rs.getString(3), rs.getString(4), rs.getString(5),
-					rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getInt(9),
-					rs.getInt(10), rs.getInt(11), rs.getInt(12), rs.getString(13));
-			
-			list.add(dto);				
+			PdsDto dto = new PdsDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getString(12));
+			list.add(dto);
 		}		
 		System.out.println("4/6 getPdsList Success");
 		
@@ -131,18 +127,16 @@ public class PdsManager implements iPdsManager {
 
 
 	@Override
-	public PdsfileDto getPds(int seq) {
+	public PdsDto getPds(int seq) {
 
-		String sql = " SELECT p.SEQ, p.ID, p.TITLE, p.CONTENT, f.FILENAME, f.REALNAME, p.READCOUNT, p.DOWNCOUNT, p.REF, p.STEP, p.DEPTH, p.DEL, p.REGDATE "
-				+ " FROM PDS p, FILE_DB f "
-				+ " where p.SEQ = f.num and p.seq = ? "
-				+ " ORDER BY REF DESC, STEP ASC  ";
-		
+		String sql = " SELECT * "
+				+ " FROM PDS "
+				+ " WHERE SEQ=? ";
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
-		PdsfileDto dto = null;
+		PdsDto dto = null;
 		
 		
 		try {
@@ -160,7 +154,7 @@ public class PdsManager implements iPdsManager {
 			
 			if(rs.next()) {
 				int i = 1;
-				dto = new PdsfileDto(rs.getInt(i), rs.getString(i++), rs.getString(i++), rs.getString(i++), rs.getString(i++), rs.getString(i++), rs.getInt(i++), rs.getInt(i++), rs.getInt(i++), rs.getInt(i++), rs.getInt(i++), rs.getInt(i++), rs.getString(i++));
+				 dto = new PdsDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getString(12));
 				System.out.println("4/6 getPds Success");
 			}
 		} catch (Exception e) {
@@ -183,7 +177,7 @@ public class PdsManager implements iPdsManager {
 		ResultSet rs = null;
 		
 		String sql = "INSERT INTO pds "
-				+ " VALUES(SEQ_PDS.NEXTVAL, ?, ?, ?, 0, 0, (SELECT NVL(MAX(REF), 0)+1 FROM pds), 0, 0, 0, SYSDATE ) ";
+				+ " VALUES(SEQ_PDS.NEXTVAL, ?, ?, ?, 0, 0, ?,(SELECT NVL(MAX(REF), 0)+1 FROM pds), 0, 0, 0, SYSDATE ) ";
 		
 		try {
 			
@@ -200,52 +194,12 @@ public class PdsManager implements iPdsManager {
 			psmt.setString(1, pds.getId());
 			psmt.setString(2, pds.getTitle());
 			psmt.setString(3, pds.getContent());
-			
+			psmt.setString(4, pds.getFilename());
 			count = psmt.executeUpdate();
 			System.out.println("4/6 writePds Success");
 			
 		} catch (Exception e) {			
 			System.out.println("writePds fail");
-		} finally{
-			DBClose.close(psmt, conn, rs);			
-		}
-		
-		return count>0?true:false;		
-	}
-
-	@Override
-	public boolean writeFile(FileDto File) {
-		int count = 0;
-		
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		
-		String sql = "INSERT INTO FILE_DB "
-				+ " VALUES(SEQ_FILE_DB.NEXTVAL, ?, ?) ";
-		
-		try {
-			
-				conn = DBConnection.getConnection();
-			
-			
-			
-			
-			System.out.println("2/6 writeFile Success");
-			
-			psmt = conn.prepareStatement(sql);
-			System.out.println("3/6 writeFile Success");
-			
-			psmt.setString(1, File.getFilename());
-			psmt.setString(2, File.getRealname());
-
-			System.out.println( File.getFilename());
-			System.out.println( File.getRealname());
-			count = psmt.executeUpdate();
-			System.out.println("4/6 writeFile Success");
-			
-		} catch (Exception e) {			
-			System.out.println("writeFile fail");
 		} finally{
 			DBClose.close(psmt, conn, rs);			
 		}
@@ -285,5 +239,116 @@ public class PdsManager implements iPdsManager {
 		return count>0?true:false;
 	}
 
+	@Override
+	public boolean ad_PdsUpdate(int seq, PdsDto dto) {
+		String sql = " UPDATE pds SET "
+				+ " title=?, content=?, filename=? "
+				+ " WHERE SEQ=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
 	
+			try {
+			conn = DBConnection.getConnection();
+		
+			
+		
+			System.out.println("2/6 S updateBbs");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getFilename());
+			psmt.setInt(4, seq);
+			
+			System.out.println("3/6 S updateBbs");
+			
+			count = psmt.executeUpdate();
+			System.out.println("4/6 S updateBbs");
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally{
+			DBClose.close(psmt, conn, null);	
+			System.out.println("5/6 S updateBbs");
+		}		
+		
+		return count>0?true:false;
+	}
+
+	@Override
+	public boolean answer(int seq, PdsDto pds) {
+
+		// update
+		String sql1 = " UPDATE pds "
+				+ " SET STEP=STEP+1 "
+				+ " WHERE REF=(SELECT REF FROM pds WHERE SEQ=?) "
+				+ " AND STEP > (SELECT STEP FROM pds WHERE SEQ=?) ";
+		
+		//insert
+		String sql2 = " INSERT INTO pds "
+		+ " VALUES(SEQ_PDS.NEXTVAL, ?, ?, ?, 0, 0, ?,(SELECT REF FROM pds WHERE SEQ=?),(SELECT STEP FROM pds WHERE SEQ=?)+1,(SELECT DEPTH FROM pds WHERE SEQ=?)+1, 0, SYSDATE ) ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			conn.setAutoCommit(false);
+			System.out.println("1/6 answer Success");
+			
+			
+			psmt= conn.prepareStatement(sql1);
+			psmt.setInt(1, seq);
+			psmt.setInt(2, seq);
+			
+			System.out.println("2/6 answer Success");
+			
+			count = psmt.executeUpdate();
+			System.out.println("3/6 answer Success");
+			
+			psmt.clearParameters();
+			
+			psmt= conn.prepareStatement(sql2);
+			
+			psmt.setString(1, pds.getId());
+			psmt.setString(2, pds.getTitle());
+			psmt.setString(3, pds.getContent());
+			psmt.setString(4, "answer");
+			psmt.setInt(5, seq);
+			psmt.setInt(6, seq);
+			psmt.setInt(7, seq);
+			
+			System.out.println("4/6 answer Success");
+			
+			count = psmt.executeUpdate();
+			conn.commit();
+			System.out.println("5/6 answer Success");
+		} catch (Exception e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		}finally {
+			
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			DBClose.close(psmt, conn, null);
+			System.out.println("6/6 answer Success");
+		}
+		
+		return count>0?true:false;
+		
+
+	}
 }

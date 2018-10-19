@@ -2,6 +2,7 @@ package model.reserve;
 
 import java.util.List;
 
+
 import dto.ReserveDto;
 
 public interface iReserveManager {
@@ -13,4 +14,6 @@ public interface iReserveManager {
 	public List<ReserveDto> getCalendarList(String hotelname, String yyyyMM);
 	
 	public List<ReserveDto> getReserve(String hotelname);
+	
+	public List<ReserveDto> getlist(String hotelname, String yyyymmdd);
 }

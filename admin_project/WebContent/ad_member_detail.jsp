@@ -128,11 +128,7 @@ section{
 
 
 <%
-Object ologin = session.getAttribute("login");
-
-MemberDto mem = (MemberDto)ologin;
-
-
+MemberDto user = (MemberDto)session.getAttribute("login");
 
 
 
@@ -152,7 +148,7 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
 			<div class="rad-logo-container rad-nav-min">
 				
 			</div>
-			<a href="index.jsp" class="rad-logo-hidden">Admin</a>
+			<a href="MemberControl?command=ad_admin" class="rad-logo-hidden">Admin</a>
 
 			
 		</nav>
@@ -162,21 +158,21 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
 	<nav class="rad-sidebar rad-nav-min">
 		<ul>
 			<li>
-				<a href="#" class="inbox">
+				<a href="MemberControl?command=memberGo&id=<%=user.getId() %>" class="inbox">
 					<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
 					<span class="rad-sidebar-item">회원 관리</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="HotelControl?command=ad_hotel">
 				<i class="fas fa-hotel">
 						<span class="icon-bg rad-bg-danger"></span>
 					</i>
 					<span class="rad-sidebar-item">호텔 관리</span>
 				</a>
 			</li>
-			<li><a href="#" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a></li>
-			<li><a href="#" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a></li>
+			<li><a href="HotelControl?command=ad_chart" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a></li>
+			<li><a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a></li>
 			
 		</ul>
 	</nav>
@@ -208,7 +204,7 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
           <th>호텔 이름</th>
           <th>요구 사항</th>
           <th>등록일</th>
-          <th>수정</th>
+      
           <th>취소</th>
         </tr>
       </thead>
@@ -234,19 +230,12 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
           
           
           <input type="text" value="<%=dto.getRealdate() %>" name="regdate"></td>
+          
           <td><%=dto.getHotelname() %></td>
           <td><input type="text" value="<%=dto.getRequest() %>" name="request"></td>
           <td><%=dto.getRegdate() %></td>
            
-          <td>
-           <%if(dto.getDel() == 0){
-        	  %><input type="submit" value="수정">
-        	   <%  }else{
-        	%> 취소된 예약입니다
-        	<%
-      		 }
-          %>
-          </td>
+         
           <td>
           <%if(dto.getDel() == 0){
         	  %><input type="button" value="예약취소" onclick="location.href='ReserveControl?command=ad_reserveDelete&seq=<%=dto.getSeq() %>&id=<%=dto.getId()%>'">
@@ -303,7 +292,7 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
           <td><%=dto2.getRegdate() %></td>
           <td>
            <%if(dto2.getDel() == 0){
-        	  %><input type="button" value="삭제" onclick="location.href='ReviewControl?command=ad_reviewDelete&seq=<%=dto2.getNum() %>&id=<%=dto2.getId()%>'">>
+        	  %><input type="button" value="삭제" onclick="location.href='ReviewControl?command=ad_reviewDelete&seq=<%=dto2.getNum() %>&id=<%=dto2.getId()%>'">
         <%  }else{
         	%> 삭제된 후기입니다
         	<%

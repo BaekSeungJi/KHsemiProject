@@ -4,7 +4,7 @@ import java.util.List;
 
 import dto.FileDto;
 import dto.PdsDto;
-import dto.PdsfileDto;
+
 
 public class PdsService {
 	private static PdsService pdsService = null;
@@ -24,7 +24,8 @@ public class PdsService {
 	
 	
 	
-	public List<PdsfileDto> getPdsList(){
+	
+	public List<PdsDto> getPdsList(){
 		return manager.getPdsList();
 	}
 	
@@ -32,9 +33,7 @@ public class PdsService {
 		return manager.writePds(pds);
 	}
 	
-	public boolean writeFile(FileDto File) {
-		return manager.writeFile(File);
-	}
+	
 	
 	public void readCount(int seq) {
 		manager.readCount(seq);
@@ -49,7 +48,16 @@ public class PdsService {
 	}
 
 
-	public PdsfileDto getPds(int seq) {
+	public PdsDto  getPds(int seq) {
 		return manager.getPds(seq);
+	}
+	
+	public boolean ad_PdsUpdate(int seq, PdsDto dto) {
+		return manager.ad_PdsUpdate(seq, dto);
+	}
+	
+	public boolean answer(int seq, PdsDto pds) {
+		return manager.answer(seq, pds);
+	
 	}
 }

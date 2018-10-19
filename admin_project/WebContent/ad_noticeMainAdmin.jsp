@@ -59,7 +59,7 @@ h1{
   margin-bottom: 15px;
 }
 table{
-	margin-bottom: 100px;
+
   width:100%;
   table-layout: fixed;
 }
@@ -123,7 +123,7 @@ List<PdsDto> list = (List<PdsDto>)request.getAttribute("list");
 			<div class="rad-logo-container rad-nav-min">
 				
 			</div>
-			<a href="MemberControl?command=ad_admin" class="rad-logo-hidden">Admin</a>
+			<a href="#" class="rad-logo-hidden">Admin</a>
 
 			
 		</nav>
@@ -133,7 +133,7 @@ List<PdsDto> list = (List<PdsDto>)request.getAttribute("list");
 	<nav class="rad-sidebar rad-nav-min">
 		<ul>
 			<li>
-				<a href="MemberControl?command=memberGo&id=<%=mem.getId() %>" class="inbox">
+				<a href="#" class="inbox">
 					<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
 					<span class="rad-sidebar-item">회원 관리</span>
 				</a>
@@ -146,8 +146,8 @@ List<PdsDto> list = (List<PdsDto>)request.getAttribute("list");
 					<span class="rad-sidebar-item">호텔 관리</span>
 				</a>
 			</li>
-			<li><a href="HotelControl?command=ad_chart" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a></li>
-			<li><a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a></li>
+			<li><a href="#" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a></li>
+			<li><a href="#" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a></li>
 			
 		</ul>
 	</nav>
@@ -208,6 +208,10 @@ for(int i = 0;i < list.size(); i++){
 %>
 </table>
 </div>
+
+<a href="ad_notice_write.jsp">자료 올리기</a>
+<br><br>
+
 
 
 </div>

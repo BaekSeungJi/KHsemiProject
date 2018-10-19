@@ -12,11 +12,18 @@
 <%
 // 일단 임의로 로그인
 String id = "yuriv";
+String pwd = "1234";
+String name = "김유리";
+String email = "yuriv@naver.com";
+String phone = "010-8728-2222";
+int blacklist = 0;
+int auth=1;
 
-
+MemberDto dto = new MemberDto(id,pwd,name,email,phone,blacklist,auth);
+session.setAttribute("login", dto);
 %>
 
-<a href="MemberControl?command=ad_admin&id=<%=id%>">관리자 모드 이동</a>
+<a href="MemberControl?command=ad_admin">관리자 모드 이동</a>
 
 </body>
 </html>

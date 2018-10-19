@@ -1,8 +1,13 @@
+
 <%@page import="dto.ReserveTableDto"%>
 <%@page import="java.util.List"%>
 <%@page import="dto.MemberDto"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+     <%
+request.setCharacterEncoding("utf-8");
+%>   
+
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -19,6 +24,9 @@
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 
+  <!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   
 <style type="text/css">
 
@@ -128,14 +136,27 @@ body{
 
 <body>
 
+<%
+// ê²€ìƒ‰ì–´
+String findWord = request.getParameter("sWord");
+String choice = request.getParameter("selected");
+
+System.out.println("findWord = " + findWord);
+
+System.out.println("choice = " + choice);
+
+if(choice == null || choice.equals("")){
+	choice = "";	
+}
+
+if(findWord == null){
+	findWord = "";
+}
+
+%>
 
 <%
- Object ologin = session.getAttribute("login");
-
-MemberDto mem = (MemberDto)ologin;
-
-
-
+MemberDto user = (MemberDto)session.getAttribute("login");
 
 
 List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list");
@@ -150,7 +171,7 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
 			<div class="rad-logo-container rad-nav-min">
 				
 			</div>
-			<a href="index.jsp" class="rad-logo-hidden">Admin</a>
+			<a href="MemberControl?command=ad_admin" class="rad-logo-hidden">Admin</a>
 
 			
 		</nav>
@@ -160,21 +181,21 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
 	<nav class="rad-sidebar rad-nav-min">
 		<ul>
 			<li>
-				<a href="#" class="inbox">
+				<a href="MemberControl?command=memberGo&id=<%=user.getId() %>" class="inbox">
 					<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
-					<span class="rad-sidebar-item">È¸¿ø °ü¸®</span>
+					<span class="rad-sidebar-item">íšŒì› ê´€ë¦¬</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="HotelControl?command=ad_hotel">
 				<i class="fas fa-hotel">
 						<span class="icon-bg rad-bg-danger"></span>
 					</i>
-					<span class="rad-sidebar-item">È£ÅÚ °ü¸®</span>
+					<span class="rad-sidebar-item">í˜¸í…” ê´€ë¦¬</span>
 				</a>
 			</li>
-			<li><a href="#" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">¸ÅÃâ °ü¸®</span></a></li>
-			<li><a href="#" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">°øÁö»çÇ×</span></a></li>
+			<li><a href="HotelControl?command=ad_chart" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">ë§¤ì¶œ ê´€ë¦¬</span></a></li>
+			<li><a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">ê³µì§€ì‚¬í•­</span></a></li>
 			
 		</ul>
 	</nav>
@@ -190,16 +211,7 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
 			<div class="container-fluid">
 
 
-  <h1>È¸¿ø Á¤º¸</h1>
-
- 
- <div id="select_box" align="right">
-    <select class="sel">
-        <option selected="selected">Á¤·Ä</option>
-        <option>ÃÖ½Å¼ø</option>
-        <option>¿À·¡µÈ ¼ø</option>
-    
-    </select>
+  <h1>íšŒì› ì •ë³´</h1>
 
  
  
@@ -209,10 +221,10 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
       <thead>
         <tr>
           <th>ID</th>
-          <th>ÀÌ¸§</th>
-          <th>ÀÌ¸ŞÀÏ</th>
-          <th>ÀüÈ­¹øÈ£</th>
-          <th>¿¹¾à ³¯Â¥</th>
+          <th>ì´ë¦„</th>
+          <th>ì´ë©”ì¼</th>
+          <th>ì „í™”ë²ˆí˜¸</th>
+          <th>ì˜ˆì•½ ë‚ ì§œ</th>
         </tr>
       </thead>
     </table>
@@ -245,25 +257,28 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
        %>
       </tbody>
     </table>
+    
+    
+
   </div>
 
-
+<form action="MemberControl">
 <div align="center" style="margin-top: 20px;">
-<select>
-<option selected="selected">ÀÌ¸§</option><option>ÀüÈ­¹øÈ£</option>
+<input type="hidden" name="command" value="memberGo">
+<input type="hidden" name="id" value="<%=user.getId()%>">
+<select name="sel">
+<option selected="selected" >ì´ë¦„</option><option>ì•„ì´ë””</option>
 </select>
-<input type="text"> <input type="button" value="°Ë»ö">
+<input type="text" name="txt"> <input type="submit" value="ê²€ìƒ‰"> 
 
 </div>
 
-
+</form>
 
 </div>
 
 
 </section>
-
-
 
 
 

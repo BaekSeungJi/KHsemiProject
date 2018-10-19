@@ -174,10 +174,20 @@ public class MemberManager implements iMemberManager {
 	
 	// 해당호텔 예약 정보
 	@Override
-	public List<ReserveTableDto> ad_GetHotelmember(String hotelname) {
-		String sql = " SELECT  m.id, m.name,m.email,m.phone, e.realdate  FROM member m, RESERVE e "
-				+ " WHERE e.HOTELNAME = ? ";
+	public List<ReserveTableDto> ad_GetHotelmember(String hotelname,String sWord,String selected) {
+		
 		List<ReserveTableDto> list = new ArrayList<>();
+		
+		// 검색어
+		String Word = "";
+		if(selected.equals("이름")) {	
+			Word = " and m.name LIKE '%" + sWord.trim() + "%'";
+		}else if(selected.equals("아이디")) {	
+			Word = " and m.id='" + sWord.trim() + "' ";
+		}
+		
+		String sql = " SELECT  m.id, m.name,m.email,m.phone, e.realdate  FROM member m, RESERVE e "
+				+ " WHERE e.HOTELNAME = ? " + Word;
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;

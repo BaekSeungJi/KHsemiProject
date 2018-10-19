@@ -43,26 +43,12 @@ String hotelname = null;
 scoreDto sdto = null;
 MonthlysalesDto Mdto = null;
 
-if(request.getAttribute("dto") != null){
-	 mem = (MemberDto)request.getAttribute("dto");
-	session.setAttribute("login", mem);
-	session.setMaxInactiveInterval(30*60);
-}else{
-	 mem = (MemberDto)session.getAttribute("login");
-}
 
-if(request.getAttribute("hotelname") != null){
-	 hotelname  = (String)request.getAttribute("hotelname");
-	session.setAttribute("hotelname", hotelname);
-	session.setMaxInactiveInterval(30*60);
-}else{
-	 hotelname = (String)session.getAttribute("hotelname");
-}
+mem = (MemberDto)session.getAttribute("login");
 
+hotelname = (String)session.getAttribute("hotelname");
 
 sdto = (scoreDto)request.getAttribute("sdto");
-
-
 
 Mdto = (MonthlysalesDto)request.getAttribute("Mdto");
 	
@@ -76,7 +62,7 @@ Mdto = (MonthlysalesDto)request.getAttribute("Mdto");
 			<div class="rad-logo-container rad-nav-min">
 				
 			</div>
-			<a href="index.jsp" class="rad-logo-hidden">Admin</a>
+			<a href="MemberControl?command=ad_admin" class="rad-logo-hidden">Admin</a>
 
 			
 		</nav>
@@ -120,7 +106,7 @@ Mdto = (MonthlysalesDto)request.getAttribute("Mdto");
 			
 				<header class="rad-page-title">
 					<span> <%=mem.getName() %> 님 환영합니다</span>
-					<small class="md-txt"><%=hotelname %> <a href="https://www.google.com/maps/place/3720+Emerald+St,+Torrance,+CA+90503/@33.8403836,-118.3543828,17z/data=!4m18!1m15!4m14!1m6!1m2!1s0x80c2b4d407f58b11:0xdedca55964c89054!2s3720+Emerald+St,+Torrance,+CA+90503!2m2!1d-118.3520761!2d33.8403792!1m6!1m2!1s0x80c2b4d407f58b11:0xdedca55964c89054!2s3720+Emerald+St,+Torrance,+CA+90503!2m2!1d-118.3520761!2d33.8403792!3m1!1s0x80c2b4d407f58b11:0xdedca55964c89054" target="_blank"><i class="fa fa-map-marker color-main"></i> 서울</a></small>					
+					<small class="md-txt"><%=hotelname %> </small>					
 				</header>
 				
 
@@ -143,7 +129,7 @@ Mdto = (MonthlysalesDto)request.getAttribute("Mdto");
 				<div class="col-lg-3 col-xs-6">
 					<div class="rad-info-box rad-txt-danger">
 						<i class="fas fa-hotel rad-info-box_i"></i>
-						<a href="ad_hotel.jsp">
+						<a href="HotelControl?command=ad_hotel&hotelname=<%=hotelname%>">
 							<span class="heading">호텔 관리</span>
 							<span class="value"><span><i class="fas fa-arrow-alt-circle-right"></i></span></span>
 						</a>
@@ -152,7 +138,7 @@ Mdto = (MonthlysalesDto)request.getAttribute("Mdto");
 					<div class="col-lg-3 col-xs-6">
 						<div class="rad-info-box rad-txt-primary">
 							<i class="fas fa-chart-pie rad-info-box_i"></i>
-							<a href="ad_chart.jsp">
+							<a href="HotelControl?command=ad_chart&hotelname=<%=hotelname%>">
 								<span class="heading">매출 관리</span>
 								<span class="value"><span><i class="fas fa-arrow-alt-circle-right"></i></span></span>
 							</a>
@@ -161,7 +147,7 @@ Mdto = (MonthlysalesDto)request.getAttribute("Mdto");
 					<div class="col-lg-3 col-xs-6">
 						<div class="rad-info-box rad-bg-warning">
 							<i class="fas fa-list-ul rad-info-box_i"></i>
-							<a href="ad_notice.jsp">
+							<a href="PdsControl?command=ad_noticeGo">
 								<span class="heading">공지사항</span>
 								<span class="value"><span><i class="fas fa-arrow-alt-circle-right"></i></span></span>
 							</a>
@@ -191,7 +177,7 @@ Mdto = (MonthlysalesDto)request.getAttribute("Mdto");
 								<tr height="40">
 								<td>
 								<input type="hidden" value="ad_memberUpdate" name="command">
-								아이디  </p></td><td><input type="text" value=<%=mem.getId() %> name="id"></td>
+								아이디  </p></td><td><input type="text" value=<%=mem.getId() %> name="id" readonly="readonly"></td>
 							</tr>
 							
 							<tr height="40">

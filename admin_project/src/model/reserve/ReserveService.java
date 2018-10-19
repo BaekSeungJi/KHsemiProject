@@ -25,8 +25,8 @@ public class ReserveService {
 				return manager.ad_reservedelete(seq);
 			}
 	//admin 예약 수정 
-			public boolean ad_reserveUpdate(int seq, String regdate, String request) {
-				return manager.ad_reserveUpdate(seq, regdate, request);
+			public boolean ad_reserveUpdate(int seq, String realdate, String request) {
+				return manager.ad_reserveUpdate(seq, realdate, request);
 			}
 	//admin 예약 달력 
 			public List<ReserveDto> getCalendarList(String hotelname, String yyyyMM){
@@ -36,5 +36,9 @@ public class ReserveService {
 	//admin 해당호텔의 예약 전체 가져오기
 			public List<ReserveDto> getReserve(String hotelname) {
 				return manager.getReserve(hotelname);
+			}
+	//admin callist 가져오기
+			public List<ReserveDto> getlist(String hotelname, String yyyymmdd) {
+				return manager.getlist(hotelname, yyyymmdd);
 			}
 }

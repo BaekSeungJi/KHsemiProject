@@ -32,8 +32,8 @@ public class MemberService {
 	}
 	
 	//admin 해당호텔 예약명단 가져오기
-	public List<ReserveTableDto> adminGetHotelmember(String hotelname) {
-		return manager.ad_GetHotelmember(hotelname);
+	public List<ReserveTableDto> ad_GetHotelmember(String hotelname, String sWord, String selected) {
+		return manager.ad_GetHotelmember(hotelname, sWord, selected);
 	}
 	
 	//admin 해당 id 예약 리스트 가져오기

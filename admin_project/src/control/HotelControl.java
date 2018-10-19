@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.websocket.Session;
 
 import dto.HotelDto;
+import dto.MemberDto;
 import dto.MonthlysalesDto;
 import dto.ReserveDto;
 import dto.ReviewDto;
@@ -44,11 +45,12 @@ public class HotelControl extends HttpServlet {
 		
 		
 		String command =req.getParameter("command");
-		PrintWriter out = resp.getWriter();
+	
 		
 
 		// admin 호텔 정보 수정
 		if(command.equals("ad_hotelUpdate")) {
+			PrintWriter out = resp.getWriter();
 			
 			String hotelname = req.getParameter("hotelname");
 			String DESCRIPTION = req.getParameter("description");
@@ -77,7 +79,7 @@ public class HotelControl extends HttpServlet {
 		}
 		
 		else if (command.equals("ad_GohotelUpdate")) {
-		
+			PrintWriter out = resp.getWriter();
 			
 			String hotelname = req.getParameter("hotelname");
 			
@@ -91,6 +93,7 @@ public class HotelControl extends HttpServlet {
 		}
 		
 		else if (command.equals("ad_hotel")) {	
+			PrintWriter out = resp.getWriter();
 			
 			Calendar cal = Calendar.getInstance();
 			cal.set(Calendar.DATE, 1);
@@ -122,8 +125,8 @@ public class HotelControl extends HttpServlet {
 
 			int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
-			
-			String hotelname= req.getParameter("hotelname"); 
+			String hotelname = (String)req.getSession().getAttribute("hotelname");
+	
 			
 			ReserveService Rservice = ReserveService.getInstance();
 			
@@ -142,6 +145,9 @@ public class HotelControl extends HttpServlet {
 		}
 		
 		else if (command.equals("ad_chart")) {	
+			MemberDto dto = (MemberDto)req.getSession().getAttribute("login");
+			String id = dto.getId();
+
 			String hotelname = (String)req.getSession().getAttribute("hotelname");
 			
 			ReserveService ser = ReserveService.getInstance();
@@ -168,9 +174,53 @@ public class HotelControl extends HttpServlet {
 			
 			String year= req.getParameter("year"); 
 			String month= req.getParameter("month"); 
-			String day= req.getParameter("day"); 
+			String day= req.getParameter("day"); 		
+
+			String yyyymmdd = year + util.two(month + "") + util.two(day + "");
+
+			System.out.print(year);
+			System.out.print(month);
+			System.out.print(day);
+			System.out.print(yyyymmdd);
+			
+			ReserveService Rs = ReserveService.getInstance();
+			
+			List<ReserveDto> list = Rs.getlist(hotelname, yyyymmdd);
+			
+			req.setAttribute("list", list);
+			req.setAttribute("year", year);
+			req.setAttribute("month", month);
+			req.setAttribute("day", day);
+			req.setAttribute("yyyymmdd", yyyymmdd);
+			
 			dispatch("ad_caldetail.jsp", req, resp);
 		}
+		
+		else if (command.equals("ad_calDelete")) {	
+			PrintWriter out = resp.getWriter();
+			
+			System.out.print("delete들옴");
+		int seq = Integer.parseInt(req.getParameter("seq")); 
+		String hotelname = req.getParameter("hotelname");
+		ReserveService service = ReserveService.getInstance();
+		
+		System.out.print(seq);
+		System.out.print(hotelname);
+		
+		boolean b = service.ad_reservedelete(seq);
+		
+		if(b == true) {
+		
+			out.println("alert('삭제 완료되었습니다');");
+
+			resp.sendRedirect("HotelControl?command=ad_hotel&hotelname="+hotelname);
+		}else {
+	
+			out.println("alert('삭제 실패하였습니다');");
+		
+			resp.sendRedirect("HotelControl?command=ad_hotel&hotelname="+hotelname);
+		}
+	}
 	}
 	
 	

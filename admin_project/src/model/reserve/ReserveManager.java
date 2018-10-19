@@ -8,6 +8,7 @@ import java.util.List;
 
 import db.DBClose;
 import db.DBConnection;
+
 import dto.ReserveDto;
 import model.pds.PdsManager;
 
@@ -21,7 +22,7 @@ public class ReserveManager implements iReserveManager {
 	@Override
 	public boolean ad_reserveUpdate(int seq, String regdate, String request) {
 		String sql = " UPDATE reserve SET "
-				+ " regdate=?, request=? "
+				+ " REALDATE=?, request=? "
 				+ " WHERE SEQ=? ";
 		
 		Connection conn = null;
@@ -65,7 +66,7 @@ public class ReserveManager implements iReserveManager {
 		int count = 0;
 		Connection conn=null;
 		PreparedStatement psmt=null;
-		
+		System.out.println("delete함수 들옴");
 		
 			try {
 			conn = DBConnection.getConnection();
@@ -73,13 +74,13 @@ public class ReserveManager implements iReserveManager {
 			psmt=conn.prepareStatement(sql);
 			psmt.setInt(1, seq);			
 			count = psmt.executeUpdate();
-			
+			System.out.println("count"+count);
 		} catch (Exception e) {			
 			e.printStackTrace();
 		} finally{
 			DBClose.close(psmt, conn, null);			
 		}
-				
+			
 		return count>0?true:false;
 	}
 
@@ -91,7 +92,8 @@ public class ReserveManager implements iReserveManager {
 				+ "				SEQ, ID, HOTELNAME, REQUEST, REALDATE, REGDATE, DEL "
 				+ "		FROM reserve "
 				+ "		WHERE HOTELNAME=? AND SUBSTR(REALDATE, 1, 6)=?) "
-				+ "  WHERE RN BETWEEN 1 AND 5 ";
+				+ "  WHERE RN BETWEEN 1 AND 5 "
+				+ " and del = 0 ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -157,11 +159,11 @@ public class ReserveManager implements iReserveManager {
 		
 		try {
 			conn = DBConnection.getConnection();
-			System.out.println("1/6 ad_getHotelname Success");
+			System.out.println("1/6 getReserve Success");
 			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 ad_getHotelname Success");
+			System.out.println("2/6 getReserve Success");
 			rs = psmt.executeQuery(sql);
-			System.out.println("3/6 ad_getHotelname Success");
+			System.out.println("3/6 getReserve Success");
 			
 			while(rs.next()){			
 				Rdto = new ReserveDto(0, "", "", "", rs.getString(1), "", 0);
@@ -170,7 +172,7 @@ public class ReserveManager implements iReserveManager {
 				
 			}
 		} catch (Exception e1) {
-			System.out.println("ad_getHotelname Fail");
+			System.out.println("getReserve Fail");
 			e1.printStackTrace();
 			
 		}	finally{			
@@ -180,6 +182,47 @@ public class ReserveManager implements iReserveManager {
 		
 		
 		return dto;
+	}
+
+	@Override
+	public List<ReserveDto> getlist(String hotelname, String yyyymmdd) {
+		String sql = " SELECT * "
+				+ " FROM reserve "
+				+ "	WHERE hotelname=? AND REALDATE =? ";
+		
+		System.out.println("getlist:"+yyyymmdd);
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ReserveDto> list = new ArrayList<ReserveDto>();
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getlist Success");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, hotelname.trim());
+			psmt.setString(2, yyyymmdd.trim());
+			System.out.println("2/6 getlist Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getlist Success");
+			
+			while(rs.next()) {
+				ReserveDto dto = new ReserveDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7));
+				System.out.println("지금:"+rs.getString(2));
+				list.add(dto);				
+			}
+			System.out.println("4/6 getlist Success");
+			
+		} catch (Exception e) {
+			System.out.println("getlist Fail");
+		} finally {			
+			DBClose.close(psmt, conn, rs);			
+		}
+			
+		return list;
 	}
 
 	

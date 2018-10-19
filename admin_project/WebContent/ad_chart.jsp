@@ -30,9 +30,7 @@
 </head>
 
 <%
- Object ologin = session.getAttribute("login");
-
-MemberDto mem = (MemberDto)ologin;
+MemberDto user= (MemberDto)session.getAttribute("login");
 
 MonthlysalesDto dto = (MonthlysalesDto)request.getAttribute("Mdto");
 scoreDto sdto = (scoreDto)request.getAttribute("sdto");
@@ -48,7 +46,7 @@ scoreDto sdto = (scoreDto)request.getAttribute("sdto");
 			<div class="rad-logo-container rad-nav-min">
 				
 			</div>
-			<a href="index.jsp" class="rad-logo-hidden">Admin</a>
+			<a href="MemberControl?command=ad_admin" class="rad-logo-hidden">Admin</a>
 
 			
 		</nav>
@@ -58,21 +56,21 @@ scoreDto sdto = (scoreDto)request.getAttribute("sdto");
 	<nav class="rad-sidebar rad-nav-min">
 		<ul>
 			<li>
-				<a href="MemberControl?command=memberGo&id=<%=mem.getId() %>" class="inbox">
+				<a href="MemberControl?command=memberGo&id=<%=user.getId() %>" class="inbox">
 					<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
 					<span class="rad-sidebar-item">회원 관리</span>
 				</a>
 			</li>
 			<li>
-				<a href="ad_hotel.jsp">
+				<a href="HotelControl?command=ad_hotel">
 				<i class="fas fa-hotel">
 						<span class="icon-bg rad-bg-danger"></span>
 					</i>
 					<span class="rad-sidebar-item">호텔 관리</span>
 				</a>
 			</li>
-			<li><a href="ad_chart.jsp" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a></li>
-			<li><a href="ad_notice.jsp" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a></li>
+			<li><a href="HotelControl?command=ad_chart" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a></li>
+			<li><a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a></li>
 			
 		</ul>
 	</nav>

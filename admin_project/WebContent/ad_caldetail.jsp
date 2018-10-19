@@ -1,3 +1,6 @@
+<%@page import="java.sql.Timestamp"%>
+
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="dto.MemberDto"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="dto.ReserveDto"%>
@@ -6,7 +9,24 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
+<%!
+public String toDates(String mdate){
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
+	
+	// 201810021607	-> 2018-10-02 16:07 
+	String s = mdate.substring(0, 4) + "-"	// yyyy 
+			+ mdate.substring(4, 6) + "-"	// MM
+			+ mdate.substring(6, 8) + " "	// dd
+			+ mdate.substring(8, 10) + ":"	// hh
+			+ mdate.substring(10, 12) + ":00";
+	
+	Timestamp d = Timestamp.valueOf(s);
+	
+	return sdf.format(d);
+}
+
+%>
         
 <!DOCTYPE html>
 <html lang="en" >
@@ -58,7 +78,12 @@ MemberDto user= (MemberDto)session.getAttribute("login");
 
 String hotelname = (String)session.getAttribute("hotelname");
 
-List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list"); 
+String year = request.getParameter("year");
+String month = request.getParameter("month");
+String day = request.getParameter("day");
+/* String yyyymmdd = request.getParameter("yyyymmdd"); */
+
+List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 
 %>
 
@@ -112,108 +137,46 @@ List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 
 <div align="center">
 
-<table class="_tablee">
-<col width="100"><col width="100"><col width="100"><col width="100">
-<col width="100"><col width="100"><col width="100">
+<%-- <%= yyyymmdd%> --%>
+<h2><%=year %>년 <%=month %>월 <%=day %>일 일정</h2>
+
+<table border="1" style="text-align: center;">
+<col width="100"><col width="200"><col width="100"><col width="450"><col width="50">
+
+<tr bgcolor="#FA8072">
+<td>번호</td><td>시간</td><td>아이디</td><td>요청사항</td><td>삭제</td>
+</tr>
 
 <%
-
-
-
-int dayOfWeek = (int)request.getAttribute("dayOfWeek");
-int year = (int)request.getAttribute("year");
-int month = (int)request.getAttribute("month");
-
-
-Calendar cal = (Calendar)request.getAttribute("cal");
+for(int i = 0;i < list.size(); i++ ){
+	ReserveDto dto = list.get(i);
+	%>
+	
+	<tr bgcolor="#FFFFFF" >	
+		<td><%=i + 1 %></td>
+		<td><%=dto.getRealdate()%></td>
+		<td>
+			<%=dto.getId() %>
 			
-			// <<
-			String pp = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
-										+ "<img src='image/left.gif'></a>", 
-											"HotelControl","ad_hotel", year-1, month,hotelname);
-
-			// <
-			String p = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
-										+ "<img src='image/prec.gif'></a>", 
-											"HotelControl","ad_hotel", year, month-1,hotelname,"ad_hotel");
-
-			// >
-			String n = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
-										+ "<img src='image/next.gif'></a>", 
-											"HotelControl","ad_hotel", year, month+1,hotelname,"ad_hotel");
-
-			// >>
-			String nn = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
-										+ "<img src='image/last.gif'></a>", 
-										"HotelControl","ad_hotel", year+1, month,hotelname,"ad_hotel");
-
-
+		</td>
+		<td>
+			<%=dto.getRequest() %>
+		</td>
+		<td>
+			<form action="HotelControl" method="post">
+				<input type="hidden" name="command" value="ad_calDelete">
+				<input type="hidden" name="seq" value="<%=dto.getSeq() %>">
+				<input type="hidden" name="hotelname" value="<%=hotelname %>">
+				<input type="submit" value="일정삭제">
+			</form>
+		</td>	
+	</tr>
+	<%
+}
 %>
-
-
-
-<tr height="100" class="_tr">
-	<td colspan="7" align="center">
-		<%=pp %>&nbsp;<%=p %>
-		<font color="black" style="font-size: 50px">
-			<%=String.format("%d년&nbsp;&nbsp;%d월", year, month) %>
-		</font>
-		<%=n %>&nbsp;<%=nn %>
-	</td>
-</tr>
-
-<tr height="40" bgcolor="#F5F1E9">
-	<td align="center" style="padding-top: 7px; color: red;">일</td>
-	<td align="center">월</td>
-	<td align="center">화</td>
-	<td align="center">수</td>
-	<td align="center">목</td>
-	<td align="center">금</td>
-	<td align="center" style="color: red;">토</td>
-</tr>
-
-<tr height="100" align="left" valign="top"  class="_t">
-<%
-//위쪽 빈칸
-for(int i = 1;i < dayOfWeek; i++){
-	%>
-	<td>&nbsp;</td>	
-	<%
-}
-
-// 날짜
-int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-for(int i = 1;i <= lastDay; i++){
-	%>
-	<td><%= util.callist(year, month, i,hotelname) %>
-	<%=util.makeTable(year, month, i, list) %>
-	</td>
-	<%
-	if((i + dayOfWeek - 1) % 7 == 0 && i != lastDay){
-		%>
-		</tr><tr height="100" align="left" valign="top"  class="_t">
-		<%
-	}
-}
-
-// 밑칸
-for(int i = 0;i < (7 - (dayOfWeek + lastDay - 1) % 7 ) % 7; i++){
-	%>
-	<td>&nbsp;</td>	
-	<%
-}
-
-
-%>
-</tr>
-
-
-
 </table>
 
-</div>
-	
-<div>
+
 
 </div>
 					

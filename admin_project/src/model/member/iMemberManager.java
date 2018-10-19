@@ -19,7 +19,7 @@ public interface iMemberManager {
 	
 	public String ad_getHotelname(String id);
 	
-	public List<ReserveTableDto> ad_GetHotelmember(String hotelname);
+	public List<ReserveTableDto> ad_GetHotelmember(String hotelname,String sWord,String selected);
 	
 	public List<ReserveDto> ad_reserveList(String id);
 	
@@ -27,4 +27,5 @@ public interface iMemberManager {
 	
 	public boolean ad_MemberUpdate(String id, String pw, String name, String email, String phone);
 
+	
 }

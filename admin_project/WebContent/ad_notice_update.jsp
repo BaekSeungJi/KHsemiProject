@@ -1,23 +1,12 @@
-<%@page import="dto.MemberDto"%>
 <%@page import="dto.PdsDto"%>
+<%@page import="dto.MemberDto"%>
 
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%!
-// 댓글용
- public String arrow (int depth){
-	String rs = "<img src ='image/arrow.png' width='20px' height='20px'/>";
-	String nbsp = "&nbsp;&nbsp;&nbsp;&nbsp;";
-	String ts = "";
-	
-	for(int i = 0; i< depth; i++){
-		ts += nbsp;
-	}
-	return depth == 0 ? "":ts + rs;
-}
-
-%>     
+    pageEncoding="UTF-8"%> 
+    <%
+request.setCharacterEncoding("utf-8");
+%> 
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -26,29 +15,24 @@
   <title>Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
  
- 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
 <link rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css'>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.4/jquery-jvectormap.min.css'>
- <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
-      <link rel="stylesheet" href="css/style.css">
-      
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+    
 <style type="text/css">
-._tr{
-border: 1px solid #C0C0C0	;
-text-align: center;
 
 
+
+table{
+	background-color:#ffffff;
 }
-</style>
-
-  
-<style type="text/css">
-
-
+   
 
 h1{
   font-size: 30px;
@@ -58,11 +42,7 @@ h1{
   text-align: center;
   margin-bottom: 15px;
 }
-table{
-	margin-bottom: 100px;
-  width:100%;
-  table-layout: fixed;
-}
+
 .tbl-header{
   background-color: #FA8072;
  }
@@ -87,20 +67,20 @@ td{
   vertical-align:middle;
   font-weight: 300;
   font-size: 12px;
-  color: #FA8072;
+  color: black;
   border-bottom: solid 1px #FA8072;
 
 }
+.t{
+background-color: #FA8072;
 
-
-/* demo styles */
-
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
-body{
-  background: -webkit-linear-gradient(left, #25c481, #2 5b7c4);
-  background: linear-gradient(to right, #25c481, #2 5b7c4);
-  font-family: 'Roboto', sans-serif;
 }
+
+
+.spe{
+text-align: right;
+}
+
 
 
 }
@@ -112,10 +92,12 @@ body{
 <body>
 
 <%
-MemberDto mem = (MemberDto)session.getAttribute("login");
-List<PdsDto> list = (List<PdsDto>)request.getAttribute("list");
-%>  
+MemberDto user = (MemberDto)session.getAttribute("login");
 
+PdsDto dto = (PdsDto)request.getAttribute("dto");
+%>    
+    
+  
 
   <section>
 	<header>
@@ -133,7 +115,7 @@ List<PdsDto> list = (List<PdsDto>)request.getAttribute("list");
 	<nav class="rad-sidebar rad-nav-min">
 		<ul>
 			<li>
-				<a href="MemberControl?command=memberGo&id=<%=mem.getId() %>" class="inbox">
+				<a href="MemberControl?command=memberGo&id=<%=user.getId() %>" class="inbox">
 					<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
 					<span class="rad-sidebar-item">회원 관리</span>
 				</a>
@@ -157,57 +139,59 @@ List<PdsDto> list = (List<PdsDto>)request.getAttribute("list");
 		<div class="rad-body-wrapper rad-nav-min">
 			<div class="container-fluid">
 
-		<header class="rad-page-title">
-					<span>공지사항 </span>
-					<small><%=mem.getName()%> 회원님</small>
-								
-				</header>
 
-<div align="center">
 
-<table border="1" style="background-color: white;">
-<col width="50"><col width="100"><col width="400"><col width="80">
-<col width="50"><col width="50"><col width="100">
+<form action="fileUpdate.jsp" method="post" enctype="multipart/form-data">
 
-<tr bgcolor="#FA8072" align="center" height="25">
-	<td style="color: white;">번호</td>	<td style="color: white;">작성자</td>	<td style="color: white;">제목</td>	<td style="color: white;">다운로드</td>
-		<td style="color: white;">조회수</td>	<td style="color: white;">다운수</td>	<td style="color: white;">작성일</td>
+<div align="center" style="margin-bottom: 100px">
+
+<table border="1" bgcolor="pink">
+<col width="70"><col width="500">
+
+<tr>
+	<td class="t">아이디</td>
+	<td><%=user.getId() %>
+
+		<input type="hidden" name="id" value="<%=user.getId() %>">
+		<%String s = dto.getSeq()+""; %>
+		<input type="hidden" name="seq" value="<%=s%>">
+	</td>
 </tr>
 
-<%
-for(int i = 0;i < list.size(); i++){
-	PdsDto pds = list.get(i);
-	String bgcolor = "";
-	if(i % 2 == 0){
-		bgcolor = "white";
-	}else{
-		bgcolor = "#FFFFFF";
-	}
-	%>
-	<tr  height="5px" class="_tr">
-		<td><%=i + 1 %></td>
-		<td><%=pds.getId() %></td>
-		<td align="left">
-		<%=arrow(pds.getDepth()) %>
-			<a href="PdsControl?command=pdsdetail&seq=<%=pds.getSeq()%>">
-					<%=pds.getTitle() %>
-			</a>
-		</td>
-		<td>
-		<%if(pds.getFilename().equals("answer")==false){ %>
-			<input type="button" name="btnDown" value="파일"
-				onclick="location.href='filedown?filename=<%=pds.getFilename() %>&seq=<%=pds.getSeq()%>'">
-		<%} %>
-		</td>
-		<td><%=pds.getReadcount() %></td>
-		<td><%=pds.getDowncount() %></td>
-		<td><%=pds.getRegdate().substring(0, 10) %></td>	
-	</tr>
-	<%
-}
-%>
+<tr>
+	<td class="t">제목</td>
+	<td>
+		<input type="text" name="title" size="50" value="<%=dto.getTitle()%>">
+	</td>
+</tr>
+<%if(dto.getFilename().equals("answer")==false){ %>
+<tr>
+	<td class="t">파일업로드</td>
+	<td>
+		<input type="file" name="fileload" style="width: 400px">
+	</td>
+</tr>
+<%} %>
+<tr>
+	<td class="t">내용</td>
+	<td>
+		<textarea rows="20" cols="50" name="content"><%=dto.getContent() %></textarea>
+	</td>
+</tr>
+
+<tr align="center" class="spe">
+	<td colspan="2">
+		<input type="submit" value="수정">
+	</td>
+</tr>
+
 </table>
+
 </div>
+
+</form>
+
+
 
 
 </div>

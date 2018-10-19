@@ -34,9 +34,10 @@ public class ReviewControl extends HttpServlet {
 		String command =req.getParameter("command");
 		
 		
-		PrintWriter out = resp.getWriter();
+		
 		// 관리자_리뷰삭제
 		if(command.equals("ad_reviewDelete")) {
+			PrintWriter out = resp.getWriter();
 			
 			int seq = Integer.parseInt(req.getParameter("seq"));
 			
