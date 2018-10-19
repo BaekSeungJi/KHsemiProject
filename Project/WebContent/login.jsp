@@ -1,4 +1,3 @@
-<%@page import="java.util.List"%>
 <%@page import="model.member.iMemberManager"%>
 <%@page import="dto.MemberDto"%>
 <%@page import="model.member.MemberService"%>
@@ -8,12 +7,11 @@
 
    <%
 String id = request.getParameter("id");
-//System.out.println("login확인 id ="+id);
+System.out.println("login확인 id ="+id);
 String pwd = request.getParameter("pwd");
 String name = request.getParameter("name");
 String email = request.getParameter("email");
 String phone = request.getParameter("phone");
-
 int blacklist = Integer.parseInt("0");
 int auth = Integer.parseInt("3");
 
@@ -46,7 +44,7 @@ if(mem != null && !mem.getId().equals("") && mem.getBlacklist()==0){
 %>
 	<script type="text/javascript">
 	alert("안녕하세요 <%=mem.getId() %> 님");
-	location.href = "loginview.jsp";
+	location.href = "index.jsp";
 	</script>	
 <%
 }else{
