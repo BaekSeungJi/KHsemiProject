@@ -333,7 +333,7 @@ String keyword = request.getParameter("keyword");
 									</li>
 									<!-- 검색된 호텔 리스트가 addList 함수를 통해 이 부분에 append됨. -->
 								</ul>
-								</section>
+							</section>
 							</div>
 							</div>
 						</div>					
