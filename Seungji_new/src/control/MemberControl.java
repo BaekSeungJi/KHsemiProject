@@ -68,13 +68,8 @@ public class MemberControl extends HttpServlet {
 		else if(command.equals("Login")) {					//로그인
 			String id = req.getParameter("id");
 			String pwd = req.getParameter("pwd");
-			String name = req.getParameter("name");
-			String email = req.getParameter("email");
-			String phone = req.getParameter("phone");
-			int blacklist = Integer.parseInt("blacklist");
-			int auth = Integer.parseInt("auth");
 
-			MemberDto dto = new MemberDto(id, pwd, name, email, phone, blacklist, auth);
+			MemberDto dto = new MemberDto(id, pwd, "", "", "", 0, 3);
 			req.setAttribute("dto", dto);
 
 			dispatch("login.jsp", req, resp);	
