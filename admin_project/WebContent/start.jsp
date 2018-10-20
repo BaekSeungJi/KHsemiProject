@@ -17,7 +17,7 @@ String name = "김유리";
 String email = "yuriv@naver.com";
 String phone = "010-8728-2222";
 int blacklist = 0;
-int auth=1;
+int auth=2;
 
 MemberDto dto = new MemberDto(id,pwd,name,email,phone,blacklist,auth);
 session.setAttribute("login", dto);

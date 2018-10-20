@@ -56,7 +56,7 @@ public class HotelControl extends HttpServlet {
 			String DESCRIPTION = req.getParameter("description");
 			int MAXPEOPLE = Integer.parseInt(req.getParameter("maxpeople"));
 			int PRICE = Integer.parseInt(req.getParameter("price"));
-			int HOTELPHONE = Integer.parseInt(req.getParameter("hotelphone"));
+			String HOTELPHONE = req.getParameter("hotelphone");
 			
 			System.out.println(hotelname);
 			System.out.println(DESCRIPTION);
@@ -66,6 +66,7 @@ public class HotelControl extends HttpServlet {
 			HotelService service = HotelService.getInstance();
 			
 			boolean b = service.ad_HotelUpdate(hotelname, DESCRIPTION, MAXPEOPLE, PRICE, HOTELPHONE);
+			
 			
 			if(b == true) {
 				out.println("alert('수정 완료되었습니다');");

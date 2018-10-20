@@ -25,7 +25,7 @@ public class PdsManager implements iPdsManager {
 	public List<PdsDto> getPdsList() {
 		String sql = " SELECT seq,id,title,content,readcount,downcount,filename,ref,step,depth,del, regdate "
 				+ " FROM PDS "
-				+ " where del = 0 "
+			
 				+ " ORDER BY REF DESC, STEP ASC ";
 	
 	Connection conn = null;

@@ -188,13 +188,17 @@ for(int i = 0;i < list.size(); i++){
 		<td><%=i + 1 %></td>
 		<td><%=pds.getId() %></td>
 		<td align="left">
+		 <%if(pds.getDel()==1){ %>
+		삭제된 글입니다
+		<%}else{ %> 
 		<%=arrow(pds.getDepth()) %>
 			<a href="PdsControl?command=pdsdetail&seq=<%=pds.getSeq()%>">
 					<%=pds.getTitle() %>
 			</a>
+			<%} %>
 		</td>
 		<td>
-		<%if(pds.getFilename().equals("answer")==false){ %>
+		<%if(pds.getFilename().equals("answer")==false && pds.getDel()==0){ %>
 			<input type="button" name="btnDown" value="파일"
 				onclick="location.href='filedown?filename=<%=pds.getFilename() %>&seq=<%=pds.getSeq()%>'">
 		<%} %>

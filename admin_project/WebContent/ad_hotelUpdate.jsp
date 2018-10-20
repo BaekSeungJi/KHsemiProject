@@ -84,7 +84,7 @@ HotelDto dto = (HotelDto)request.getAttribute("dto");
 							<div class="panel-body">
 							
 							<div>
-							<div style="float: left; padding-right: 20px"><img alt="" src="72294141bf017fd8c2098303afdb7878.jpg" width="230" height="300"></div>
+							<div style="float: left; padding-right: 20px"><img alt="" src="image/<%=dto.getImage() %>" width="230" height="300"></div>
 							<div style="float: left;">
 							<form action="HotelControl">
 							<table>
@@ -92,7 +92,7 @@ HotelDto dto = (HotelDto)request.getAttribute("dto");
 								<tr height="40">
 								<td>
 								<input type="hidden" value="ad_hotelUpdate" name="command">
-							호텔이름 </td><td><input type="text" value="<%=dto.getHotelname()%>" name="hotelname"></td>
+							호텔이름 </td><td><input type="text" value="<%=dto.getHotelname()%>" readonly="readonly" name="hotelname"></td>
 							</tr>
 						
 							

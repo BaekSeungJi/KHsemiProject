@@ -186,7 +186,7 @@ public class MemberManager implements iMemberManager {
 			Word = " and m.id='" + sWord.trim() + "' ";
 		}
 		
-		String sql = " SELECT  m.id, m.name,m.email,m.phone, e.realdate  FROM member m, RESERVE e "
+		String sql = " SELECT  m.id, m.name,m.email,m.phone, e.checkin,e.checkout  FROM member m, RESERVE e "
 				+ " WHERE e.HOTELNAME = ? " + Word;
 		
 		Connection conn = null;
@@ -216,9 +216,10 @@ public class MemberManager implements iMemberManager {
 				String name = rs.getString(2);
 				String email = rs.getString(3);
 				String phone = rs.getString(4);
-				String realdate = rs.getString(5);
+				String checkin = rs.getString(5);
+				String checkout = rs.getString(6);
 				
-				ReserveTableDto dto = new ReserveTableDto(id, name, email, phone, realdate);
+				ReserveTableDto dto = new ReserveTableDto(id, name, email, phone, checkin,checkout);
 				
 				list.add(dto);
 				System.out.println(dto.getId());
@@ -240,7 +241,7 @@ public class MemberManager implements iMemberManager {
 	@Override
 	public List<ReserveDto> ad_reserveList(String id) {
 
-		String sql = " SELECT seq, hotelname, request, realdate, regdate, del from reserve where id = ? ";
+		String sql = " SELECT seq, hotelname, request, CHECKIN,checkout, regdate, del from reserve where id = ? ";
 		List<ReserveDto> list = new ArrayList<>();
 		
 		Connection conn = null;
@@ -270,10 +271,11 @@ public class MemberManager implements iMemberManager {
 				String _id = id;
 				String hotelname = rs.getString(2);
 				String request = rs.getString(3);
-				String realdate = rs.getString(4);
-				String regdate = rs.getString(5);
-				int del = rs.getInt(6);
-				ReserveDto dto = new ReserveDto(seq, _id, hotelname, request, realdate, regdate, del);
+				String CHECKIN = rs.getString(4);
+				String CHECKout = rs.getString(5);
+				String regdate = rs.getString(6);
+				int del = rs.getInt(7);
+				ReserveDto dto = new ReserveDto(seq, _id, hotelname, request,CHECKIN,CHECKout , regdate, del);
 				list.add(dto);
 			
 			}

@@ -20,9 +20,9 @@ public class ReserveManager implements iReserveManager {
 	}
 
 	@Override
-	public boolean ad_reserveUpdate(int seq, String regdate, String request) {
+	public boolean ad_reserveUpdate(int seq, String checkin,String checkout, String request) {
 		String sql = " UPDATE reserve SET "
-				+ " REALDATE=?, request=? "
+				+ " checkin=?,checkout=?, request=? "
 				+ " WHERE SEQ=? ";
 		
 		Connection conn = null;
@@ -38,9 +38,10 @@ public class ReserveManager implements iReserveManager {
 			System.out.println("2/6 S updateBbs");
 			
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, regdate);
-			psmt.setString(2, request);
-			psmt.setInt(3, seq);
+			psmt.setString(1, checkin);
+			psmt.setString(2, checkout);
+			psmt.setString(3, request);
+			psmt.setInt(4, seq);
 			
 			System.out.println("3/6 S updateBbs");
 			
@@ -86,12 +87,12 @@ public class ReserveManager implements iReserveManager {
 
 	@Override
 	public List<ReserveDto> getCalendarList(String hotelname, String yyyyMM) {
-		String sql = " SELECT SEQ, ID, HOTELNAME, REQUEST, REALDATE, REGDATE, DEL "
+		String sql = " SELECT SEQ, ID, HOTELNAME, REQUEST, checkin,checkout, REGDATE, DEL "
 				+ " FROM ( "
-				+ " 	SELECT ROW_NUMBER() OVER(PARTITION BY SUBSTR(REALDATE, 1, 8) ORDER BY REALDATE ASC) RN, "
-				+ "				SEQ, ID, HOTELNAME, REQUEST, REALDATE, REGDATE, DEL "
+				+ " 	SELECT ROW_NUMBER() OVER(PARTITION BY SUBSTR(checkin, 1, 8) ORDER BY checkin ASC) RN, "
+				+ "				SEQ, ID, HOTELNAME, REQUEST, checkin,checkout, REGDATE, DEL "
 				+ "		FROM reserve "
-				+ "		WHERE HOTELNAME=? AND SUBSTR(REALDATE, 1, 6)=?) "
+				+ "		WHERE HOTELNAME=? AND SUBSTR(checkin, 1, 6)=?) "
 				+ "  WHERE RN BETWEEN 1 AND 5 "
 				+ " and del = 0 ";
 		
@@ -125,9 +126,10 @@ public class ReserveManager implements iReserveManager {
 				dto.setId(rs.getString(2));
 				dto.setHotelname(rs.getString(3));
 				dto.setRequest(rs.getString(4));
-				dto.setRealdate(rs.getString(5));
-				dto.setRegdate(rs.getString(6));
-				dto.setDel(rs.getInt(7));
+				dto.setCheckin(rs.getString(5));
+				dto.setCheckout(rs.getString(6));
+				dto.setRegdate(rs.getString(7));
+				dto.setDel(rs.getInt(8));
 				list.add(dto);			
 		
 				
@@ -146,7 +148,7 @@ public class ReserveManager implements iReserveManager {
 	@Override
 	public List<ReserveDto> getReserve(String hotelname) {
 
-		String sql = " SELECT realdate FROM reserve "
+		String sql = " SELECT checkin,checkout FROM reserve "
 				+ " WHERE hotelname = '" + hotelname + "'";
 		
 		List<ReserveDto> dto = new ArrayList<>();
@@ -166,7 +168,9 @@ public class ReserveManager implements iReserveManager {
 			System.out.println("3/6 getReserve Success");
 			
 			while(rs.next()){			
-				Rdto = new ReserveDto(0, "", "", "", rs.getString(1), "", 0);
+				System.out.println("확인2:"+rs.getString(1));
+				System.out.println("확인2:"+rs.getString(2));
+				Rdto = new ReserveDto(0, "", "", "", rs.getString(1),rs.getString(2), "", 0);
 				
 				dto.add(Rdto);
 				
@@ -188,7 +192,7 @@ public class ReserveManager implements iReserveManager {
 	public List<ReserveDto> getlist(String hotelname, String yyyymmdd) {
 		String sql = " SELECT * "
 				+ " FROM reserve "
-				+ "	WHERE hotelname=? AND REALDATE =? ";
+				+ "	WHERE hotelname=? AND checkin =? ";
 		
 		System.out.println("getlist:"+yyyymmdd);
 		Connection conn = null;
@@ -210,7 +214,7 @@ public class ReserveManager implements iReserveManager {
 			System.out.println("3/6 getlist Success");
 			
 			while(rs.next()) {
-				ReserveDto dto = new ReserveDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7));
+				ReserveDto dto = new ReserveDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getString(6), rs.getString(7), rs.getInt(8));
 				System.out.println("지금:"+rs.getString(2));
 				list.add(dto);				
 			}

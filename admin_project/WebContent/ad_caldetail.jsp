@@ -141,10 +141,10 @@ List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 <h2><%=year %>년 <%=month %>월 <%=day %>일 일정</h2>
 
 <table border="1" style="text-align: center;">
-<col width="100"><col width="200"><col width="100"><col width="450"><col width="50">
+<col width="80"><col width="150"><col width="150"><col width="400"><col width="100"><col width="50">
 
 <tr bgcolor="#FA8072">
-<td>번호</td><td>시간</td><td>아이디</td><td>요청사항</td><td>삭제</td>
+<td>번호</td><td>체크인</td><td>체크아웃</td><td>아이디</td><td>요청사항</td><td>삭제</td>
 </tr>
 
 <%
@@ -154,7 +154,8 @@ for(int i = 0;i < list.size(); i++ ){
 	
 	<tr bgcolor="#FFFFFF" >	
 		<td><%=i + 1 %></td>
-		<td><%=dto.getRealdate()%></td>
+		<td><%=dto.getCheckin()%></td>
+		<td><%=dto.getCheckout()%></td>
 		<td>
 			<%=dto.getId() %>
 			

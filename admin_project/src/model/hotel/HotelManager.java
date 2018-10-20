@@ -24,7 +24,7 @@ public class HotelManager implements iHotelManager {
 
 		@Override
 		public boolean ad_HotelUpdate(String hotelname, String DESCRIPTION, int MAXPEOPLE, int PRICE,
-				int HOTELPHONE) {
+				String HOTELPHONE) {
 			String sql = " UPDATE hotel SET "
 					+ " DESCRIPTION=?, MAXPEOPLE=?, PRICE=?, HOTELPHONE=? "
 					+ " WHERE hotelname=? ";
@@ -45,7 +45,7 @@ public class HotelManager implements iHotelManager {
 				psmt.setString(1, DESCRIPTION);
 				psmt.setInt(2, MAXPEOPLE);
 				psmt.setInt(3, PRICE);
-				psmt.setInt(4, HOTELPHONE);
+				psmt.setString(4, HOTELPHONE);
 				psmt.setString(5, hotelname);
 				
 				
@@ -72,7 +72,7 @@ public class HotelManager implements iHotelManager {
 			PreparedStatement psmt = null;
 			ResultSet rs = null;
 			
-			String sql = " SELECT id, HOTELNAME, DESCRIPTION, region,MAXPEOPLE, PRICE, HOTELPHONE "
+			String sql = " SELECT id, HOTELNAME, DESCRIPTION, region,MAXPEOPLE, PRICE, HOTELPHONE,image "
 					+ " FROM hotel "
 					+ " WHERE hotelname=? ";
 			
@@ -93,9 +93,9 @@ public class HotelManager implements iHotelManager {
 					String region = rs.getString(4);	
 					int maxpeople = rs.getInt(5);
 					int price = rs.getInt(6);
-					int hotelphone = rs.getInt(7);
-				
-					dto = new HotelDto(id, _hotelname, description, region, maxpeople, price, hotelphone);
+					String hotelphone = rs.getString(7);
+					String image = rs.getString(8);	
+					dto = new HotelDto(id, _hotelname, description, region, maxpeople, price, hotelphone, image);
 				}
 				
 			} catch (Exception e) {		

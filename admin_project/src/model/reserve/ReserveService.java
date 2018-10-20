@@ -25,8 +25,8 @@ public class ReserveService {
 				return manager.ad_reservedelete(seq);
 			}
 	//admin 예약 수정 
-			public boolean ad_reserveUpdate(int seq, String realdate, String request) {
-				return manager.ad_reserveUpdate(seq, realdate, request);
+			public boolean ad_reserveUpdate(int seq, String checkin,String checkout, String request) {
+				return manager.ad_reserveUpdate(seq,  checkin,checkout, request);
 			}
 	//admin 예약 달력 
 			public List<ReserveDto> getCalendarList(String hotelname, String yyyyMM){

@@ -47,7 +47,7 @@ public class ReviewManager implements iReviewManager {
 	
 	@Override
 	public List<ReviewDto> ad_getReview(String hotelname) {
-		String sql = " SELECT score from REVIEW where hotelname = ? ";
+		String sql = " SELECT score from REVIEW where hotelname = ? and del = 0 ";
 		List<ReviewDto> list = new ArrayList<>();
 		
 		Connection conn = null;

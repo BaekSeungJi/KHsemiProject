@@ -66,17 +66,18 @@ public class ReserveControl extends HttpServlet {
 			
 			int seq = Integer.parseInt(req.getParameter("seq"));	
 			String id = req.getParameter("id");
-			String realdate = req.getParameter("realdate");
+			String checkin = req.getParameter("checkin");
+			String checkout = req.getParameter("checkout");
 			String request = req.getParameter("request");
 		
 			System.out.println("리저브테스트id"+id);
-			System.out.println("리저브테스트realdate:"+realdate);
+			System.out.println("리저브테스트realdate:"+checkin);
 			System.out.println("리저브테스트request:"+request);
 			
 			
 			ReserveService service = ReserveService.getInstance();
 			
-			boolean b = service.ad_reserveUpdate(seq, realdate, request);
+			boolean b = service.ad_reserveUpdate(seq, checkin,checkout, request);
 			
 			if(b == true) {
 				out.println("<script>alert('수정 완료되었습니다');</script>");

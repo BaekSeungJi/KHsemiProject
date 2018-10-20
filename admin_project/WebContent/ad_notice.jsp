@@ -59,7 +59,7 @@ h1{
   margin-bottom: 15px;
 }
 table{
-	margin-bottom: 100px;
+	margin-bottom: 60px;
   width:100%;
   table-layout: fixed;
 }
@@ -123,9 +123,12 @@ List<PdsDto> list = (List<PdsDto>)request.getAttribute("list");
 			<div class="rad-logo-container rad-nav-min">
 				
 			</div>
+			<%if(mem.getAuth()==2){ %>
 			<a href="MemberControl?command=ad_admin" class="rad-logo-hidden">Admin</a>
-
 			
+			<%}else{ %>
+			<a href="#" class="rad-logo-hidden">Admin</a>
+			<%} %>
 		</nav>
 	</header>
 </section>
@@ -133,21 +136,49 @@ List<PdsDto> list = (List<PdsDto>)request.getAttribute("list");
 	<nav class="rad-sidebar rad-nav-min">
 		<ul>
 			<li>
+				<%if(mem.getAuth()==2){ %>
 				<a href="MemberControl?command=memberGo&id=<%=mem.getId() %>" class="inbox">
-					<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
+				<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
 					<span class="rad-sidebar-item">회원 관리</span>
 				</a>
+				<%}else{ %>
+				<a href="#" class="inbox">
+				<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
+					<span class="rad-sidebar-item">회원 관리</span>
+				</a>
+				<%} %>
+					
 			</li>
 			<li>
+				<%if(mem.getAuth()==2){ %>
 				<a href="HotelControl?command=ad_hotel">
 				<i class="fas fa-hotel">
 						<span class="icon-bg rad-bg-danger"></span>
 					</i>
 					<span class="rad-sidebar-item">호텔 관리</span>
 				</a>
+				<%}else{ %>
+				<a href="#">
+				<i class="fas fa-hotel">
+						<span class="icon-bg rad-bg-danger"></span>
+					</i>
+					<span class="rad-sidebar-item">호텔 관리</span>
+				</a>
+				<%} %>
 			</li>
-			<li><a href="HotelControl?command=ad_chart" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a></li>
-			<li><a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a></li>
+				<%if(mem.getAuth()==2){ %>
+			<li><a href="HotelControl?command=ad_chart" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a>
+			<%}else{ %>
+						<li><a href="#" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a>
+			<%} %>
+			</li>
+			
+				<%if(mem.getAuth()==2){ %>
+			<li><a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a>
+			<%}else{ %>
+			<li><a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a>
+			<%} %>
+			</li>
 			
 		</ul>
 	</nav>
@@ -188,13 +219,18 @@ for(int i = 0;i < list.size(); i++){
 		<td><%=i + 1 %></td>
 		<td><%=pds.getId() %></td>
 		<td align="left">
+		
 		<%=arrow(pds.getDepth()) %>
+		 <%if(pds.getDel()==1){ %>
+		삭제된 글입니다
+		<%}else{ %> 
 			<a href="PdsControl?command=pdsdetail&seq=<%=pds.getSeq()%>">
 					<%=pds.getTitle() %>
 			</a>
+			 <%} %> 
 		</td>
 		<td>
-		<%if(pds.getFilename().equals("answer")==false){ %>
+<%if(pds.getFilename().equals("answer")==false && pds.getDel()==0){ %>
 			<input type="button" name="btnDown" value="파일"
 				onclick="location.href='filedown?filename=<%=pds.getFilename() %>&seq=<%=pds.getSeq()%>'">
 		<%} %>
@@ -208,7 +244,10 @@ for(int i = 0;i < list.size(); i++){
 %>
 </table>
 </div>
-
+<%if(mem.getAuth()==1){ %>
+<a href="ad_notice_write.jsp">자료 올리기</a>
+<br><br>
+<%} %>
 
 </div>
 </div>

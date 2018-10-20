@@ -1,13 +1,12 @@
-
-<%@page import="dto.ReserveTableDto"%>
-<%@page import="java.util.List"%>
+<%@page import="dto.PdsDto"%>
 <%@page import="dto.MemberDto"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-     <%
-request.setCharacterEncoding("utf-8");
-%>   
 
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%> 
+    <%
+request.setCharacterEncoding("utf-8");
+%> 
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -17,6 +16,7 @@ request.setCharacterEncoding("utf-8");
   <meta name="viewport" content="width=device-width, initial-scale=1">
  
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
 <link rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css'>
@@ -24,13 +24,15 @@ request.setCharacterEncoding("utf-8");
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 
-  <!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-  
+    
 <style type="text/css">
 
 
+
+table{
+	background-color:#ffffff;
+}
+   
 
 h1{
   font-size: 30px;
@@ -40,11 +42,7 @@ h1{
   text-align: center;
   margin-bottom: 15px;
 }
-table{
 
-  width:100%;
-  table-layout: fixed;
-}
 .tbl-header{
   background-color: #FA8072;
  }
@@ -69,101 +67,39 @@ td{
   vertical-align:middle;
   font-weight: 300;
   font-size: 12px;
-  color: #FA8072;
+  color: black;
   border-bottom: solid 1px #FA8072;
 
 }
+.t{
+background-color: #FA8072;
+
+}
 
 
-/* demo styles */
-
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
-body{
-  background: -webkit-linear-gradient(left, #25c481, #2 5b7c4);
-  background: linear-gradient(to right, #25c481, #2 5b7c4);
-  font-family: 'Roboto', sans-serif;
+.spe{
+text-align: right;
 }
 
 
 
-/* follow me template */
-.made-with-love {
-  margin-top: 40px;
-  padding: 10px;
-  clear: left;
-  text-align: center;
-  font-size: 10px;
-  font-family: arial;
-  color: #fff;
-}
-.made-with-love i {
-  font-style: normal;
-  color: #F50057;
-  font-size: 14px;
-  position: relative;
-  top: 2px;
-}
-.made-with-love a {
-  color: #fff;
-  text-decoration: none;
-}
-.made-with-love a:hover {
-  text-decoration: underline;
-}
-
-.sel {
-
- font-size: 14px;
 }
 
 </style>
   
-  
 </head>
-
-
-
-
-
-  
-
-
-
-
-
-
-
 
 <body>
 
 <%
-// 검색어
-String findWord = request.getParameter("sWord");
-String choice = request.getParameter("selected");
+int seq = Integer.parseInt(request.getParameter("seq"));
 
-System.out.println("findWord = " + findWord);
+String id = request.getParameter("id");
 
-System.out.println("choice = " + choice);
-
-if(choice == null || choice.equals("")){
-	choice = "";	
-}
-
-if(findWord == null){
-	findWord = "";
-}
-
-%>
-
-<%
 MemberDto user = (MemberDto)session.getAttribute("login");
 
-
-List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list");
-
-%>
-
-
+%>  
+  
 
   <section>
 	<header>
@@ -201,95 +137,71 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
 	</nav>
 </aside>
 
-
-
-
-
-
 <section>
 		<div class="rad-body-wrapper rad-nav-min">
 			<div class="container-fluid">
 
 
-  <h1>회원 정보</h1>
 
- 
- 
-  </div>
-  <div class="tbl-header">
-    <table cellpadding="0" cellspacing="0" border="0">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>이름</th>
-          <th>이메일</th>
-          <th>전화번호</th>
-          <th>체크인 날짜</th>
-          <th>체크아웃 날짜</th>
-        </tr>
-      </thead>
-    </table>
-  </div>
+<form action="ReserveControl" method="post" >
 
-  
-  <div class="tbl-content">
-    <table cellpadding="0" cellspacing="0" border=" ">
-      <tbody>
-      <% 
-       for(int i= 0; i<list.size();i++){
-    	   ReserveTableDto dto = list.get(i);
-      %>
-     
-          <tr onmouseover="this.style.background='#f0f0f0'"
-        	onmouseout="this.style.background='white'"
-        	onclick="location.href='MemberControl?command=ad_member_detail&id=<%=dto.getId() %>'" style="cursor:pointer;"
-        	>
-        
-          <td><%=dto.getId() %></td>
-          <td><%=dto.getName() %></td>
-          <td><%=dto.getEmail() %></td>
-          <td><%=dto.getPhone() %></td>
-          <td><%=dto.getCheckin() %></td>
- 		    <td><%=dto.getCheckout() %></td>
-        </tr>
-   
-       <%
-       }
-       %>
-      </tbody>
-    </table>
-    
-    
+<div align="center" style="margin-bottom: 100px">
 
-  </div>
+<table border="1" bgcolor="pink">
+<col width="80"><col width="500">
 
-<form action="MemberControl">
-<div align="center" style="margin-top: 20px;">
-<input type="hidden" name="command" value="memberGo">
-<input type="hidden" name="id" value="<%=user.getId()%>">
-<select name="sel">
-<option selected="selected" >이름</option><option>아이디</option>
-</select>
-<input type="text" name="txt"> <input type="submit" value="검색"> 
+<tr>
+	<td class="t">아이디</td>
+	<td><%=id %>
+	<input type="hidden" name="command" value=ad_reserveUpdate>
+<input type="hidden" name="id" value="<%=id%>">
+<input type="hidden" name="seq" value="<%=seq %>">
+		
+	</td>
+</tr>
+
+<tr>
+	<td class="t">체크인</td>
+	<td>
+		<input type="text" name="checkin" size="50" >
+	</td>
+</tr>
+
+<tr>
+	<td class="t">체크아웃</td>
+	<td>
+		<input type="text" name="checkout" size="50" >
+	</td>
+</tr>
+<tr>
+	<td class="t">요청사항</td>
+	<td>
+		<textarea rows="20" cols="50" name="request"></textarea>
+	</td>
+</tr>
+
+<tr align="center" class="spe">
+	<td colspan="2">
+		<input type="submit" value="수정">
+	</td>
+</tr>
+
+</table>
 
 </div>
 
 </form>
 
+
+
+
 </div>
-
-
+</div>
 </section>
 
 
 
-
-
-
-
-
-
-<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js'></script>
 <script src='http://code.jquery.com/ui/1.11.4/jquery-ui.js'></script>
@@ -298,8 +210,6 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
 <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.3/jquery-jvectormap.js'></script>
 <script src='http://jvectormap.com/js/jquery-jvectormap-1.2.2.min.js'></script>
-
-  
 
 
 </body>

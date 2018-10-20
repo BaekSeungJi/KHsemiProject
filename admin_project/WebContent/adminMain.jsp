@@ -1,3 +1,4 @@
+<%@page import="dto.HotelDto"%>
 <%@page import="dto.MonthlysalesDto"%>
 <%@page import="dto.scoreDto"%>
 <%@page import="dto.MemberDto"%>
@@ -42,7 +43,7 @@ MemberDto mem = null;
 String hotelname = null;
 scoreDto sdto = null;
 MonthlysalesDto Mdto = null;
-
+HotelDto hoteldto = null;
 
 mem = (MemberDto)session.getAttribute("login");
 
@@ -52,7 +53,7 @@ sdto = (scoreDto)request.getAttribute("sdto");
 
 Mdto = (MonthlysalesDto)request.getAttribute("Mdto");
 	
-
+hoteldto = (HotelDto)request.getAttribute("hoteldto");
 
 %>
   <section>
@@ -169,7 +170,7 @@ Mdto = (MonthlysalesDto)request.getAttribute("Mdto");
 							<div class="panel-body">
 							
 							<div>
-							<div style="float: left; padding-right: 40px"><img alt="" src="72294141bf017fd8c2098303afdb7878.jpg" width="230" height="250"></div>
+							<div style="float: left; padding-right: 40px"><img alt="" src="image/<%=hoteldto.getImage() %>" width="230" height="250"></div>
 							<div style="float: left;">
 							<form action="MemberControl">
 							<table>

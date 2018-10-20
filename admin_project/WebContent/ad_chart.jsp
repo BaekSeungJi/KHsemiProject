@@ -25,6 +25,9 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
   
 </head>
@@ -87,10 +90,6 @@ scoreDto sdto = (scoreDto)request.getAttribute("sdto");
 							<div class="panel-heading">
 								<h3 class="panel-title">매출 현황<ul class="rad-panel-action">
 																	<li><i class="fa fa-chevron-down"></i></li>
-																	<li><i class="fa fa-rotate-right"></i></li>
-																	<li><i class="fa fa-cog"></i>
-																	<li><i class="fa fa-close"></i>
-																	</li>
 																</ul></h3>
 							</div>
 							<div class="panel-body">
@@ -105,7 +104,7 @@ scoreDto sdto = (scoreDto)request.getAttribute("sdto");
 					<div class="col-xs-12 col-md-6">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<h3 class="panel-title">Area Chart<ul class="rad-panel-action">
+								<h3 class="panel-title">평점<ul class="rad-panel-action">
 																	<li><i class="fa fa-chevron-down"></i></li>
 														
 											
@@ -225,6 +224,21 @@ Highcharts.chart('container2', {
 </script>
 
 
+<script type="text/javascript">
+
+$(".fa-chevron-down").on("click", function() {
+	var $ele = $(this).parents('.panel-heading');
+	$ele.siblings('.panel-footer').toggleClass("rad-collapse");
+	$ele.siblings('.panel-body').toggleClass("rad-collapse", function() {
+		setTimeout(function() {
+			initializeCharts();
+		}, 200);
+	});
+});
+
+
+
+</script>
 </body>
 
 </html>

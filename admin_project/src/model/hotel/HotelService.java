@@ -24,7 +24,7 @@ public class HotelService {
 	
 	//admin 호텔 정보 수정
 	public boolean ad_HotelUpdate(String hotelname, String DESCRIPTION, int MAXPEOPLE, int PRICE,
-			int HOTELPHONE) {
+			String HOTELPHONE) {
 		return manager.ad_HotelUpdate(hotelname, DESCRIPTION, MAXPEOPLE, PRICE, HOTELPHONE);
 	}
 	

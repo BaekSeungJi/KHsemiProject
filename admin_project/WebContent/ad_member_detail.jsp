@@ -20,6 +20,10 @@
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
   
 <style type="text/css">
 
@@ -131,6 +135,7 @@ section{
 MemberDto user = (MemberDto)session.getAttribute("login");
 
 
+String hotelname =(String)session.getAttribute("hotelname");
 
 List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("reserveList");
 
@@ -200,18 +205,19 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
     <table>
       <thead>
         <tr>
-          <th>예약 날짜</th>
+          <th>체크인 날짜</th>
+          <th>체크아웃 날짜</th>
           <th>호텔 이름</th>
           <th>요구 사항</th>
           <th>등록일</th>
-      
+      	<th>수정</th>
           <th>취소</th>
         </tr>
       </thead>
     </table>
   </div>
   
-   <form action="ReserveControl">
+ 
   <div class="tbl-content">
   
     <table cellpadding="0" cellspacing="0" border=" ">
@@ -220,25 +226,37 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
        for(int i= 0; i<list.size();i++){
     	   ReserveDto dto = list.get(i);
       %>
+      <%if(dto.getHotelname().equals(hotelname)){ %>
       <tr onmouseover="this.style.background='#f0f0f0'"
         	onmouseout="this.style.background='white'">
           <td>
       
           <input type="hidden" name="command" value="ad_reserveUpdate">
-          <input type="hidden" name="seq" value="<%=dto.getSeq()%>">
-          <input type="hidden" name="id" value="<%=dto.getId()%>">
+          <input type="hidden" id="id" value="<%=dto.getId()%>">
           
           
-          <input type="text" value="<%=dto.getRealdate() %>" name="regdate"></td>
-          
+          <input type="text" value="<%=dto.getCheckin() %>" id="checkin"></td>
+        
+             <td>   <input type="text" value="<%=dto.getCheckout() %>" id="checkout"></td></td>
           <td><%=dto.getHotelname() %></td>
-          <td><input type="text" value="<%=dto.getRequest() %>" name="request"></td>
+          <td><input type="text" value="<%=dto.getRequest() %>" id="request"></td>
           <td><%=dto.getRegdate() %></td>
+           <td>
+            <%if(dto.getDel() == 0){
+        	  %><button onclick="location.href='ad_memberUpdateGo.jsp?seq=<%=dto.getSeq() %>&id=<%=dto.getId()%>'">수정</button>
+        	  
+        <%  }else{
+        	%> 취소된 예약입니다
+        	<%
+      		 }
+          %>
            
+           </td>
          
           <td>
           <%if(dto.getDel() == 0){
-        	  %><input type="button" value="예약취소" onclick="location.href='ReserveControl?command=ad_reserveDelete&seq=<%=dto.getSeq() %>&id=<%=dto.getId()%>'">
+        	  %> <button onclick="location.href='ReserveControl?command=ad_reserveDelete&seq=<%=dto.getSeq() %>&id=<%=dto.getId()%>'">예약취소</button>
+        	  
         <%  }else{
         	%> 취소된 예약입니다
         	<%
@@ -248,6 +266,7 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
           </td>
           
         </tr>
+        <%} %>
        <%
        }
        %>
@@ -255,7 +274,7 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
     </table>
    
   </div>
-</form>
+
 
 <div style="padding-bottom: 100px;">
 
@@ -293,7 +312,7 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
           <td>
            <%if(dto2.getDel() == 0){
         	  %><input type="button" value="삭제" onclick="location.href='ReviewControl?command=ad_reviewDelete&seq=<%=dto2.getNum() %>&id=<%=dto2.getId()%>'">
-        <%  }else{
+        	<%  }else{
         	%> 삭제된 후기입니다
         	<%
       		 }
@@ -318,8 +337,6 @@ List<ReviewDto> list2 = (List<ReviewDto>)request.getAttribute("reviewList");
 
 
 </section>
-
-
 
 
 

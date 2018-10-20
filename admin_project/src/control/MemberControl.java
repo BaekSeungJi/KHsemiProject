@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JOptionPane;
 
-
-
+import dto.HotelDto;
 import dto.MemberDto;
 import dto.MonthlysalesDto;
 import dto.ReserveDto;
@@ -57,11 +56,15 @@ public class MemberControl extends HttpServlet {
 			MemberDto dto = (MemberDto)req.getSession().getAttribute("login");
 			String id = dto.getId();
 			
-			if(dto.getAuth()==1) {
-			
-				dispatch("PdsControl?command=ad_noticeGo2", req, resp);
-			}
 	
+			// 메인관리자면 바로 게시판으로 ㄱ
+			String link = null;
+			if(dto.getAuth()==1) {
+				link = "PdsControl?command=ad_noticeGo";
+			}else {
+				link = "adminMain.jsp";
+			}
+			
 			//서비스 생성
 			MemberService service = MemberService.getInstance();
 			ReviewService Rservice = ReviewService.getInstance();
@@ -71,7 +74,7 @@ public class MemberControl extends HttpServlet {
 			// 호텔이름가져와서 세션저장
 			String hotelname= service.getHotelname(id);
 			req.getSession().setAttribute("hotelname", hotelname);
-			
+			HotelDto hoteldto = Hser.getHoteldetail(hotelname);
 			
 			// 차트 정보
 			int price = Integer.parseInt(Hser.getPrice(hotelname));
@@ -81,13 +84,13 @@ public class MemberControl extends HttpServlet {
 			MonthlysalesDto Mdto =  util.getsales(Rdto, price);
 			
 		
-			
-			
+			req.setAttribute("hoteldto", hoteldto);
 			req.setAttribute("Mdto", Mdto);
 			req.setAttribute("sdto", sdto);
 			
 			
-			dispatch("adminMain.jsp", req, resp);
+			dispatch(link , req, resp);
+		
 		}
 		
 		// 해당 호텔 예약한 회원들 보기 
@@ -167,6 +170,14 @@ public class MemberControl extends HttpServlet {
 				out.println("alert('수정 실패하였습니다');");
 				resp.sendRedirect("MemberControl?command=ad_admin&id="+id);
 			}
+			
+		}
+		else if(command.equals("ad_memberUpdate")) {
+			int seq = Integer.parseInt(req.getParameter("req"));
+			String request = req.getParameter("request");
+			String realdate = req.getParameter("realdate");
+			String id = req.getParameter("id");
+			
 			
 		}
 	}

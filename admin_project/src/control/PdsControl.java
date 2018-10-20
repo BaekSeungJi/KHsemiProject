@@ -54,17 +54,7 @@ public class PdsControl extends HttpServlet {
 			
 		}
 		
-		else if(command.equals("ad_noticeGo2")) {
-			
-			PdsService service = PdsService.getInstance();
-			
-			List<PdsDto> list = service.getPdsList();
-			
-			req.setAttribute("list", list);
-			
-			dispatch("ad_noticeMainAdmin.jsp", req, resp);
-			
-		}
+	
 		else if(command.equals("ad_pdsWrite")) {
 			PrintWriter out = resp.getWriter();
 			
