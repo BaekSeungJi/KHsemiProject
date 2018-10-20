@@ -1,3 +1,4 @@
+<%@page import="dto.MemberDto"%>
 <%@page import="dto.HotelDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,6 +11,10 @@
 // 첫 페이지에서 넘어온 맵 검색어
 String keyword = request.getParameter("keyword");
 %>
+
+
+
+
 
 
 	<head>
@@ -37,12 +42,11 @@ String keyword = request.getParameter("keyword");
 			<link rel="stylesheet" href="./css/style-desktop.css" />
 		
 		
-		
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=916ea874e228791dbf525372ff0244e5&libraries=services"></script>
 		
 		
 		<script type="text/javascript">
-		$(document).ready(function () {
+		$(window).on('load', function () {
 			// 페이지 실행되자마자, 검색된 맵 불러오기.
 			updateMap(1);
 			
@@ -294,6 +298,22 @@ String keyword = request.getParameter("keyword");
 	</head>
 	<body class="homepage">
 	
+	
+<!-- 로그인여부 확인 / 로그인한 사람의 정보 가져오기. -->
+<%
+Object ologin = session.getAttribute("login");
+MemberDto mem = null;
+if(ologin == null){	// 로그인 정보가 안넘어왔을때. 혹은 기간이 만료했을때(로그인하고 한참 지남)
+	%>
+	<script type="text/javascript">
+	alert("비회원 상태로 접속하셨습니다.");
+	</script>
+	<%
+}else{
+	mem = (MemberDto)ologin;
+}
+%>
+	
 		<!-- Header(로고) -->
 		<div id="header-wrapper">
 			<div class="container">
@@ -303,12 +323,20 @@ String keyword = request.getParameter("keyword");
 						<span>by KHsemiProject</span>
 					</div>
 					<nav id="nav">
+					<% if(mem.getId() == null || mem.getId().equals("")){ %>
 						<ul>
 							<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
 							<li><a href="loginview.jsp">로그인</a></li>	
 							<li><a href="Signup.jsp">회원가입</a></li>
-							<!-- 찬수씨 로그인화면 완성되면 session에서 로그인 정보 불러와서 '마이페이지' 동적생성하기 -->
 						</ul>
+					<%}else{ %>
+						<ul>
+							<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
+							<li><a href="mypage.jsp">마이페이지</a></li>	
+							<li><a href="logout.jsp">로그아웃</a></li>
+							<!-- 세션만료되게 하기,,, 이왕이면 logout.jsp따로 안만드는 방법으로. -->
+						</ul>
+					<%} %>
 					</nav>
 				</div>
 			</div>
