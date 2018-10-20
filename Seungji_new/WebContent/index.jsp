@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>오늘의 숙소</title>
+<title>오늘의 숙소!</title>
 
 <!-- <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> -->
 
