@@ -27,9 +27,14 @@ List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>caldel.jsp</title>
+<title>reservedel.jsp</title>
 </head>
 <body>
+
+<form action="MemberControl">
+	<input type="hidden" name="command" value="logout.jsp">
+	<input type="submit" value="로그아웃"> 
+</form>
 
 <%!
 public String toOne(String msg){	// 08 -> 8
@@ -44,17 +49,18 @@ public String two(String msg){		// 8 -> 08
 <%
 int seq = Integer.parseInt(request.getParameter("seq"));
 
-iReserveManager irm = ReserveService.getInstance();
-iCalendar dao = CalendarDao.getInstance();
-ReserveDto dto = dao.getDay(seq);
-boolean isS = dao.deleteCalendar(seq);
+ReserveService reservice = ReserveService.getInstance();
 
-String year = dto.getRdate().substring(0, 4);	// 년도
-String month = toOne(dto.getRdate().substring(4, 6));	// 월
-String day = toOne(dto.getRdate().substring(6, 8));		// 일
+ReserveDto reservedto = reservice.getDay(seq);
+
+boolean isS = reservice.reservedelete(seq);
+
+String year = reservedto.getRegdate().substring(0, 4);	// 년도
+String month = toOne(reservedto.getRegdate().substring(4, 6));	// 월
+String day = toOne(reservedto.getRegdate().substring(6, 8));		// 일
 
 String url = String.format("%s?year=%s&month=%s&day=%s", 
-							"calendar.jsp", year, month, day);
+							"reserve.jsp", year, month, day);
 
 if(isS){
 	%>

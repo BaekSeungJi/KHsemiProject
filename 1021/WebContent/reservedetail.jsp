@@ -33,6 +33,11 @@ List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 </head>
 <body>
 
+<form action="MemberControl">
+	<input type="hidden" name="command" value="logout.jsp">
+	<input type="submit" value="로그아웃"> 
+</form>
+
 <%!
 
 public String toDates(String mdate){

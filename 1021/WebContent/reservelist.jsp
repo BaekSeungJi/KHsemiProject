@@ -59,15 +59,15 @@ String day = request.getParameter("day");
 String dates = year + two(month + "") + two(day + "");
 Calendar cal = Calendar.getInstance();
 
-iReserveManager irm = ReserveService.getInstance();
-iCalendar dao = CalendarDao.getInstance(); 
-List<ReserveDto> reslist = dao.getDayList(user.getId(), dates);
-/* 
+
+ReserveService reservice = ReserveService.getInstance();
+
+/*  
 for(int i = 0;i < list.size(); i++){
-	CalendarDto c = list.get(i);
-	System.out.println(c.toString());	
-}
- */
+	ReserveDto dto = list.get(i);
+	System.out.println(dto.toString());	
+} */
+ 
 %>
 
     
@@ -75,9 +75,14 @@ for(int i = 0;i < list.size(); i++){
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>callist.jsp</title>
+<title>reservelist.jsp</title>
 </head>
 <body>
+
+<form action="MemberControl">
+	<input type="hidden" name="command" value="logout.jsp">
+	<input type="submit" value="로그아웃"> 
+</form>
 
 <h2><%=year %>년 <%=month %>월 <%=day %>일 일정</h2>
 
@@ -92,17 +97,18 @@ for(int i = 0;i < list.size(); i++){
 for(int i = 0;i < list.size(); i++ ){
 	ReserveDto reservedto = list.get(i);
 	%>
+	
 	<tr>	
 		<td><%=i + 1 %></td>
 		<td><%=toDates(reservedto.getRequest()) %></td>
 		<td>
-			<a href="reservedetail.jsp?seq=<%=dto.getSeq() %>">
-				<%=dto.getTitle() %>
+			<a href="reservedetail.jsp?seq=<%=reservedto.getSeq() %>">
+				<%=reservedto.getHotelname() %>
 			</a>
 		</td>
 		<td>
-			<form action="caldel.jsp" method="post">
-				<input type="hidden" name="seq" value="<%=dto.getSeq() %>">
+			<form action="reservedel.jsp" method="post">
+				<input type="hidden" name="seq" value="<%=reservedto.getSeq() %>">
 				<input type="submit" value="일정삭제">
 			</form>
 		</td>	
@@ -114,7 +120,7 @@ for(int i = 0;i < list.size(); i++ ){
 
 <%
 String url = String.format("%s?year=%s&month=%s", 
-						"calendar.jsp", year, month);
+						"reserve.jsp", year, month);
 %>
 
 <a href="<%=url %>">일정보기</a>

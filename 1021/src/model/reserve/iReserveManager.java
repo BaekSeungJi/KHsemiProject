@@ -14,6 +14,12 @@ public interface iReserveManager {
 	
 	public boolean reserve(String id, String hotelname, String request, String checkin, String checkout);
 	
+	public boolean reserveUpdate(int seq, String checkin,String checkout, String request);
+
+	public boolean reservedelete(int seq);
+	
+	public ReserveDto getDay(int seq);
+
 	
 	public boolean profileedit(String id, String pw, String name, String email, String phone);
 	public List<ReserveDto> getReservelist(String id); 

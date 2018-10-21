@@ -10,6 +10,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+
+
 <%
 MemberDto memdto = (MemberDto)session.getAttribute("login");
 session.setAttribute("login", memdto);
@@ -104,6 +106,11 @@ public String dot3(String msg){
 <title>reserve.jsp</title>
 </head>
 <body>
+
+<form action="MemberControl">
+	<input type="hidden" name="command" value="logout.jsp">
+	<input type="submit" value="로그아웃"> 
+</form>
 
 <h2>달력</h2>
 

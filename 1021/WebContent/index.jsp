@@ -23,6 +23,10 @@ body {
 
 <h1>index.jsp</h1>
 
+<form action="MemberControl">
+	<input type="hidden" name="command" value="logout.jsp">
+	<input type="submit" value="로그아웃"> 
+</form>
 
 
 <br>

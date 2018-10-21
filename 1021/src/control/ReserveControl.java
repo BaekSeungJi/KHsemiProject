@@ -57,11 +57,11 @@ public class ReserveControl extends HttpServlet {
 			req.setAttribute("list", list);
 			
 			dispatch("reserve.jsp", req, resp);
-
+			
 		}
 		
 		else if(command.equals("reservedel")) {
-String id = req.getParameter("id");
+			String id = req.getParameter("id");
 			
 			MemberService memservice = MemberService.getInstance();
 			ReserveService resservice = ReserveService.getInstance();
@@ -82,7 +82,7 @@ String id = req.getParameter("id");
 		}
 		
 		else if(command.equals("reservedetail")) {
-String id = req.getParameter("id");
+			String id = req.getParameter("id");
 			
 			MemberService memservice = MemberService.getInstance();
 			ReserveService resservice = ReserveService.getInstance();

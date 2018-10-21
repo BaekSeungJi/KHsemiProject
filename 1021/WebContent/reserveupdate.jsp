@@ -1,3 +1,6 @@
+<%@page import="model.reserve.ReserveService"%>
+<%@page import="control.ReserveControl"%>
+<%@page import="model.reserve.iReserveManager"%>
 <%@page import="dto.ReserveDto"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.List"%>
@@ -34,6 +37,11 @@ List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 </head>
 <body>
 
+<form action="MemberControl">
+	<input type="hidden" name="command" value="logout.jsp">
+	<input type="submit" value="로그아웃"> 
+</form>
+
 <%!
 public String toDates(String mdate){
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
@@ -61,14 +69,16 @@ int tyear = cal.get(Calendar.YEAR);
 String sseq = request.getParameter("seq");
 int seq = Integer.parseInt(sseq);
 
-iCalendar dao = CalendarDao.getInstance();
-CalendarDto dto = dao.getDay(seq);
+ReserveService reservice = ReserveService.getInstance();
 
-String year = dto.getRdate().substring(0, 4);
-String month = toOne(dto.getRdate().substring(4, 6));
-String day = toOne(dto.getRdate().substring(6, 8));
-String hour = toOne(dto.getRdate().substring(8, 10));
-String min = toOne(dto.getRdate().substring(10, 12));
+/* CalendarDto dto = dao.getDay(seq); */
+ReserveDto reservedto = reservice.getDay(seq);
+
+String year = reservedto.getRegdate().substring(0, 4);
+String month = toOne(reservedto.getRegdate().substring(4, 6));
+String day = toOne(reservedto.getRegdate().substring(6, 8));
+String hour = toOne(reservedto.getRegdate().substring(8, 10));
+String min = toOne(reservedto.getRegdate().substring(10, 12));
 
 %>
 
@@ -79,23 +89,23 @@ String min = toOne(dto.getRdate().substring(10, 12));
 <div align="center">
 
 
-<form action="calupdateAf.jsp" method="post">
+<form action="reserveupdateAf.jsp" method="post">
 
 <table border="1">
 <col width="200"><col width="500">
 
 <tr>
-	<td>아이디<input type="hidden" name="seq" value="<%=dto.getSeq() %>">
+	<td>아이디<input type="hidden" name="seq" value="<%=reservedto.getSeq() %>">
 	</td>
 	<td>
-		<input type="text" name="id" value="<%=dto.getId() %>" readonly="readonly">
+		<input type="text" name="id" value="<%=reservedto.getId() %>" readonly="readonly">
 	</td>
 </tr> 
 
 <tr>
 	<td>제목</td>
 	<td>
-		<input type="text" size="60" name="title" value="<%=dto.getTitle() %>">
+		<input type="text" size="60" name="title" value="<%=reservedto.getHotelname() %>">
 	</td>
 </tr>
 
@@ -164,7 +174,7 @@ String min = toOne(dto.getRdate().substring(10, 12));
 <tr>
 	<td>내용</td>
 	<td>
-		<textarea rows="20" cols="60" name="content"><%=dto.getContent() %> </textarea>
+		<textarea rows="20" cols="60" name="content"><%=reservedto.getRequest()%> </textarea>
 	</td>
 </tr>
 
@@ -191,7 +201,7 @@ function modify() {
 
 <%
 String url = String.format("%s?year=%s&month=%s", 
-						"calendar.jsp", year, month);
+						"reserve.jsp", year, month);
 %>
 
 <a href="<%=url %>">일정보기</a>

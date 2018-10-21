@@ -38,6 +38,11 @@ public String two(String msg){
 </head>
 <body>
 
+<form action="MemberControl">
+	<input type="hidden" name="command" value="logout.jsp">
+	<input type="submit" value="로그아웃"> 
+</form>
+
 <%
 String id = request.getParameter("id");
 String hotelname = request.getParameter("hotelname");
@@ -53,8 +58,10 @@ String day2 = request.getParameter("day2");
 
 
 String checkin = year1 + two(month1) + two(day1);
-String checkout = year2 + two(month2) + two(day1);
+String checkout = year2 + two(month2) + two(day2);
 
+System.out.println("checkin :" + checkin);
+System.out.println("checkout :" + checkout);
 
 ReserveService resservice = ReserveService.getInstance();
 

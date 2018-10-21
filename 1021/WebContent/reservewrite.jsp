@@ -33,6 +33,11 @@ List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 </head>
 <body>
 
+<form action="MemberControl">
+	<input type="hidden" name="command" value="logout.jsp">
+	<input type="submit" value="로그아웃"> 
+</form>
+
 <h3>일정 쓰기</h3>
 
 <%
@@ -104,7 +109,7 @@ System.out.println("memdto.getid :" + memdto.getId());
 		%>		
 		</select>월
 		
-		<select name="day1" id="day2">
+		<select name="day1">
 		<%
 			for(int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
 				%>
@@ -139,7 +144,7 @@ System.out.println("memdto.getid :" + memdto.getId());
 		%>		
 		</select>월
 		
-		<select name="day2" id="day2">
+		<select name="day2">
 		<%
 			for(int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
 				%>

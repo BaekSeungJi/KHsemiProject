@@ -222,6 +222,8 @@ public class ReserveManager implements iReserveManager {
 			psmt.setString(4, checkin);
 			psmt.setString(5, checkout);
 			System.out.println("2/6 S reserve");
+			System.out.println("checkin :" + checkin);
+			System.out.println("checkout :" + checkout);
 			
 			count = psmt.executeUpdate();
 			System.out.println("3/6 S reserve");
@@ -246,4 +248,121 @@ public class ReserveManager implements iReserveManager {
 
 	
 	
-}
+
+	@Override
+	public boolean reservedelete(int seq) {
+		String sql=" UPDATE reserve SET  "
+				+" DEL=1 "
+				+ " WHERE SEQ=? ";
+		
+		int count = 0;
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		
+		
+			try {
+			conn = DBConnection.getConnection();
+		
+			psmt=conn.prepareStatement(sql);
+			psmt.setInt(1, seq);			
+			count = psmt.executeUpdate();
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally{
+			DBClose.close(psmt, conn, null);			
+		}
+				
+		return count>0?true:false;
+	}
+
+
+	@Override
+	public ReserveDto getDay(int seq) {
+			String sql = " SELECT "
+					+ " SELECT SEQ, HOTELNAME, REQUEST, CHECKIN, CHECKOUT, REGDATE, DEL "
+					+ " FROM RESERVE "
+					+ " WHERE SEQ=? ";
+			
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			ResultSet rs = null;
+			
+			ReserveDto dto = null;
+			
+			try {
+				conn = DBConnection.getConnection();
+				System.out.println("2/6 S getDay");	
+				
+				psmt = conn.prepareStatement(sql);
+				psmt.setInt(1, seq);
+				System.out.println("3/6 S getDay");	
+				
+				rs = psmt.executeQuery();
+				System.out.println("4/6 S getDay");	
+				
+				while(rs.next()){
+					dto = new ReserveDto();
+					dto.setSeq(rs.getInt(1));
+					dto.setHotelname(rs.getString(2));
+					dto.setRequest(rs.getString(3));
+					dto.setCheckin(rs.getString(4));
+					dto.setCheckout(rs.getString(5));
+					dto.setRegdate(rs.getString(6));
+					dto.setDel(rs.getInt(7));					
+				}	
+				System.out.println("5/6 S getDay");			
+							
+			} catch (Exception e) {			
+				e.printStackTrace();
+			} finally{
+				DBClose.close(psmt, conn, rs);
+				System.out.println("6/6 S getDay");			
+			}		
+			
+			return dto;
+		}
+
+
+	@Override
+	public boolean reserveUpdate(int seq, String checkin, String checkout, String request) {
+		String sql = " UPDATE reserve SET "
+				+ " checkin=?, checkout=?, request=? "
+				+ " WHERE SEQ=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+	
+			try {
+			conn = DBConnection.getConnection();
+		
+			
+		
+			System.out.println("2/6 S updateBbs");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, checkin);
+			psmt.setString(2, checkout);
+			psmt.setString(3, request);
+			psmt.setInt(4, seq);
+			
+			System.out.println("3/6 S updateBbs");
+			
+			count = psmt.executeUpdate();
+			System.out.println("4/6 S updateBbs");
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally{
+			DBClose.close(psmt, conn, null);	
+			System.out.println("5/6 S updateBbs");
+		}		
+		
+		return count>0?true:false;
+	}
+	}
+
+	
+	

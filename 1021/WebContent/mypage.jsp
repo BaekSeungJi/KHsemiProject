@@ -75,6 +75,10 @@ public String whour(int Auth){
 </head>
 <body>
 
+<form action="MemberControl">
+	<input type="hidden" name="command" value="logout.jsp">
+	<input type="submit" value="로그아웃"> 
+</form>
 
 <section>
   <!--for demo wrap-->

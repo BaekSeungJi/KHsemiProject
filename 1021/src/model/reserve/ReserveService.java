@@ -26,6 +26,24 @@ public class ReserveService {
 		return manager.reserve(id, hotelname, request, checkin, checkout);
 	}
 	
+	//예약 삭제
+	public boolean reservedelete(int seq){
+		return manager.reservedelete(seq);
+	}
+	
+	
+	//getday
+	public ReserveDto getDay(int seq) {
+		return manager.getDay(seq);
+	}
+	
+	//예약 수정 
+	public boolean reserveUpdate(int seq, String checkin,String checkout, String request) {
+		return manager.reserveUpdate(seq, checkin, checkout, request);
+	}
+	
+	
+	
 	//해당 id 예약 리스트 가져오기
 	public List<ReserveDto> getreserveList(String id){
 		return manager.getreserveList(id);
