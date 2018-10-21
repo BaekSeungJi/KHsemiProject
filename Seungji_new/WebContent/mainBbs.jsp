@@ -1,3 +1,4 @@
+<%@page import="org.apache.el.lang.ELSupport"%>
 <%@page import="dto.MemberDto"%>
 <%@page import="dto.HotelDto"%>
 <%@page import="java.util.List"%>
@@ -7,46 +8,59 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <%
 // 첫 페이지에서 넘어온 맵 검색어
 String keyword = request.getParameter("keyword");
 %>
 
+<head>
+<title>mainBbs.jsp</title>
 
+<style type="text/css">
+/* 검색옵션 탭마다 붙는 분홍네모 아이콘 */
+ul.style2 li{
+	list-style-type : none;
+	padding-left : 1.5em;
+	background-image : url("./css/images/header-wrapper-bg.png");
+	background-size : 1em;
+	background-repeat : no-repeat;
+}
 
-
-
-
-	<head>
-		<title>mainBbs.jsp</title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-		<link href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css'>
-		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
-		<!-- 맵 구동용 제이쿼리 버전 -->
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<!-- 슬라이더용 제이쿼리 버전 -->
-		<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-		
-		<!-- 맵 검색용 js -->
-		<script src="js/skel.min.js"></script>
-		<script src="js/skel-panels.min.js"></script>
-		<script src="js/init.js"></script>
-		
-			<!-- 디자인 css -->
-			<link rel="stylesheet" href="./css/skel-noscript.css" />
-			<link rel="stylesheet" href="./css/style.css" />
-			<link rel="stylesheet" href="./css/style-desktop.css" />
-		
-		
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=916ea874e228791dbf525372ff0244e5&libraries=services"></script>
-		
-		
-		<script type="text/javascript">
-		$(window).on('load', function () {
+#sidebox{
+	top:30%;
+	position:absolute; 
+}
+</style>
+	
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css'>
+	<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+	<!-- 맵 구동용 제이쿼리 버전 -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<!-- 슬라이더용 제이쿼리 버전 -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	
+	<!-- 맵 검색용 js -->
+	<script src="js/skel.min.js"></script>
+	<script src="js/skel-panels.min.js"></script>
+	<script src="js/init.js"></script>
+	
+	<!-- 디자인 css -->
+	<link rel="stylesheet" href="./css/skel-noscript.css" />
+	<link rel="stylesheet" href="./css/style.css" />
+	<link rel="stylesheet" href="./css/style-desktop.css" />
+	
+	<!-- 다음맵 api -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=916ea874e228791dbf525372ff0244e5&libraries=services"></script>
+	
+	
+	<script type="text/javascript">
+		$(document).ready(function () {
 			// 페이지 실행되자마자, 검색된 맵 불러오기.
 			updateMap(1);
 			
@@ -274,167 +288,153 @@ String keyword = request.getParameter("keyword");
 
 		});
 		</script>
-		
-		
-		
-		
-		<style type="text/css">
-		
-		/* 검색옵션 탭마다 붙는 분홍네모 아이콘 */
-		ul.style2 li{
-			list-style-type : none;
-			padding-left : 1.5em;
-			background-image : url('./css/images/header-wrapper-bg.png');
-			background-size : 1em;
-			background-repeat : no-repeat;
-		}
-		
-		#sidebox{
-			top:30%;
-			position:absolute; 
-		}
-		</style>
-		
-	</head>
-	<body class="homepage">
 	
 	
+	
+</head>
+<body class="homepage">
+
 <!-- 로그인여부 확인 / 로그인한 사람의 정보 가져오기. -->
 <%
 Object ologin = session.getAttribute("login");
 MemberDto mem = null;
-if(ologin == null){	// 로그인 정보가 안넘어왔을때. 혹은 기간이 만료했을때(로그인하고 한참 지남)
-	%>
-	<script type="text/javascript">
-	alert("비회원 상태로 접속하셨습니다.");
-	</script>
-	<%
+if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간이 만료했을때(로그인하고 한참 지남)
+   %>
+   <script type="text/javascript">
+   alert("비회원 상태로 접속하셨습니다.");
+   </script>
+   <%
 }else{
-	mem = (MemberDto)ologin;
+   mem = (MemberDto)ologin;
 }
 %>
-	
-		<!-- Header(로고) -->
-		<div id="header-wrapper">
-			<div class="container">
-				<div id="header">
-					<div id="logo">
-						<h1><a href="#">Today's home</a></h1>
-						<span>by KHsemiProject</span>
-					</div>
-					<nav id="nav">
-					<% if(mem.getId() == null || mem.getId().equals("")){ %>
-						<ul>
-							<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
-							<li><a href="loginview.jsp">로그인</a></li>	
-							<li><a href="Signup.jsp">회원가입</a></li>
-						</ul>
-					<%}else{ %>
-						<ul>
-							<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
-							<li><a href="mypage.jsp">마이페이지</a></li>	
-							<li><a href="logout.jsp">로그아웃</a></li>
-							<!-- 세션만료되게 하기,,, 이왕이면 logout.jsp따로 안만드는 방법으로. -->
-						</ul>
-					<%} %>
-					</nav>
+
+	<!-- Header(로고) -->
+	<div id="header-wrapper">
+		<div class="container">
+			<div id="header">
+				<div id="logo">
+					<h1><a href="#">Today's home</a></h1>
+					<span>by KHsemiProject</span>
 				</div>
+				<nav id="nav">
+				<% if(mem == null){ %>
+					<ul>
+						<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
+						<li><a href="loginview.jsp">로그인</a></li>	
+						<li><a href="Signup.jsp">회원가입</a></li>
+					</ul>
+				<%}else if(mem.getAuth() == 3){ %>
+					<ul>
+						<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
+						<li><a href="mypage.jsp">마이페이지</a></li>	
+						<li><a href="logout.jsp">로그아웃</a></li>
+					</ul>
+				<%}else if(mem.getAuth() == 1 || mem.getAuth() == 2){ %>
+					<ul>
+						<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
+						<li><a href="start.jsp">관리자 모드</a></li>	
+						<li><a href="logout.jsp">로그아웃</a></li>
+					</ul>
+				<%} %>
+				</nav>
+			</div>
+		</div>
+		
+	</div>
+	<!-- Page Wrapper(로고와 밑단을 제외한 중간 콘텐츠부분 전체) -->
+	<div id="wrapper" class="container">
+
+		<!-- Page Content(위와 마찬가지) -->
+		<div id="page" class="row">
+			
+			<!-- Content Area(왼쪽 콘텐츠들) -->
+			<div id="content" class="8u skel-cell-important">
+				
+				<!-- Main Content Area(왼쪽 상단. 지도부분) -->
+				<section>
+					<h2>어느 숙소에 묵으시겠습니까?</h2>
+					<p id="mainMap"><a href="#"><img src="./css/images/pics02.jpg" alt=""></a></p>
+					<input type="text" id="newMapKeyword">
+					<button type="button" id="btn_map">검색</button>
+				</section>
+				
+				
+				<!-- Two Column Area(왼쪽 하단. 게시판 부분) -->
+				<section>
+					<div id="two-column" class="5grid">
+						<div class="row">
+							<h2>호텔 검색 결과</h2>
+							<!-- <div id="hotelImage"></div> -->
+							<!-- <ul class="style4" id="searchHotelList">
+								<li class="first">
+									<h3>Mauris vulputate dolor sit amet</h3>
+									<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum. </a></p>
+								</li>
+							</ul> -->
+							
+							<table id="hotelListTable" style="margin-left: 7%; margin-top: -1%;">
+							
+								
+							</table>
+							
+						</div>
+					</div>					
+				</section>				
+
+
+			</div>
+
+			<!-- Sidebar Area(오른쪽 콘텐츠들) -->
+			<div id="sidebar" class="4u">
+			
+				<!-- Sidebar Section 1 -->
+				
+
+				<!-- Sidebar Section 2 -->
+				<div id="sidebox" >
+				<section id="box1">
+					<h2 style="margin-top: 5%;">검색옵션</h2>
+					<ul class="style2">
+						<li>
+							<p>지역 : <input type="text" value="<%=keyword%>" id="searchText" size="25px"></p>
+						</li>
+						<li>
+							<p>가격 : <div id="slider1" style="width: 150px; margin-left: 50px;"></p>
+							<p id="opa"></p>
+						</li>
+						<li>
+							<p>인원 : <select id="sel_people" style="margin-left: 10px;">
+										<option value="1" selected>1명</option>
+										<option value="2">2명</option>
+										<option value="3">3명</option>
+										<option value="4">4명 이상</option>
+									</select>
+							</p>
+						</li>
+						<li>
+							<p>날짜 : <input type="text" class="date" id="date1" placeholder="체크인" size="8px">~
+									<input type="text" class="date" id="date2" placeholder="체크아웃" size="8px"></p>
+						</li>
+					</ul>
+					<p><a href="#" class="button" id="btn_search"><span>Search More</span></a></p>
+				</section>
+				</div>
+
 			</div>
 			
 		</div>
-		<!-- Page Wrapper(로고와 밑단을 제외한 중간 콘텐츠부분 전체) -->
-		<div id="wrapper" class="container">
+		<!-- Page Content -->
 
-			<!-- Page Content(위와 마찬가지) -->
-			<div id="page" class="row">
-				
-				<!-- Content Area(왼쪽 콘텐츠들) -->
-				<div id="content" class="8u skel-cell-important">
-					
-					<!-- Main Content Area(왼쪽 상단. 지도부분) -->
-					<section>
-						<h2>어느 숙소에 묵으시겠습니까?</h2>
-						<p id="mainMap"><a href="#"><img src="./css/images/pics02.jpg" alt=""></a></p>
-						<input type="text" id="newMapKeyword">
-						<button type="button" id="btn_map">검색</button>
-					</section>
-					
-					
-					<!-- Two Column Area(왼쪽 하단. 게시판 부분) -->
-					<section>
-						<div id="two-column" class="5grid">
-							<div class="row">
-								<h2>호텔 검색 결과</h2>
-								<!-- <div id="hotelImage"></div> -->
-								<!-- <ul class="style4" id="searchHotelList">
-									<li class="first">
-										<h3>Mauris vulputate dolor sit amet</h3>
-										<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum. </a></p>
-									</li>
-								</ul> -->
-								
-								<table id="hotelListTable" style="margin-left: 7%; margin-top: -1%;">
-								
-									
-								</table>
-								
-							</div>
-						</div>					
-					</section>				
+	</div>
+	<!-- Wrapper Ends Here -->
 
-	
-				</div>
-	
-				<!-- Sidebar Area(오른쪽 콘텐츠들) -->
-				<div id="sidebar" class="4u">
-				
-					<!-- Sidebar Section 1 -->
-					
-	
-					<!-- Sidebar Section 2 -->
-					<div id="sidebox" >
-					<section id="box1">
-						<h2 style="margin-top: 5%;">검색옵션</h2>
-						<ul class="style2">
-							<li>
-								<p>지역 : <input type="text" value="<%=keyword%>" id="searchText" size="25px"></p>
-							</li>
-							<li>
-								<p>가격 : <div id="slider1" style="width: 150px; margin-left: 50px;"></p>
-								<p id="opa"></p>
-							</li>
-							<li>
-								<p>인원 : <select id="sel_people" style="margin-left: 10px;">
-											<option value="1" selected>1명</option>
-											<option value="2">2명</option>
-											<option value="3">3명</option>
-											<option value="4">4명 이상</option>
-										</select>
-								</p>
-							</li>
-							<li>
-								<p>날짜 : <input type="text" class="date" id="date1" placeholder="체크인" size="8px">~
-										<input type="text" class="date" id="date2" placeholder="체크아웃" size="8px"></p>
-							</li>
-						</ul>
-						<p><a href="#" class="button" id="btn_search"><span>Search More</span></a></p>
-					</section>
-					</div>
-
-				</div>
-				
-			</div>
-			<!-- Page Content -->
-
+	<!-- Copyright -->
+	<div id="copyright">
+		<div class="container">
+			Design by <a href="http://www.iei.or.kr/main/main.kh" target="_blank">KH CLASS_3 semi project 6조</a>
 		</div>
-		<!-- Wrapper Ends Here -->
-
-		<!-- Copyright -->
-		<div id="copyright">
-			<div class="container">
-				Design by <a href="http://www.iei.or.kr/main/main.kh" target="_blank">KH CLASS_3 semi project 6조</a>
-			</div>
-		</div>
+	</div>
 
 		
 </body>

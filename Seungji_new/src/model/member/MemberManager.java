@@ -1,15 +1,11 @@
 package model.member;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import db.DBClose;
 import db.DBConnection;
 import dto.MemberDto;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.ResultSet;
 
 public class MemberManager implements iMemberManager {
@@ -23,6 +19,7 @@ public class MemberManager implements iMemberManager {
 	public static MemberManager getInstance() {
 		return memberManager;
 	}
+
 
 
 	@Override

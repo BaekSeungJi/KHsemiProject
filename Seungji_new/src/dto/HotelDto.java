@@ -36,6 +36,9 @@ REFERENCES MEMBER(ID);
 
 ALTER TABLE HOTEL
 ADD IMAGE VARCHAR2(50);
+
+ALTER TABLE hotel
+MODIFY(region VARCHAR2(200));
 */
 
 public class HotelDto implements Serializable {

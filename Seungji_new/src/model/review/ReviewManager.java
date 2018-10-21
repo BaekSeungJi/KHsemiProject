@@ -11,6 +11,10 @@ import db.DBConnection;
 import dto.ReviewDto;
 
 public class ReviewManager implements iReviewManager {
+	
+	public ReviewManager() {
+		DBConnection.initConnect();
+	}
 
 	@Override
 	public List<ReviewDto> getReviewList(String hotelname) {

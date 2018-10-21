@@ -36,7 +36,7 @@ int auth = dto.getAuth();
 <%
 MemberService service = MemberService.getInstance();
 
-boolean isS = service.manager.addMember(new MemberDto(id, pwd, name, email, phone, 0, 3));
+boolean isS = service.manager.addMember(new MemberDto(id, pwd, name, email, phone, blacklist, auth));
 
 if(isS==true){
 %>
