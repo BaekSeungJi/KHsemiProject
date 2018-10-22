@@ -501,5 +501,44 @@ List<ReserveTableDto> list = new ArrayList<>();
 		return count>0?true:false;
 	}
 
+
+
+
+	@Override
+	public boolean profileedit(String id, String pw, String name, String email, String phone) {
+		String sql = " UPDATE member SET " + " pwd=?, name=?, email=?, phone=? " + " WHERE id=? ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+
+		try {
+			conn = DBConnection.getConnection();
+
+			System.out.println("2/6  profile update");
+
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, pw);
+			psmt.setString(2, name);
+			psmt.setString(3, email);
+			psmt.setString(4, phone);
+			psmt.setString(5, id);
+
+			System.out.println("3/6  profile update");
+
+			count = psmt.executeUpdate();
+			System.out.println("4/6 profile update");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+			System.out.println("5/6 profile update");
+		}
+
+		return count > 0 ? true : false;
+	}
 	
-}
+
+	}
+	

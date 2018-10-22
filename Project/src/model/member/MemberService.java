@@ -49,6 +49,10 @@ public class MemberService {
 			public boolean ad_MemberUpdate(String id, String pw, String name, String email, String phone) {
 				return manager.ad_MemberUpdate(id, pw, name, email, phone);
 		}
+			//해당 id 예약 리스트 가져오기
+			public List<ReserveDto> reserveList(String id){
+				return manager.ad_reserveList(id);
+			}
 
 			
 		

@@ -229,5 +229,58 @@ public class ReserveManager implements iReserveManager {
 		return list;
 	}
 
+	@Override
+	public List<ReserveDto> getreserveList(String id) {
+		String sql = " SELECT SEQ, HOTELNAME, REQUEST, CHECKIN, CHECKOUT, REGDATE, DEL "
+				+ " FROM RESERVE "
+				+ " WHERE ID=? ";
+			List<ReserveDto> list = new ArrayList<>();
+					
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			ResultSet rs = null;
+						
+			try {
+				conn = DBConnection.getConnection();
+				System.out.println("1/6 getreserveList Success");
+				psmt = conn.prepareStatement(sql);
+				System.out.println("2/6 getreserveList Success");
+				System.out.println(id);					
+				psmt.setString(1, id);
+						
+				System.out.println("3/6 getreserveList Success");
+				
+				rs = psmt.executeQuery();
+				System.out.println("4/6 getreserveList Success");
+						
+						
+					while(rs.next()){			
+						System.out.println("5/6 getreserveList Success");
+								
+							
+						int seq = rs.getInt(1);
+						String _id = id;
+						String hotelname = rs.getString(2);
+						String request = rs.getString(3);
+						String checkin = rs.getString(4);
+						String checkout = rs.getString(5);
+						String regdate = rs.getString(6);
+						int del = rs.getInt(7);
+						ReserveDto dto = new ReserveDto(seq, _id, hotelname, request, checkin, checkout, regdate, del);
+						list.add(dto);
+						
+						}
+					} catch (Exception e1) {
+						System.out.println("getreserveList Fail");
+						e1.printStackTrace();
+						
+					}	finally{			
+						DBClose.close(psmt, conn, rs);			
+					}
+					
+					return list;
+	}
+
+	
 	
 }

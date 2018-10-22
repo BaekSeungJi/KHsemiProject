@@ -41,4 +41,12 @@ public class ReserveService {
 			public List<ReserveDto> getlist(String hotelname, String yyyymmdd) {
 				return manager.getlist(hotelname, yyyymmdd);
 			}
+
+			public List<ReserveDto> getreserveList(String id){
+				return manager.getreserveList(id);
+			}
+			
+			
+			
+			
 }

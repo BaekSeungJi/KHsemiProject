@@ -16,4 +16,13 @@ public interface iReserveManager {
 	public List<ReserveDto> getReserve(String hotelname);
 	
 	public List<ReserveDto> getlist(String hotelname, String yyyymmdd);
+
+	public List<ReserveDto> getreserveList(String id);
+
+
+
+
+
+
+
 }

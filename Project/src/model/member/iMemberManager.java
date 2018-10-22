@@ -29,6 +29,11 @@ public interface iMemberManager {
 	public List<ReviewDto> ad_reviewList(String id);
 	
 	public boolean ad_MemberUpdate(String id, String pw, String name, String email, String phone);
+//
+			
+	public boolean profileedit(String id, String pw, String name, String email, String phone);
+	
 
+	
 	
 }
