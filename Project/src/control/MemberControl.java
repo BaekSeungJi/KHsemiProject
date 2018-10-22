@@ -254,8 +254,6 @@ public class MemberControl extends HttpServlet {
 		
 		
 		
-		
-		
 	}
 
 	
