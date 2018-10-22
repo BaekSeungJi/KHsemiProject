@@ -12,7 +12,6 @@ CREATE TABLE FILE_DB(
 	FILENAME VARCHAR2(50) NOT NULL,	-- 중복을 거르기 위한 이름(시간으로 파일이름 설정하는거)
 	REALNAME VARCHAR2(50) NOT NULL	-- 'test.jsp' 등... 실제 출력할 파일 이름
 );
-
 CREATE SEQUENCE SEQ_FILE_DB
 START WITH 1 INCREMENT BY 1;
 
