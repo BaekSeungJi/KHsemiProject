@@ -14,6 +14,7 @@
 String keyword = request.getParameter("keyword");
 %>
 
+
 <head>
 <title>mainBbs.jsp</title>
 
@@ -307,6 +308,7 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
    <%
 }else{
    mem = (MemberDto)ologin;
+   String id = mem.getId();
 }
 %>
 
@@ -328,8 +330,11 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 				<%}else if(mem.getAuth() == 3){ %>
 					<ul>
 						<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
-						<li><a href="mypage.jsp">마이페이지</a></li>	
-						<li><a href="logout.jsp">로그아웃</a></li>
+						<li><a href="MemberControl?command=mypage&id=<%=mem.getId()%>">마이페이지</a></li>
+					<li><a href="logout.jsp">로그아웃</a></li>
+					
+					<a href="ReserveControl?command=reserve&id=<%=mem.getId()%>">임시 호텔예약</a>
+ 
 					</ul>
 				<%}else if(mem.getAuth() == 1 || mem.getAuth() == 2){ %>
 					<ul>

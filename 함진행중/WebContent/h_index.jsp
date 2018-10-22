@@ -32,7 +32,11 @@ body {
 <br>
 <%
 //임의로 로그인
-String id = "hyh";
+Object ologin = session.getAttribute("login");
+MemberDto mem = null;
+mem = (MemberDto)ologin;
+
+String id = mem.getId();
 
 %>
 
