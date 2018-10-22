@@ -4,9 +4,14 @@ package model.member;
 import db.DBClose;
 import db.DBConnection;
 import dto.MemberDto;
+import dto.ReserveDto;
+import dto.ReserveTableDto;
+import dto.ReviewDto;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 public class MemberManager implements iMemberManager {
 
@@ -250,6 +255,37 @@ public class MemberManager implements iMemberManager {
 		}
 
 		return mem;
+	}
+
+
+	@Override
+	public String ad_getHotelname(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ReserveTableDto> ad_GetHotelmember(String hotelname, String sWord, String selected) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ReserveDto> ad_reserveList(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ReviewDto> ad_reviewList(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean ad_MemberUpdate(String id, String pw, String name, String email, String phone) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	

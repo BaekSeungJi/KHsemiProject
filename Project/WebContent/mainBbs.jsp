@@ -98,7 +98,7 @@ ul.style2 li{
 			
 			
 			// 조건에 맞는 호텔목록 불러오기 (검색옵션 -> search more 버튼클릭) 
-			$("#btn_search").click(function () {
+				$("#btn_search").click(function () {
 				
 				$("#hotelListTable").empty();
 				
@@ -110,6 +110,13 @@ ul.style2 li{
 				var people = $("#sel_people").val();
 				var date1 = $("#date1").val();
 				var date2 = $("#date2").val();
+				
+				if(place == null || place=="" || price == null || price=="" ||
+					people == null || people == "" || date1 == null || date1 == "" ||
+					date2 == null || date2=="" ){
+					alert("빈칸이 있습니다 .모든 칸을 전부 입력해주세요");
+					return;
+				}
 						
 				$.ajax({
 					url : "HotelControl",
@@ -125,7 +132,7 @@ ul.style2 li{
 					success : function(data){
 						if(data == "") return;
 						alert("검색 통신성공!");
-						alert(data);
+						//alert(data);
 						// json형태로 파싱한 데이터의 result부분을 가져온다.
 						var parsed = JSON.parse(data);
 						var result = parsed.result;
@@ -143,6 +150,7 @@ ul.style2 li{
 				});
 				
 			});
+
 			
 			
 			// json으로 잘라온 리스트를 실제로 태그와 함께 동적생성하며 ul에 뿌려주는 함수
@@ -334,7 +342,7 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 				<%}else if(mem.getAuth() == 1 || mem.getAuth() == 2){ %>
 					<ul>
 						<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
-						<li><a href="start.jsp">관리자 모드</a></li>	
+						<li><a href="adminMain.jsp">관리자 모드</a></li>	
 						<li><a href="logout.jsp">로그아웃</a></li>
 					</ul>
 				<%} %>

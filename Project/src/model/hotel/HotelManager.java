@@ -25,34 +25,18 @@ public class HotelManager implements iHotelManager {
 		System.out.println("체크인 = " + date1);
 		System.out.println("체크아웃 = " + date2);
 		
+	
+		
 		String sql = " SELECT HOTEL.SEQ, HOTEL.ID, HOTEL.HOTELNAME, HOTEL.REGION, HOTEL.MAXPEOPLE, HOTEL.PRICE, HOTEL.HOTELPHONE, HOTEL.DEL, HOTEL.READCOUNT, HOTEL.IMAGE "
 				+ " FROM HOTEL LEFT JOIN RESERVE "
 				+ " ON HOTEL.SEQ = RESERVE.NUM "
-				+ " AND RESERVE.CHECKIN >= '2017/10/22' "
-				+ " AND RESERVE.CHECKOUT < '2017/10/24' "
-				+ " AND HOTEL.REGION LIKE '%역삼%' "
-				+ " AND HOTEL.PRICE >= 1000 "
-				+ " AND HOTEL.MAXPEOPLE >= 1 "
+				+ " AND RESERVE.CHECKIN >= ? "
+				+ " AND RESERVE.CHECKOUT < ? "
+				+ " AND HOTEL.REGION LIKE '%'||?||'%' "
+				+ " AND HOTEL.PRICE >= ? "
+				+ " AND HOTEL.MAXPEOPLE >= ? "
 				+ " ORDER BY HOTEL.REGDATE DESC ";
 				
-				/*
-				+ " AND REGION LIKE '%'||?||'%' "
-				+ " AND PRICE >=? "
-				+ " AND MAXPEOPLE >=? "
-				+ " ORDER BY REGDATE DESC ";
-		
-		*/
-		/*
-			SELECT HOTEL.SEQ, HOTEL.ID, HOTEL.HOTELNAME, HOTEL.REGION
-			FROM HOTEL LEFT JOIN RESERVE
-			ON HOTEL.SEQ = RESERVE.NUM
-			AND RESERVE.CHECKIN >= '2017/10/22'
-			AND RESERVE.CHECKOUT < '2017/10/24'
-			AND HOTEL.REGION LIKE '%역삼%' 
-			AND HOTEL.PRICE >= 1000
-			AND HOTEL.MAXPEOPLE >= 1
-			ORDER BY HOTEL.REGDATE DESC
-		 */
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -68,7 +52,7 @@ public class HotelManager implements iHotelManager {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 getSearchHotelList Success");
 			
-			/*psmt.setString(1, date1);
+			psmt.setString(1, date1);
 			System.out.println("3/6 getSearchHotelList Success");
 			psmt.setString(2, date2);
 			System.out.println("4/6 getSearchHotelList Success");
@@ -77,7 +61,7 @@ public class HotelManager implements iHotelManager {
 			psmt.setInt(4, Integer.parseInt(price));
 			System.out.println("6/6 getSearchHotelList Success");
 			psmt.setInt(5, Integer.parseInt(people));
-			System.out.println("7/6 getSearchHotelList Success");*/
+			System.out.println("7/6 getSearchHotelList Success");
 			
 			rs = psmt.executeQuery();
 			System.out.println("8/6 getSearchHotelList Success");
