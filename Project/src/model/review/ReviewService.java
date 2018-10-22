@@ -30,5 +30,15 @@ public class ReviewService {
 	public void addReview(ReviewDto inputDto) {
 		manager.addReview(inputDto);
 	}
+	
+	public  boolean reviewdelete(int seq){
+		
+		return manager.ad_reviewdelete(seq);
+		}
+
+	//admin 호텔 리뷰 가져오기 
+	public List<ReviewDto> ad_getReview(String hotelname) {
+		return manager.ad_getReview(hotelname);
+	}
 
 }

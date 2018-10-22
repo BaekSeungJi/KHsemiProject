@@ -11,4 +11,8 @@ public interface iReviewManager {
 	
 	public void addReview(ReviewDto inputDto);
 
+	public boolean ad_reviewdelete(int seq);
+	
+	public List<ReviewDto> ad_getReview(String hotelname);
+	
 }

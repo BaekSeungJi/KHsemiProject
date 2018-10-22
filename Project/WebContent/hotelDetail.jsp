@@ -3,7 +3,13 @@
 <%@page import="dto.HotelDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
     
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <%
 String seq = request.getParameter("seq");
 String id = request.getParameter("id");
@@ -19,15 +25,10 @@ System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
 
 %>
 
-    
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900|Quicksand:400,700|Questrial" rel="stylesheet" />
-<link href="css/default.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+<link href="./css/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="./css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=916ea874e228791dbf525372ff0244e5&libraries=services"></script>
@@ -136,7 +137,12 @@ System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
 					"hotelname":hotelname
 				},
 				success : function(data){
-					if(data == "") return;
+					if(data == "[]") {
+						$("#centerContents").append(
+	                    		"<br><br><div class='addReviewList' align='center'><strong>"+
+	                    		"아직 등록된 후기가 없습니다ㅠㅠ" + "</strong></div><br><br><br><br>");
+						return;
+					};
 					//alert("리뷰 통신성공!");
 					//alert(data);
 					
@@ -171,7 +177,7 @@ System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
 		
 		// [3] '오시는 길' 탭
 		$("#btn_place").click(function () {
-			alert("길내놔");
+			//alert("길내놔");
 			
 			// 기존 중간영역 콘텐츠(호텔정보/리뷰정보) 비우기
 			$("#detailDiv").hide();
@@ -207,7 +213,7 @@ System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
 				type : "get",
 				data : "address="+address,
 				success : function(data){
-					alert("통신성공!");
+					//alert("통신성공!");
 					$("#addressMapHere").html(data);
 				},
 				error : function(){

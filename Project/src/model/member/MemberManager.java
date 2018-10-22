@@ -1,15 +1,11 @@
 package model.member;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import db.DBClose;
 import db.DBConnection;
 import dto.MemberDto;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.ResultSet;
 
 public class MemberManager implements iMemberManager {
@@ -23,6 +19,7 @@ public class MemberManager implements iMemberManager {
 	public static MemberManager getInstance() {
 		return memberManager;
 	}
+
 
 
 	@Override
@@ -96,13 +93,13 @@ public class MemberManager implements iMemberManager {
 			if(rs.next()) {
 				String id = rs.getString(1);
 				String pwd = rs.getString(2);
-				/*String name = rs.getString(3);
+				String name = rs.getString(3);
 				String email = rs.getString(4);
-				String phone = rs.getString(5);	*/	
+				String phone = rs.getString(5);
 				int blacklist = rs.getShort(6);
 				int auth = rs.getInt(7);
 
-				mem = new MemberDto(id, pwd, null, null, null, blacklist, auth);
+				mem = new MemberDto(id, pwd, name, email, phone, blacklist, auth);
 			}
 			System.out.println("3/3 login Success");
 

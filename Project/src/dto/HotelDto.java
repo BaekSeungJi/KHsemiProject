@@ -36,6 +36,9 @@ REFERENCES MEMBER(ID);
 
 ALTER TABLE HOTEL
 ADD IMAGE VARCHAR2(50);
+
+ALTER TABLE hotel
+MODIFY(region VARCHAR2(200));
 */
 
 public class HotelDto implements Serializable {
@@ -72,6 +75,19 @@ public class HotelDto implements Serializable {
 		this.del = del;
 		this.readcount = readcount;
 		this.regdate = regdate;
+		this.image = image;
+	}
+	
+	public HotelDto(String id, String hotelname, String description, String region, int maxpeople, int price,
+			String hotelphone, String image) {
+		super();
+		this.id = id;
+		this.hotelname = hotelname;
+		this.description = description;
+		this.region = region;
+		this.maxpeople = maxpeople;
+		this.price = price;
+		this.hotelphone = hotelphone;
 		this.image = image;
 	}
 	

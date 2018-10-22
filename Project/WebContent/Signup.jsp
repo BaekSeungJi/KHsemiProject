@@ -33,11 +33,11 @@
 				<tr>
 				<td>
 				<!-- id체크 -->
-				
 				<p id="idcheck" style="font-size: 10px"></p>
 				<input type="button" id="btn" required value="id확인">
 				</td>
 				</tr>				
+				
 				<label for="password">password:</label> <input
 				type="password" id="pwd" name="pwd" 
 				required value="Password" onBlur="if(this.value=='')this.value='Password'"

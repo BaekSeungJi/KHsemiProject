@@ -56,5 +56,14 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
   </servlet-mapping>
   
   
+   <servlet>
+  	<servlet-name>ReserveControl</servlet-name>
+  	<servlet-class>control.ReserveControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ReserveControl</servlet-name>
+  	<url-pattern>/ReserveControl</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
 
