@@ -55,7 +55,6 @@ public class MemberControl extends HttpServlet {
 
 	public void doProcess(HttpServletRequest req, HttpServletResponse resp) throws Exception, ServletException {
 
-
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/html; charset=UTF-8");
 
@@ -295,6 +294,7 @@ public class MemberControl extends HttpServlet {
 		
 			dispatch("profileeditaf.jsp", req, resp);
 		}
+		
 		
 
 

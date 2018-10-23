@@ -19,7 +19,7 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
 <welcome-file>default.html</welcome-file>
 <welcome-file>default.htm</welcome-file>
 <welcome-file>default.jsp</welcome-file>
-
+<welcome-file>ad_admin.jsp</welcome-file>
 
 
  </welcome-file-list>
@@ -64,6 +64,16 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
   	<servlet-name>ReserveControl</servlet-name>
   	<url-pattern>/ReserveControl</url-pattern>
   </servlet-mapping>
+  
+     <servlet>
+  	<servlet-name>PdsControl</servlet-name>
+  	<servlet-class>control.PdsControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>PdsControl</servlet-name>
+  	<url-pattern>/PdsControl</url-pattern>
+  </servlet-mapping>
+  
   
 </web-app>
 
