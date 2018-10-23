@@ -53,7 +53,10 @@ public class MemberService {
 			public List<ReserveDto> reserveList(String id){
 				return manager.ad_reserveList(id);
 			}
-
+		
+			public boolean profileedit(String id, String pwd, String name, String email, String phone) {
+				return manager.profileedit(id, pwd, name, email, phone);
+				}		
 			
 		
 

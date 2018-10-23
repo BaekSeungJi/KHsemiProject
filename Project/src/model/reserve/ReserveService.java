@@ -46,7 +46,18 @@ public class ReserveService {
 				return manager.getreserveList(id);
 			}
 			
+			//getday
+			public ReserveDto getDay(int seq) {
+				return manager.getDay(seq);
+			}
 			
+			//예약 수정 
+			public boolean reserveUpdate(int seq, String checkin,String checkout, String request) {
+				return manager.reserveUpdate(seq, checkin, checkout, request);
+			}
 			
+			public boolean reserve(String id, String hotelname, String request, String checkin, String checkout){
+				return manager.reserve(id, hotelname, request, checkin, checkout);
+			}
 			
 }

@@ -33,7 +33,7 @@ public interface iMemberManager {
 			
 	public boolean profileedit(String id, String pw, String name, String email, String phone);
 	
-
+	
 	
 	
 }

@@ -501,9 +501,6 @@ List<ReserveTableDto> list = new ArrayList<>();
 		return count>0?true:false;
 	}
 
-
-
-
 	@Override
 	public boolean profileedit(String id, String pw, String name, String email, String phone) {
 		String sql = " UPDATE member SET " + " pwd=?, name=?, email=?, phone=? " + " WHERE id=? ";
@@ -538,7 +535,8 @@ List<ReserveTableDto> list = new ArrayList<>();
 
 		return count > 0 ? true : false;
 	}
-	
 
+	
+	
 	}
 	
