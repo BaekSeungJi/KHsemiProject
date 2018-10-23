@@ -84,7 +84,7 @@ HotelDto dto = (HotelDto)request.getAttribute("dto");
 							<div class="panel-body">
 							
 							<div>
-							<div style="float: left; padding-right: 20px"><img alt="" src="image/<%=dto.getImage() %>" width="230" height="300"></div>
+							<div style="float: left; padding-right: 20px"><img alt="" src="hotelImage/<%=dto.getImage() %>" width="230" height="300"></div>
 							<div style="float: left;">
 							<form action="HotelControl">
 							<table>

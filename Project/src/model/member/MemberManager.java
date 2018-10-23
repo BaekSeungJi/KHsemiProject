@@ -297,7 +297,7 @@ public class MemberManager implements iMemberManager {
 
 	@Override
 	public List<ReserveTableDto> ad_GetHotelmember(String hotelname, String sWord, String selected) {
-List<ReserveTableDto> list = new ArrayList<>();
+		List<ReserveTableDto> list = new ArrayList<>();
 		
 		// 검색어
 		String Word = "";
@@ -308,7 +308,7 @@ List<ReserveTableDto> list = new ArrayList<>();
 		}
 		
 		String sql = " SELECT  m.id, m.name,m.email,m.phone, e.checkin,e.checkout  FROM member m, RESERVE e "
-				+ " WHERE e.HOTELNAME = ? " + Word;
+				+ " WHERE e.HOTELNAME = ? and m.id=e.id " + Word;
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;

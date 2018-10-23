@@ -378,6 +378,8 @@ public class HotelManager implements iHotelManager {
 				int price = rs.getInt(6);
 				String hotelphone = rs.getString(7);
 				String image = rs.getString(8);	
+				
+				System.out.println("이미지경로 테스트:"+image);
 				dto = new HotelDto(id, _hotelname, description, region, maxpeople, price, hotelphone, image);
 			}
 			

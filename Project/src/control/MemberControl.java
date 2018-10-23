@@ -147,6 +147,8 @@ public class MemberControl extends HttpServlet {
 			req.getSession().setAttribute("hotelname", hotelname);
 			HotelDto hoteldto = Hser.getHoteldetail(hotelname);
 			
+			System.out.println("호텔 이미지 경로 컨트롤러 :"+hoteldto.getImage());
+			
 			// 차트 정보
 			int price = Integer.parseInt(Hser.getPrice(hotelname));
 			List<ReviewDto> Rlist = Rservice.ad_getReview(hotelname);

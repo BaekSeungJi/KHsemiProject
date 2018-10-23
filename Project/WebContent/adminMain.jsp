@@ -64,7 +64,7 @@ hoteldto = (HotelDto)request.getAttribute("hoteldto");
 				
 			</div>
 			<a href="MemberControl?command=ad_admin" class="rad-logo-hidden">Admin</a>
-
+	<a href="index.jsp"><div style="float: right; margin-right: 70px; margin-top: 40px"><i class="fas fa-home"></i>Home</div></a>
 			
 		</nav>
 	</header>
@@ -170,7 +170,8 @@ hoteldto = (HotelDto)request.getAttribute("hoteldto");
 							<div class="panel-body">
 							
 							<div>
-							<div style="float: left; padding-right: 40px"><img alt="" src="image/<%=hoteldto.getImage() %>" width="230" height="250"></div>
+							<div style="float: left; padding-right: 40px"><img alt="" src="hotelImage/<%=hoteldto.getImage() %>" width="230" height="250"></div>
+							<%System.out.println("호텔이미지이름:"+hoteldto.getImage()); %>
 							<div style="float: left;">
 							<form action="MemberControl">
 							<table>
@@ -273,10 +274,10 @@ Highcharts.chart('container', {
         }
     },
     title: {
-        text: '호텔 이용자 후기 '
+        text: '호텔 이용자 후기 점수 '
     },
     subtitle: {
-        text: '히든베이호텔'
+        text: '<%=hotelname%>'
     },
     plotOptions: {
         pie: {
@@ -312,7 +313,7 @@ Highcharts.chart('container2', {
         text: '월별 매출'
     },
     subtitle: {
-        text: '히든베이호텔'
+        text: '<%=hotelname%>'
     },
     xAxis: {
         categories: [

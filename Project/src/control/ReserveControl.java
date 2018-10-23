@@ -364,7 +364,58 @@ public class ReserveControl extends HttpServlet {
 			dispatch("reservewriteAf.jsp", req, resp);
 		}
 
-		
+		// 관리자_리뷰삭제
+				else if(command.equals("ad_reserveDelete")) {
+
+				
+					
+					int seq = Integer.parseInt(req.getParameter("seq"));
+					
+					String id = req.getParameter("id");
+					
+					ReserveService service = ReserveService.getInstance();
+					
+					boolean b = service.ad_reservedelete(seq);
+					
+					if(b == true) {
+					
+						
+						resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
+					}else {
+				
+						
+						resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
+					}
+				}
+				
+				// 관리자 예약 수정
+				else if(command.equals("ad_reserveUpdate")) {
+
+				
+					
+					int seq = Integer.parseInt(req.getParameter("seq"));	
+					String id = req.getParameter("id");
+					String checkin = req.getParameter("checkin");
+					String checkout = req.getParameter("checkout");
+					String request = req.getParameter("request");
+				
+					System.out.println("리저브테스트id"+id);
+					System.out.println("리저브테스트realdate:"+checkin);
+					System.out.println("리저브테스트request:"+request);
+					
+					
+					ReserveService service = ReserveService.getInstance();
+					
+					boolean b = service.ad_reserveUpdate(seq, checkin,checkout, request);
+					
+					if(b == true) {
+						
+						resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
+					}else {
+						
+						resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
+					}
+				}
 		
 		
 		
