@@ -110,6 +110,13 @@ ul.style2 li{
 				var people = $("#sel_people").val();
 				var date1 = $("#date1").val();
 				var date2 = $("#date2").val();
+				
+				if(place == null || place=="" || price == null || price=="" ||
+					people == null || people == "" || date1 == null || date1 == "" ||
+					date2 == null || date2=="" ){
+					alert("빈칸이 있습니다 .모든 칸을 전부 입력해주세요");
+					return;
+				}
 						
 				$.ajax({
 					url : "HotelControl",

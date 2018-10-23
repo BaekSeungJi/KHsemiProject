@@ -22,59 +22,13 @@ public class HotelManager implements iHotelManager {
 	public List<HotelDto> getSearchHotelList(String place, String price, String people, String date1, String date2) {
 		
 		
-		System.out.println("체크인 = " + date1);
-		System.out.println("체크아웃 = " + date2);
-		
 		String sql1 = " SELECT R.HOTELNAME "
 				+ " FROM HOTEL H, RESERVE R "
 				+ " WHERE H.SEQ = R.NUM "
-				+ " AND CHECKIN BETWEEN '2018/10/20' AND '2018/10/23' "
-				+ " AND CHECKOUT BETWEEN '2018/10/20' AND '2018/10/22' ";
+				+ " AND CHECKIN BETWEEN ? AND ? "
+				+ " AND CHECKOUT BETWEEN ? AND ? ";
 		
 		
-		/*
-		SELECT SEQ, HOTELNAME
-		FROM HOTEL
-		WHERE HOTELNAME != (
-		   SELECT R.HOTELNAME
-		   FROM HOTEL H, RESERVE R
-		   WHERE H.SEQ = R.NUM
-		   AND CHECKIN BETWEEN '2018/10/20' AND '2018/10/23'
-		   AND CHECKOUT BETWEEN '2018/10/20' AND '2018/10/23')
-		AND REGION LIKE '%역삼%'
-		AND PRICE >= 1000
-		AND MAXPEOPLE >= 1
-		 */
-		
-		/*String sql = " SELECT HOTEL.SEQ, HOTEL.ID, HOTEL.HOTELNAME, HOTEL.REGION, HOTEL.MAXPEOPLE, HOTEL.PRICE, HOTEL.HOTELPHONE, HOTEL.DEL, HOTEL.READCOUNT, HOTEL.IMAGE "
-				+ " FROM HOTEL LEFT JOIN RESERVE "
-				+ " ON HOTEL.SEQ = RESERVE.NUM "
-				+ " AND RESERVE.CHECKIN >= '2017/10/22' "
-				+ " AND RESERVE.CHECKOUT < '2017/10/24' "
-				+ " AND HOTEL.REGION LIKE '%역삼%' "
-				+ " AND HOTEL.PRICE >= 1000 "
-				+ " AND HOTEL.MAXPEOPLE >= 1 "
-				+ " ORDER BY HOTEL.REGDATE DESC ";*/
-				
-				/*
-				+ " AND REGION LIKE '%'||?||'%' "
-				+ " AND PRICE >=? "
-				+ " AND MAXPEOPLE >=? "
-				+ " ORDER BY REGDATE DESC ";
-		
-		*/
-		/*
-			SELECT HOTEL.SEQ, HOTEL.ID, HOTEL.HOTELNAME, HOTEL.REGION
-			FROM HOTEL LEFT JOIN RESERVE
-			ON HOTEL.SEQ = RESERVE.NUM
-			AND RESERVE.CHECKIN >= '2017/10/22'
-			AND RESERVE.CHECKOUT < '2017/10/24'
-			AND HOTEL.REGION LIKE '%역삼%' 
-			AND HOTEL.PRICE >= 1000
-			AND HOTEL.MAXPEOPLE >= 1
-			ORDER BY HOTEL.REGDATE DESC
-		 */
-
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -89,27 +43,27 @@ public class HotelManager implements iHotelManager {
 			psmt = conn.prepareStatement(sql1);
 			System.out.println("2/6 getSearchHotelList Success");
 			
-			/*psmt.setString(1, date1);
+			psmt.setString(1, date1);
 			System.out.println("3/6 getSearchHotelList Success");
 			psmt.setString(2, date2);
 			System.out.println("4/6 getSearchHotelList Success");
-			psmt.setString(3, place.substring(0, 2));
+			psmt.setString(3, date1);
 			System.out.println("5/6 getSearchHotelList Success");
-			psmt.setInt(4, Integer.parseInt(price));
+			psmt.setString(4, date2);
 			System.out.println("6/6 getSearchHotelList Success");
-			psmt.setInt(5, Integer.parseInt(people));
-			System.out.println("7/6 getSearchHotelList Success");*/
 			
 			rs = psmt.executeQuery();
-			System.out.println("8/6 getSearchHotelList Success");
+			System.out.println("7/6 getSearchHotelList Success");
 			
 			if(rs.next()) {
 				list = getHotelList1(place, price, people, date1, date2);
+				System.out.println("8/6 getSearchHotelList Success");
 			}else {
 				list = getHotelList2(place, price, people);
+				System.out.println("9/6 getSearchHotelList Success");
 			}
 			
-			System.out.println("9/6 getSearchHotelList Success");
+			System.out.println("10/6 getSearchHotelList Success");
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -131,11 +85,12 @@ public class HotelManager implements iHotelManager {
 				+ 		" SELECT R.HOTELNAME "
 				+ 		" FROM HOTEL H, RESERVE R "
 				+ 		" WHERE H.SEQ = R.NUM "
-				+ 		" AND CHECKIN BETWEEN '2018/10/20' AND '2018/10/23' "
-				+ 		" AND CHECKOUT BETWEEN '2018/10/20' AND '2018/10/23' ) "
-				+ " AND REGION LIKE '%역삼%' "
-				+ " AND PRICE >= 1000 "
-				+ " AND MAXPEOPLE >= 1 ";
+				+ 		" AND CHECKIN BETWEEN ? AND ? "
+				+ 		" AND CHECKOUT BETWEEN ? AND ? ) "
+				+ " AND REGION LIKE '%'||?||'%' "
+				+ " AND PRICE >=? "
+				+ " AND MAXPEOPLE >=? "
+				+ " ORDER BY REGDATE DESC ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -151,19 +106,23 @@ public class HotelManager implements iHotelManager {
 			psmt = conn.prepareStatement(sql2);
 			System.out.println("2/6 getHotelList1 Success");
 			
-			/*psmt.setString(1, date1);
-			System.out.println("3/6 getSearchHotelList Success");
+			psmt.setString(1, date1);
+			System.out.println("3/6 getHotelList1 Success");
 			psmt.setString(2, date2);
-			System.out.println("4/6 getSearchHotelList Success");
-			psmt.setString(3, place.substring(0, 2));
-			System.out.println("5/6 getSearchHotelList Success");
-			psmt.setInt(4, Integer.parseInt(price));
-			System.out.println("6/6 getSearchHotelList Success");
-			psmt.setInt(5, Integer.parseInt(people));
-			System.out.println("7/6 getSearchHotelList Success");*/
+			System.out.println("4/6 getHotelList1 Success");
+			psmt.setString(3, date1);
+			System.out.println("5/6 getHotelList1 Success");
+			psmt.setString(4, date2);
+			System.out.println("6/6 getHotelList1 Success");
+			psmt.setString(5, place.substring(0, 2));
+			System.out.println("7/6 getHotelList1 Success");
+			psmt.setInt(6, Integer.parseInt(price));
+			System.out.println("8/6 getHotelList1 Success");
+			psmt.setInt(7, Integer.parseInt(people));
+			System.out.println("9/6 getHotelList1 Success");
 			
 			rs = psmt.executeQuery();
-			System.out.println("8/6 getHotelList1 Success");
+			System.out.println("10/6 getHotelList1 Success");
 			
 			
 			while(rs.next()) {
@@ -187,7 +146,7 @@ public class HotelManager implements iHotelManager {
 				list.add(d);
 				
 			}
-			System.out.println("9/6 getHotelList1 Success");
+			System.out.println("11/6 getHotelList1 Success");
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -206,9 +165,10 @@ public class HotelManager implements iHotelManager {
 
 		String sql3 = " SELECT SEQ, ID, HOTELNAME, REGION, MAXPEOPLE, PRICE, HOTELPHONE, DEL, READCOUNT, IMAGE "
 				+ " FROM HOTEL "
-				+ " WHERE REGION LIKE '%역삼%' "
-				+ " AND PRICE >= 1000 "
-				+ " AND MAXPEOPLE >= 1 ";
+				+ " WHERE REGION LIKE '%'||?||'%' "
+				+ " AND PRICE >=? "
+				+ " AND MAXPEOPLE >=? "
+				+ " ORDER BY REGDATE DESC ";
 			
 
 		Connection conn = null;
@@ -225,19 +185,15 @@ public class HotelManager implements iHotelManager {
 			psmt = conn.prepareStatement(sql3);
 			System.out.println("2/6 getHotelList2 Success");
 			
-			/*psmt.setString(1, date1);
-			System.out.println("3/6 getSearchHotelList Success");
-			psmt.setString(2, date2);
-			System.out.println("4/6 getSearchHotelList Success");
-			psmt.setString(3, place.substring(0, 2));
-			System.out.println("5/6 getSearchHotelList Success");
-			psmt.setInt(4, Integer.parseInt(price));
-			System.out.println("6/6 getSearchHotelList Success");
-			psmt.setInt(5, Integer.parseInt(people));
-			System.out.println("7/6 getSearchHotelList Success");*/
+			psmt.setString(1, place.substring(0, 2));
+			System.out.println("3/6 getHotelList2 Success");
+			psmt.setInt(2, Integer.parseInt(price));
+			System.out.println("4/6 getHotelList2 Success");
+			psmt.setInt(3, Integer.parseInt(people));
+			System.out.println("5/6 getHotelList2 Success");
 			
 			rs = psmt.executeQuery();
-			System.out.println("8/6 getHotelList2 Success");
+			System.out.println("6/6 getHotelList2 Success");
 			
 			while(rs.next()) {
 				int i = 1;
@@ -260,7 +216,7 @@ public class HotelManager implements iHotelManager {
 				list.add(d);
 				
 			}
-			System.out.println("9/6 getHotelList2 Success");
+			System.out.println("7/6 getHotelList2 Success");
 			
 		} catch(Exception e) {
 			e.printStackTrace();

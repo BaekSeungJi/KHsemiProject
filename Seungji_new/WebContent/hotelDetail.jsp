@@ -1,10 +1,12 @@
+<%@page import="dto.MemberDto"%>
 <%@page import="dto.ReviewDto"%>
 <%@page import="java.util.List"%>
 <%@page import="dto.HotelDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-    
+
+  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -32,6 +34,25 @@ System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=916ea874e228791dbf525372ff0244e5&libraries=services"></script>
+
+
+<style type="text/css">
+/* 로그인, 로그아웃 버튼용 */
+a.btn {
+	font-size : 50px;
+	color: black;
+	padding: 10px;
+	border: 1px solid rgba(255,255,255,0.5);
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	transition: all 0.2s;
+}
+a.btn:hover {
+	background: #fa8072;
+	border: 1px solid #fa8072;
+	color: black;
+}
+</style>
 
 <script type="text/javascript">
 	$(document).ready(function () {
@@ -76,8 +97,9 @@ System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
 									'<h2>가격</h2>' + 
 								'</div>' + 
 								'<p>' + <%=price %> + '원</p>' + 
+								<%-- '<a href="reservewrite.jsp?seq='+<%=seq%>+'" class="button">예약하기</a></div>' + --%>
 								'<a href="#" class="button">예약하기</a></div>' +
-							
+										
 							'<div class="tbox">' + 
 							'<div class="title">' + 
 								'<h2>최대인원</h2>' + 
@@ -98,6 +120,7 @@ System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
 				}
 			});
 		}
+		
 		
 		// [2] '사용자후기' 탭
 		$(document).on("click", "#btn_review", function () {
@@ -228,8 +251,47 @@ System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
 </head>
 <body>
 
+
+<!-- 로그인여부 확인 / 로그인한 사람의 정보 가져오기. -->
+<%
+Object ologin = session.getAttribute("login");
+MemberDto mem = null;
+if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간이 만료했을때(로그인하고 한참 지남)
+   %>
+   <script type="text/javascript">
+   $(document).ready(function () {
+	   $("#logoutBtn").hide();
+	   $("#loginBtn").show();
+	   
+	   $(document).on("click", ".button", function () {
+			alert("로그인 후 이용가능합니다. 로그인해주세요.");
+			/* $(".class").attr("href", "#"); */
+		});
+	});
+   </script>
+   <%
+}else{
+   mem = (MemberDto)ologin;
+   %>
+   	<script type="text/javascript">
+   	$(document).ready(function () {
+   		$("#loginBtn").hide();
+   		$("#logoutBtn").show();
+	   
+	   $(document).on("click", ".button", function () {
+		   alert("예약페이지로 넘어갑니다");
+			location.href="reservewrite.jsp?seq=<%=seq%>";
+		});
+	});
+   </script>
+   <%
+};
+%>
+
 <!-- 맨 위 이미지 / 탭부분 -->
-<div class="wrapper">
+<div class="wrapper">	
+	<a class="btn" href="loginview.jsp" title="Login" id="loginBtn">Login</a>
+	<a class="btn" href="logout.jsp" title="Logout" id="logoutBtn">Logout</a>
 	<div id="banner" class="container"><img src="<%=image %>" width="1200" height="500" alt="" /></div>
 	<div id="header-wrapper" style="background-color: #FA8072">
 	<div id="header" class="container">
