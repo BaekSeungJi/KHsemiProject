@@ -86,7 +86,9 @@ a.btn:hover {
 					// DESCRIPTION, READCOUNT, REGDATE 중에서 description만 찾아와서 뿌리기(find('태그이름') 사용)
 					$("#hotel_description").html($("#hotel_description").html(data).find('description').text());
 					//$("#hotel_description").html(data).find('description').text();
-					// READCOUNT, REGDATE 도 뿌려주기 추가해야함!!!!!!!!!!!
+					// READCOUNT, REGDATE 도 뿌려주기
+					$("#hotelRegDate").html("호텔 등록일 : " + $("#hotelRegDate").html(data).find('regdate').text());
+              		$("#hotelReadCount").html("조회수 : " + $("#hotelReadCount").html(data).find('readcount').text());
 					
 					// 기타 디테일들. 태그를 함께 생성하며 웹에 띄워주기
 					$("#three-column").append(
@@ -295,6 +297,8 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 	<div id="header" class="container">
 		<div id="logo">
 			<h1><a href="#"><%=hotelname %></a></h1>
+			<h4 id="hotelRegDate"></h4>
+         	<h4 id="hotelReadCount"></h4>
 		</div>
 		<div id="menu">
 			<ul>
