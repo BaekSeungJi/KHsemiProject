@@ -78,6 +78,7 @@ public class MemberControl extends HttpServlet {
 
 		}
 		else if(command.equals("Login")) {					//로그인
+			
 			String id = req.getParameter("id");
 			String pwd = req.getParameter("pwd");
 		/*	String name = req.getParameter("name");
@@ -90,6 +91,7 @@ public class MemberControl extends HttpServlet {
 		
 			MemberDto dto = new MemberDto(id, pwd, null, null, null, 0, 0);
 			req.setAttribute("dto", dto);
+			
 			/*
 			req.setAttribute("id", id);
 			req.setAttribute("pwd", pwd);
@@ -248,39 +250,8 @@ public class MemberControl extends HttpServlet {
 			String id = req.getParameter("id");
 			
 			
-		}else if(command.equals("mypage")) {
-			String id = req.getParameter("id");
-			
-			MemberService service = MemberService.getInstance();
-			ReserveService ser = ReserveService.getInstance();
-			HotelService Hser = HotelService.getInstance();
-			
-			String hotelname= service.getHotelname(id);
-			
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
-
-			List<ReserveDto> reserveList = service.reserveList(id); 
-	
-			req.setAttribute("dto", dto);
-			req.setAttribute("reserveList", reserveList);
-			dispatch("mypage.jsp", req, resp);
-			
-			
+		
 		}
-		
-		else if(command.equals("profileedit")) {
-			String id = req.getParameter("id");
-			MemberService service = MemberService.getInstance();
-			
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
-
-		
-			req.setAttribute("dto", dto);
-		
-			dispatch("profileedit.jsp", req, resp);
-		}
-	
-		
 		
 		
 		else if(command.equals("profileeditaf")) {
@@ -296,9 +267,53 @@ public class MemberControl extends HttpServlet {
 		}
 		
 		
-
-
+	else if(command.equals("mypage")) {
+		String id = req.getParameter("id");
 		
+		MemberService service = MemberService.getInstance();
+		ReserveService ser = ReserveService.getInstance();
+		HotelService Hser = HotelService.getInstance();
+		
+		String hotelname= service.getHotelname(id);
+		
+		MemberDto dto = service.login(id);
+
+		List<ReserveDto> reserveList = service.reserveList(id); 
+
+		req.setAttribute("dto", dto);
+		req.setAttribute("reserveList", reserveList);
+		dispatch("mypage.jsp", req, resp);
+		
+		
+	}
+	
+	else if(command.equals("profileedit")) {
+		String id = req.getParameter("id");
+		MemberService service = MemberService.getInstance();
+		
+		MemberDto dto = service.login(id);
+
+	
+		req.setAttribute("dto", dto);
+	
+		dispatch("profileedit.jsp", req, resp);
+	}
+
+	
+	
+	
+	else if(command.equals("profileeditaf")) {
+		String id = req.getParameter("id");
+		MemberService service = MemberService.getInstance();
+		
+		MemberDto dto = service.login(id);
+				
+		req.setAttribute("dto", dto);
+	
+		dispatch("profileeditaf.jsp", req, resp);
+	}
+	
+
 		
 		
 		

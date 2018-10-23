@@ -13,17 +13,17 @@ public interface iHotelManager {
 	
 	public HotelDto getHotelDetail(int seq);
 	
-	public boolean ad_HotelUpdate(String hotelname, String DESCRIPTION, int MAXPEOPLE, int PRICE,String HOTELPHONE);
-
 	public HotelDto getHoteldetail(String hotelname);
 	
 	public List<String> getMonthlyChart(String hotelname);
 	
 	public String getPrice(String hotelname);
 	
+		
 	public List<HotelDto> getHotelList1(String place, String price, String people, String date1, String date2);
 	
 	public List<HotelDto> getHotelList2(String place, String price, String people);
-	
 
+	public boolean ad_HotelUpdate(String hotelname, String DESCRIPTION, int MAXPEOPLE, int PRICE,String HOTELPHONE);
+	
 }

@@ -33,6 +33,13 @@ public interface iMemberManager {
 			
 	public boolean profileedit(String id, String pw, String name, String email, String phone);
 	
+	public boolean addMember(MemberService ms);
+	
+	public MemberDto login(String id);
+	
+	public MemberDto ad_login(String id);
+	
+	public List<ReserveDto> reserveList(String id);
 	
 	
 	

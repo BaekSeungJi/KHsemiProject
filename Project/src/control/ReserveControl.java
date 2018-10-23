@@ -216,6 +216,158 @@ public class ReserveControl extends HttpServlet {
 			dispatch("reservewriteAf.jsp", req, resp);
 		}
 
+		//////////////////////
+		else if(command.equals("reservedel")) {
+			String id = req.getParameter("id");
+
+			MemberService memservice = MemberService.getInstance();
+			ReserveService resservice = ReserveService.getInstance();
+			HotelService hotelServicervice = HotelService.getInstance();
+
+
+			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
+
+			List<ReserveDto> list = resservice.getreserveList(id);
+
+			for(ReserveDto reservedto : list){
+				System.out.println(reservedto.toString());					
+			}	
+
+			req.setAttribute("list", list);
+
+			dispatch("reservedel.jsp", req, resp);
+		}
+
+		else if(command.equals("reservedetail")) {
+			String id = req.getParameter("id");
+
+			MemberService memservice = MemberService.getInstance();
+			ReserveService resservice = ReserveService.getInstance();
+			HotelService hotelServicervice = HotelService.getInstance();
+
+
+			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
+
+			List<ReserveDto> list = resservice.getreserveList(id);
+
+			for(ReserveDto reservedto : list){
+				System.out.println(reservedto.toString());					
+			}	
+
+			req.setAttribute("list", list);
+
+			dispatch("reservedetail.jsp", req, resp);
+		}
+
+		else if(command.equals("reservelist")) {
+			String id = req.getParameter("id");
+
+			MemberService memservice = MemberService.getInstance();
+			ReserveService resservice = ReserveService.getInstance();
+			HotelService hotelServicervice = HotelService.getInstance();
+
+
+			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
+
+			List<ReserveDto> list = resservice.getreserveList(id);
+
+			for(ReserveDto reservedto : list){
+				System.out.println(reservedto.toString());					
+			}	
+
+			req.setAttribute("list", list);
+
+			dispatch("reservelist.jsp", req, resp);
+		}
+
+		else if(command.equals("reserveupdate")) {
+			String id = req.getParameter("id");
+
+			MemberService memservice = MemberService.getInstance();
+			ReserveService resservice = ReserveService.getInstance();
+			HotelService hotelServicervice = HotelService.getInstance();
+
+
+			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
+
+			List<ReserveDto> list = resservice.getreserveList(id);
+
+			for(ReserveDto reservedto : list){
+				System.out.println(reservedto.toString());					
+			}	
+
+			req.setAttribute("list", list);
+
+			dispatch("reserveupdate.jsp", req, resp);
+		}
+
+		else if(command.equals("reserveupdateaf")) {
+			String id = req.getParameter("id");
+
+			MemberService memservice = MemberService.getInstance();
+			ReserveService resservice = ReserveService.getInstance();
+			HotelService hotelServicervice = HotelService.getInstance();
+
+
+			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
+
+			List<ReserveDto> list = resservice.getreserveList(id);
+
+			for(ReserveDto reservedto : list){
+				System.out.println(reservedto.toString());					
+			}	
+
+			req.setAttribute("list", list);
+
+			dispatch("reserveupdate.jsp", req, resp);
+		}
+
+		else if(command.equals("reservewrite")) {
+			String id = req.getParameter("id");
+
+			MemberService memservice = MemberService.getInstance();
+			ReserveService resservice = ReserveService.getInstance();
+			HotelService hotelServicervice = HotelService.getInstance();
+
+
+			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
+
+			List<ReserveDto> list = resservice.getreserveList(id);
+
+			for(ReserveDto reservedto : list){
+				System.out.println(reservedto.toString());					
+			}	
+
+			req.setAttribute("list", list);
+
+			dispatch("reservewrite.jsp", req, resp);
+		}
+
+		else if(command.equals("reservewriteAf")) {
+			String id = req.getParameter("id");
+
+			MemberService memservice = MemberService.getInstance();
+			ReserveService resservice = ReserveService.getInstance();
+			HotelService hotelServicervice = HotelService.getInstance();
+
+
+			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
+
+			List<ReserveDto> list = resservice.getreserveList(id);
+
+			for(ReserveDto reservedto : list){
+				System.out.println(reservedto.toString());					
+			}	
+
+			req.setAttribute("list", list);
+
+			dispatch("reservewriteAf.jsp", req, resp);
+		}
+
+		
+		
+		
+		
 	}
 
 

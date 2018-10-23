@@ -59,5 +59,9 @@ public class ReserveService {
 			public boolean reserve(String id, String hotelname, String request, String checkin, String checkout){
 				return manager.reserve(id, hotelname, request, checkin, checkout);
 			}
-			
+		
+			//예약 삭제
+			public boolean reservedelete(int seq){
+				return manager.reservedelete(seq);
+			}
 }

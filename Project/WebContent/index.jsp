@@ -56,7 +56,7 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 				<%}else if(mem.getAuth() == 3){ %>
 					<ul>
 						<li>
-				          <a class="btn" href="mypage.jsp" title="My Page">My Page</a>
+				          <a class="btn" href="MemberControl?command=mypage&id=<%=mem.getId()%>" title="My Page">My Page</a>
 				        </li>
 				        <li>
 				          <a class="btn" href="logout.jsp" title="Logout">Logout</a>

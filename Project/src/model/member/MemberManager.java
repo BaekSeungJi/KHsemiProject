@@ -437,7 +437,6 @@ List<ReserveTableDto> list = new ArrayList<>();
 			while(rs.next()){			
 				System.out.println("5/6 ad_reviewList Success");
 				
-			
 				int seq = rs.getInt(1);
 				String _id = id;
 				String hotelname = rs.getString(2);
@@ -473,9 +472,7 @@ List<ReserveTableDto> list = new ArrayList<>();
 	
 			try {
 			conn = DBConnection.getConnection();
-		
-			
-		
+							
 			System.out.println("2/6  ad_MemberUpdate");
 			
 			psmt = conn.prepareStatement(sql);
@@ -536,6 +533,124 @@ List<ReserveTableDto> list = new ArrayList<>();
 		return count > 0 ? true : false;
 	}
 
+	//////////////////////////
+	
+	
+
+	@Override
+	public MemberDto login(String id) {
+		String sql = " SELECT ID, pwd, name, email , phone, blacklist, auth " + " FROM MEMBER " + " WHERE ID=? ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		MemberDto mem = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+
+			System.out.println("1/6 login Success");
+
+			psmt.setString(1, id);
+
+			System.out.println("2/6 login Success");
+
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				String _id = rs.getString(1);
+				String pwd = rs.getString(2);
+				String name = rs.getString(3);
+				String email = rs.getString(4);
+				String phone = rs.getString(5);
+				int blacklist = rs.getInt(6);
+				int auth = rs.getInt(7);
+
+				mem = new MemberDto(_id, pwd, name, email, phone, blacklist, auth);
+			}
+			System.out.println("3/6 login Success");
+
+		} catch (Exception e) {
+			System.out.println("login fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+
+		return mem;
+	}
+
+	@Override
+	public boolean addMember(MemberService ms) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public MemberDto ad_login(String id) {
+		String sql = " SELECT ID, pwd, name, email , phone, blacklist, auth " + " FROM MEMBER " + " WHERE ID=? ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		MemberDto mem = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+
+			System.out.println("1/6 login Success");
+
+			psmt.setString(1, id);
+
+			System.out.println("2/6 login Success");
+
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				String _id = rs.getString(1);
+				String pwd = rs.getString(2);
+				String name = rs.getString(3);
+				String email = rs.getString(4);
+				String phone = rs.getString(5);
+				int blacklist = rs.getInt(6);
+				int auth = rs.getInt(7);
+
+				mem = new MemberDto(_id, pwd, name, email, phone, blacklist, auth);
+			}
+			System.out.println("3/6 login Success");
+
+		} catch (Exception e) {
+			System.out.println("login fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+
+		return mem;
+	}
+
+	@Override
+	public List<ReserveDto> reserveList(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	}

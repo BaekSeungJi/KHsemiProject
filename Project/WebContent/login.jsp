@@ -23,7 +23,7 @@
   */
  /*
  String id = request.getParameter("id");
-//System.out.println("login확인 id ="+id);
+System.out.println("login확인 id ="+id);
 String pwd = request.getParameter("pwd");
 String name = request.getParameter("name");
 String email = request.getParameter("email");
@@ -45,7 +45,7 @@ mem = dao.manager.login(new MemberDto(id, pwd, null, null, null, 0, 0));
 <body>
 
 <%
-System.out.println("확인 mem ="+mem);
+System.out.println("확인 mem = "+mem);
 %><% 
 
 %>

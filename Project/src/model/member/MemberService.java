@@ -58,7 +58,10 @@ public class MemberService {
 				return manager.profileedit(id, pwd, name, email, phone);
 				}		
 			
-		
+			public MemberDto login(String id) {
+				return manager.login(id);
+			}
+
 
 	
 }
