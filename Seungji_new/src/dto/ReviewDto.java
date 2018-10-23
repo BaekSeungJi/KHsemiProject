@@ -27,11 +27,17 @@ REFERENCES RESERVE(SEQ);
 ALTER TABLE REVIEW 
 MODIFY(TITLE VARCHAR2(100));
 
+
+ALTER TABLE RESERVE
+ADD NUM NUMBER(8);
+
+ALTER TABLE RESERVE
+ADD CONSTRAINT FK_RESERVE_NUM FOREIGN KEY(NUM)
+REFERENCES HOTEL(SEQ);
+
 */
 
 public class ReviewDto implements Serializable {
-	
-	private int num;
 	
 	private String id;
 	private String hotelname;
@@ -43,13 +49,14 @@ public class ReviewDto implements Serializable {
 	private int readcount;
 	private String regdate;
 	
+	private int num;
+	
 	public ReviewDto() {
 	}
-	
-	public ReviewDto(int num, String id, String hotelname, String title, String content, int score, int del,
-			int readcount, String regdate) {
+
+	public ReviewDto(String id, String hotelname, String title, String content, int score, int del, int readcount,
+			String regdate, int num) {
 		super();
-		this.num = num;
 		this.id = id;
 		this.hotelname = hotelname;
 		this.title = title;
@@ -58,22 +65,6 @@ public class ReviewDto implements Serializable {
 		this.del = del;
 		this.readcount = readcount;
 		this.regdate = regdate;
-	}
-	
-	
-	// 입력받는것만 있는 생성자(리뷰 추가할때)
-	public ReviewDto(String title, String content, int score) {
-		super();
-		this.title = title;
-		this.content = content;
-		this.score = score;
-	}
-
-	public int getNum() {
-		return num;
-	}
-
-	public void setNum(int num) {
 		this.num = num;
 	}
 
@@ -140,6 +131,15 @@ public class ReviewDto implements Serializable {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+	
 	
 	
 
