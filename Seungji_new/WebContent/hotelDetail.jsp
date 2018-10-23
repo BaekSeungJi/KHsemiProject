@@ -90,7 +90,7 @@ System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
 							'<h2>호텔 매니저</h2>' + 
 						'</div>' + 
 						'<p><%=id %>님</p>' +
-						'<a href="#" class="button">상담하기</a></div>'
+						'<a href="NewFile.jsp" class="button" id="chat">상담하기</a></div>'
 						);
 				},
 				error : function(){
@@ -221,6 +221,8 @@ System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
 				}
 			});
 		}
+		
+		
 	});
 </script>
 </head>
