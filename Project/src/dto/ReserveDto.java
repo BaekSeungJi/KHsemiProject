@@ -47,13 +47,15 @@ public class ReserveDto implements Serializable {
 	private int del;
 	private String checkin;
 	private String checkout;
+	private int num;
+	
 	public ReserveDto() {
 	}
-	
+		
 
-	
+
 	public ReserveDto(int seq, String id, String hotelname, String request, String realdate, String regdate, int del,
-			String checkin, String checkout) {
+			String checkin, String checkout, int num) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -64,7 +66,10 @@ public class ReserveDto implements Serializable {
 		this.del = del;
 		this.checkin = checkin;
 		this.checkout = checkout;
+		this.num = num;
 	}
+
+
 
 	// 입력받는것만 있는 생성자(예약내역 추가할때)
 	public ReserveDto(String id, String hotelname, String request, String realdate) {
@@ -175,6 +180,18 @@ public class ReserveDto implements Serializable {
 
 	public void setCheckout(String checkout) {
 		this.checkout = checkout;
+	}
+
+
+
+	public int getNum() {
+		return num;
+	}
+
+
+
+	public void setNum(int num) {
+		this.num = num;
 	}
 	
 	
