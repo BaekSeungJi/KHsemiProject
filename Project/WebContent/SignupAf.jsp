@@ -38,7 +38,15 @@ MemberService service = MemberService.getInstance();
 
 boolean isS = service.manager.addMember(new MemberDto(id, pwd, name, email, phone, blacklist, auth));
 
-if(isS==true){
+if (isS == false){
+	%>
+	<script type="text/javascript">
+	alert("다시 가입해 주십시오");
+	location.href = "Signup.jsp";
+	</script>
+<%
+}
+else if(isS==true && id !="User_ID" && pwd!="Password" && name!="Name" && email!="E-mail" && phone!="Phone"){
 %>
 	<script type="text/javascript">
 	alert("성공적으로 가입하셨습니다");

@@ -56,12 +56,11 @@ public class MemberManager implements iMemberManager {
 			psmt.setString(5, dto.getPhone());
 		//	psmt.setInt(6, dto.getBlacklist());
 		//	psmt.setInt(7, dto.getAuth());
-			System.out.println("여기까지클리어");
-
-			count = psmt.executeUpdate();	//??
+			
+			count = psmt.executeUpdate();	
 			System.out.println("3/3 addMember Success");
 		} catch (Exception e) {			
-			System.out.println("addMember Fail");
+			System.out.println("addMember False");
 			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, null);
