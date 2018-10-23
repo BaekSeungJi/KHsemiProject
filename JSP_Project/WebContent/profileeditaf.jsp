@@ -17,7 +17,7 @@ MemberService service = MemberService.getInstance();
 MemberDto dto = (MemberDto)request.getAttribute("dto");
 Object ologin = session.getAttribute("login");
 String id = request.getParameter("id");
-String pwd = request.getParameter("pwd");;
+String pwd = request.getParameter("realpwd");;
 
 String name = request.getParameter("name");
 String email = request.getParameter("email");

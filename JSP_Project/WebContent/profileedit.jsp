@@ -13,6 +13,8 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 Object ologin = session.getAttribute("login");
 String id = request.getParameter("id");
 
+String realpwd = dto.getPwd();
+
 session.setAttribute("login", dto);
 session.setMaxInactiveInterval(30*60);
 
@@ -72,6 +74,7 @@ public String whour(int Auth){
 
 <form action="MemberControl">
 	<input type="hidden" name="command" value="profileeditaf">
+	<input type="hidden" name="realpwd" value="<%=realpwd%>">
 <section>
   <!--for demo wrap-->
   <h1>나의 프로필</h1>
