@@ -29,7 +29,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
-
+  
 </head>
 
 <%
@@ -50,7 +50,7 @@ scoreDto sdto = (scoreDto)request.getAttribute("sdto");
 				
 			</div>
 			<a href="MemberControl?command=ad_admin" class="rad-logo-hidden">Admin</a>
-			<a href="index.jsp"><div style="float: right; margin-right: 70px; margin-top: 40px"><i class="fas fa-home"></i>Home</div></a>
+<a href="index.jsp"><div style="float: right; margin-right: 70px; margin-top: 40px"><i class="fas fa-home"></i>Home</div></a>
 			
 		</nav>
 	</header>

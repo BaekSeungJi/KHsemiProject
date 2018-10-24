@@ -295,6 +295,7 @@ public class MemberManager implements iMemberManager {
 		return find;
 	}
 
+
 	@Override
 	public List<ReserveTableDto> ad_GetHotelmember(String hotelname, String sWord, String selected) {
 		List<ReserveTableDto> list = new ArrayList<>();
@@ -307,7 +308,7 @@ public class MemberManager implements iMemberManager {
 			Word = " and m.id='" + sWord.trim() + "' ";
 		}
 		
-		String sql = " SELECT  m.id, m.name,m.email,m.phone, e.checkin,e.checkout  FROM member m, RESERVE e "
+		String sql = " SELECT  m.id, m.name,m.email,m.phone, e.checkin,e.checkout,m.blacklist  FROM member m, RESERVE e "
 				+ " WHERE e.HOTELNAME = ? and m.id=e.id " + Word;
 		
 		Connection conn = null;
@@ -339,8 +340,8 @@ public class MemberManager implements iMemberManager {
 				String phone = rs.getString(4);
 				String checkin = rs.getString(5);
 				String checkout = rs.getString(6);
-				
-				ReserveTableDto dto = new ReserveTableDto(id, name, email, phone, checkin,checkout);
+				int blacklist = rs.getInt(7);
+				ReserveTableDto dto = new ReserveTableDto(id, name, email, phone, checkin,checkout,blacklist);
 				
 				list.add(dto);
 				System.out.println(dto.getId());
@@ -356,6 +357,7 @@ public class MemberManager implements iMemberManager {
 		
 		return list;
 	}
+
 
 	@Override
 	public List<ReserveDto> ad_reserveList(String id) {

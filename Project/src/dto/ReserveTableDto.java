@@ -10,7 +10,9 @@ public class ReserveTableDto implements Serializable {
 	private String phone;
 	private String checkin;
 	private String checkout;
-	public ReserveTableDto(String id, String name, String email, String phone, String checkin, String checkout) {
+	private int blacklist;
+	public ReserveTableDto(String id, String name, String email, String phone, String checkin, String checkout,
+			int blacklist) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -18,6 +20,7 @@ public class ReserveTableDto implements Serializable {
 		this.phone = phone;
 		this.checkin = checkin;
 		this.checkout = checkout;
+		this.blacklist = blacklist;
 	}
 	public String getId() {
 		return id;
@@ -55,6 +58,12 @@ public class ReserveTableDto implements Serializable {
 	public void setCheckout(String checkout) {
 		this.checkout = checkout;
 	}
-
+	public int getBlacklist() {
+		return blacklist;
+	}
+	public void setBlacklist(int blacklist) {
+		this.blacklist = blacklist;
+	}
+	
 	
 }

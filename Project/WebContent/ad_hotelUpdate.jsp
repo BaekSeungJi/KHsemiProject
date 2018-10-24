@@ -20,6 +20,7 @@
  <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
       <link rel="stylesheet" href="css/style1.css">
 
+  
 </head>
 
 <body>
@@ -38,7 +39,7 @@ HotelDto dto = (HotelDto)request.getAttribute("dto");
 				
 			</div>
 			<a href="MemberControl?command=ad_admin" class="rad-logo-hidden">Admin</a>
-			<a href="index.jsp"><div style="float: right; margin-right: 70px; margin-top: 40px"><i class="fas fa-home"></i>Home</div></a>
+<a href="index.jsp"><div style="float: right; margin-right: 70px; margin-top: 40px"><i class="fas fa-home"></i>Home</div></a>
 			
 		</nav>
 	</header>

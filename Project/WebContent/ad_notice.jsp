@@ -106,7 +106,7 @@ body{
 }
 
 </style>
-
+  
 </head>
 
 <body>
@@ -145,7 +145,7 @@ List<PdsDto> list = (List<PdsDto>)request.getAttribute("list");
 					<span class="rad-sidebar-item">회원 관리</span>
 				</a>
 				<%}else{ %>
-				<a href="#" class="inbox">
+				<a href="MemberControl?command=ad_memberDeleteGo" class="inbox">
 				<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
 					<span class="rad-sidebar-item">회원 관리</span>
 				</a>
@@ -161,26 +161,20 @@ List<PdsDto> list = (List<PdsDto>)request.getAttribute("list");
 					<span class="rad-sidebar-item">호텔 관리</span>
 				</a>
 				<%}else{ %>
-				<a href="#">
-				<i class="fas fa-hotel">
-						<span class="icon-bg rad-bg-danger"></span>
-					</i>
-					<span class="rad-sidebar-item">호텔 관리</span>
-				</a>
-				<%} %>
+				<a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a>
+ 
+			<%} %>
 			</li>
 				<%if(mem.getAuth()==2){ %>
 			<li><a href="HotelControl?command=ad_chart" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a>
-			<%}else{ %>
-						<li><a href="#" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a>
 			<%} %>
+ 		
 			</li>
 			
 				<%if(mem.getAuth()==2){ %>
 			<li><a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a>
-			<%}else{ %>
-			<li><a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a>
-			<%} %>
+			<%}%>
+		
 			</li>
 			
 		</ul>

@@ -136,6 +136,8 @@ body{
 <body>
 
 <%
+MemberDto mem = (MemberDto)session.getAttribute("login");
+
 // 검색어
 String findWord = request.getParameter("sWord");
 String choice = request.getParameter("selected");
@@ -158,7 +160,7 @@ if(findWord == null){
 MemberDto user = (MemberDto)session.getAttribute("login");
 
 
-List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list");
+List<MemberDto> list = (List<MemberDto>)request.getAttribute("list");
 
 %>
 
@@ -180,21 +182,43 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
 	<nav class="rad-sidebar rad-nav-min">
 		<ul>
 			<li>
-				<a href="MemberControl?command=memberGo&id=<%=user.getId() %>" class="inbox">
-					<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
+				<%if(mem.getAuth()==2){ %>
+				<a href="MemberControl?command=memberGo&id=<%=mem.getId() %>" class="inbox">
+				<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
 					<span class="rad-sidebar-item">회원 관리</span>
 				</a>
+				<%}else{ %>
+				<a href="MemberControl?command=ad_memberDeleteGo" class="inbox">
+				<i class="fas fa-user-alt"><span class="icon-bg rad-bg-success"></span></i>
+					<span class="rad-sidebar-item">회원 관리</span>
+				</a>
+				<%} %>
+					
 			</li>
 			<li>
+				<%if(mem.getAuth()==2){ %>
 				<a href="HotelControl?command=ad_hotel">
 				<i class="fas fa-hotel">
 						<span class="icon-bg rad-bg-danger"></span>
 					</i>
 					<span class="rad-sidebar-item">호텔 관리</span>
 				</a>
+				<%}else{ %>
+				<a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a>
+ 
+			<%} %>
 			</li>
-			<li><a href="HotelControl?command=ad_chart" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a></li>
-			<li><a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a></li>
+				<%if(mem.getAuth()==2){ %>
+			<li><a href="HotelControl?command=ad_chart" class="snooz"><i class="fas fa-chart-pie"><span class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">매출 관리</span></a>
+			<%} %>
+ 		
+			</li>
+			
+				<%if(mem.getAuth()==2){ %>
+			<li><a href="PdsControl?command=ad_noticeGo" class="done"><i class="fas fa-list-ul"><span class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">공지사항</span></a>
+			<%}%>
+		
+			</li>
 			
 		</ul>
 	</nav>
@@ -223,9 +247,8 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
           <th>이름</th>
           <th>이메일</th>
           <th>전화번호</th>
-          <th>체크인 날짜</th>
-          <th>체크아웃 날짜</th>
-           <th>권한</th>
+          <th>블랙리스트</th>
+          
         </tr>
       </thead>
     </table>
@@ -237,27 +260,24 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
       <tbody>
       <% 
        for(int i= 0; i<list.size();i++){
-    	   ReserveTableDto dto = list.get(i);
+    	   MemberDto dto = list.get(i);
       %>
      
           <tr onmouseover="this.style.background='#f0f0f0'"
         	onmouseout="this.style.background='white'"
-        	onclick="location.href='MemberControl?command=ad_member_detail&id=<%=dto.getId() %>'" style="cursor:pointer;"
         	>
         
           <td><%=dto.getId() %></td>
           <td><%=dto.getName() %></td>
           <td><%=dto.getEmail() %></td>
           <td><%=dto.getPhone() %></td>
-          <td><%=dto.getCheckin() %></td>
- 		    <td><%=dto.getCheckout() %></td>
- 		    <td>
- 		    <%if((dto.getBlacklist())==1){ %>
- 		     블랙리스트 회원입니다
- 		    <%}else{ %>
- 		    회원
- 		    <%} %>
- 		    </td>
+          <td><%if(dto.getBlacklist()==0){
+          %><input type="button" value="삭제" onclick="location.href='MemberControl?command=memberblack&id=<%=dto.getId()%>'">
+         <%}else{ %>
+         	블랙리스트 회원입니다
+         	<%} %>
+          </td>
+ 		
         </tr>
    
        <%
@@ -272,7 +292,7 @@ List<ReserveTableDto> list = (List<ReserveTableDto>)request.getAttribute("list")
 
 <form action="MemberControl">
 <div align="center" style="margin-top: 20px;">
-<input type="hidden" name="command" value="memberGo">
+<input type="hidden" name="command" value="ad_memberDeleteGo">
 <input type="hidden" name="id" value="<%=user.getId()%>">
 <select name="sel">
 <option selected="selected" >이름</option><option>아이디</option>

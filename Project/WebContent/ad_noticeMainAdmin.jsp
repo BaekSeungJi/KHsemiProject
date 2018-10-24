@@ -106,7 +106,6 @@ body{
 }
 
 </style>
-
   
 </head>
 
@@ -125,7 +124,7 @@ List<PdsDto> list = (List<PdsDto>)request.getAttribute("list");
 				
 			</div>
 			<a href="#" class="rad-logo-hidden">Admin</a>
-			<a href="index.jsp"><div style="float: right; margin-right: 70px; margin-top: 40px"><i class="fas fa-home"></i>Home</div></a>
+<a href="index.jsp"><div style="float: right; margin-right: 70px; margin-top: 40px"><i class="fas fa-home"></i>Home</div></a>
 			
 		</nav>
 	</header>
