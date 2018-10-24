@@ -85,6 +85,7 @@ System.out.println("memdto.getid :" + memdto.getId());
 	</td>
 </tr> 
 
+
 <tr>
 	<td>호텔이름</td>
 	<td>
