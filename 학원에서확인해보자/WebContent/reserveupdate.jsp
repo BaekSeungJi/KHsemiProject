@@ -73,7 +73,7 @@ System.out.println("memdto.getid :" + memdto.getId());
 	<td>아이디</td>
 	<td>
 		<%=id%>
-		<input type="hidden" name="id" value="<%=id %>">
+		<input type="hidden" readonly="readonly" name="id" value="<%=id %>">
 	</td>
 </tr> 
 
