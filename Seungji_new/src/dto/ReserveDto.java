@@ -24,6 +24,11 @@ INCREMENT BY 1;
 ALTER TABLE RESERVE
 ADD CONSTRAINT FK_RESERVE_ID FOREIGN KEY(ID)
 REFERENCES MEMBER(ID);
+ALTER TABLE RESERVE
+ADD NUM NUMBER(8);
+ALTER TABLE RESERVE
+ADD CONSTRAINT FK_RESERVE_NUM FOREIGN KEY(NUM)
+REFERENCES HOTEL(SEQ);
 */
 
 public class ReserveDto implements Serializable {
@@ -37,11 +42,17 @@ public class ReserveDto implements Serializable {
 	
 	private String regdate;
 	private int del;
+	private String checkin;
+	private String checkout;
+	private int num;
 	
 	public ReserveDto() {
 	}
-	
-	public ReserveDto(int seq, String id, String hotelname, String request, String realdate, String regdate, int del) {
+		
+
+
+	public ReserveDto(int seq, String id, String hotelname, String request, String realdate, String regdate, int del,
+			String checkin, String checkout, int num) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -50,8 +61,13 @@ public class ReserveDto implements Serializable {
 		this.realdate = realdate;
 		this.regdate = regdate;
 		this.del = del;
+		this.checkin = checkin;
+		this.checkout = checkout;
+		this.num = num;
 	}
-	
+
+
+
 	// 입력받는것만 있는 생성자(예약내역 추가할때)
 	public ReserveDto(String id, String hotelname, String request, String realdate) {
 		super();
@@ -61,6 +77,28 @@ public class ReserveDto implements Serializable {
 		this.realdate = realdate;
 	}
 
+	public ReserveDto(int seq, String id, String hotelname, String request, String checkin, String checkout,
+			String regdate, int del) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.hotelname = hotelname;
+		this.request = request;
+		this.checkin = checkin;
+		this.checkout = checkout;
+		this.regdate = regdate;
+		this.del = del;
+	}
+	
+	public ReserveDto(String id, String hotelname, String request, String checkin, String checkout) {
+		super();
+		this.id = id;
+		this.hotelname = hotelname;
+		this.request = request;
+		this.checkin = checkin;
+		this.checkout = checkout;
+	}
+	
 	public int getSeq() {
 		return seq;
 	}
@@ -116,7 +154,29 @@ public class ReserveDto implements Serializable {
 	public void setDel(int del) {
 		this.del = del;
 	}
+
+	public String getCheckin() {
+		return checkin;
+	}
 	
-	
+	public void setCheckin(String checkin) {
+		this.checkin = checkin;
+	}
+
+	public String getCheckout() {
+		return checkout;
+	}
+
+	public void setCheckout(String checkout) {
+		this.checkout = checkout;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
 
 }
