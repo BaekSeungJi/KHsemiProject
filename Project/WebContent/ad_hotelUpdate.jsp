@@ -20,7 +20,6 @@
  <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
       <link rel="stylesheet" href="css/style1.css">
 
-  
 </head>
 
 <body>

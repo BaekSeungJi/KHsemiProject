@@ -30,6 +30,13 @@ List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 
+	<!--상단고정 Home-->
+	<link rel="stylesheet" href="css/style1.css">
+    <nav class="rad-navigation">
+    <a href="index.jsp">
+    <div class="fontawesome-home" style="float: right; margin-right: 70px; margin-top: 40px"><i class="fas fa-home"></i>Home</div></a>
+    </nav>
+
 </head>
 <body>
 

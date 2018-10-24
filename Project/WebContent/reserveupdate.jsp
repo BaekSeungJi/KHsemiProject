@@ -34,6 +34,7 @@ List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>calupdate</title>
+
 </head>
 <body>
 

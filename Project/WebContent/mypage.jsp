@@ -12,7 +12,6 @@ request.setCharacterEncoding("utf-8");
 <%
 
 MemberDto mem = (MemberDto)request.getAttribute("dto");
-session.setAttribute("login", mem);
 session.setMaxInactiveInterval(30*60);
 
 List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("reserveList");
@@ -42,13 +41,13 @@ public String pw2change(String pwd){
 public String whour(int Auth){
 	String s = "";
 	
-	if(Auth == 1){
+	if(Auth == 3){
   	  s = "일반유저";
     }
     else if(Auth == 2){
   	  s = "관리자";
     }
-    else if(Auth == 3){
+    else if(Auth == 1){
   	  s = "운영자";
     }		
 
@@ -64,7 +63,7 @@ public String whour(int Auth){
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
 <link rel="stylesheet" type="text/css" href="css/main.css"> 
@@ -72,14 +71,18 @@ public String whour(int Auth){
 
 
 <title>mypage</title>
+
+
 </head>
 <body>
 
+
+<!-- 
 <form action="MemberControl">
 	<input type="hidden" name="command" value="logout.jsp">
 	<input type="submit" value="로그아웃"> 
 </form>
-
+ -->
 <section>
   <!--for demo wrap-->
   <h1>나의 프로필</h1>

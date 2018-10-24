@@ -18,9 +18,36 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>login view</title>
    <link rel="stylesheet" href="css/login.css">
+   
+    <!--상단고정 Home&logout-->
+   <link rel="stylesheet" href="css/style1.css">
+    <nav class="rad-navigation">
+    <a href="index.jsp">
+    <div class="fontawesome-home" style="float: right; margin-right: 70px; margin-top: 40px"><i class="fas fa-home"></i>Home</div></a>
+    <%
+    
+    Object ologin = session.getAttribute("login");
+    if(ologin != null){   //로그인이 되어있다면 logout 표시
+       %>
+       <script type="text/javascript">
+       <a herf="logout.jsp">
+       <div class="fontawesome-sign-out-alt" style="float: right; margin-right: 70px; margin-top: 40px"><i class="fas fa-logout"></i>Logout</div></a>
+       </script>
+       <%
+     }
+    %> 
+    
+    
+   
+    
+    </nav>
 </head>
 
 <body>
+<br>
+<br>
+<br>
+<br>
 
 	<div id="login">
 

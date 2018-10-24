@@ -109,6 +109,8 @@ public String dot3(String msg){
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>reserve.jsp</title>
+
+
 </head>
 <body>
 
