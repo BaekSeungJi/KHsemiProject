@@ -225,43 +225,10 @@ public class ReserveControl extends HttpServlet {
 		else if(command.equals("reserveupdate")) {
 			
 			System.out.println("reserveupdate 진입");
+			System.out.println(req.getParameter("hotelname"));
 			
 			
-			String id = req.getParameter("id");
-
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
-
-
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
-
-			List<ReserveDto> list = resservice.getreserveList(id);
-
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());
 			
-			}	
-			
-		
-			req.setAttribute("list", list);
-
-			
-			dispatch("reserveupdate.jsp", req, resp);
-		}
-
-		else if(command.equals("reserveupdateaf")) {
-			String id = req.getParameter("id");
-
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
-
-			
-			
-
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
-
 			Calendar cal = Calendar.getInstance();
 			cal.set(Calendar.DATE, 1);
 			
@@ -311,6 +278,69 @@ public class ReserveControl extends HttpServlet {
 
 			req.setAttribute("list", list);
 
+			String id = req.getParameter("id");
+		
+			
+			dispatch("reserveupdate.jsp", req, resp);
+		}
+
+		else if(command.equals("reserveupdateaf")) {
+			System.out.println("reserveupdateaf 진입");
+			System.out.println(req.getParameter("hotelname"));
+						
+						
+						
+						Calendar cal = Calendar.getInstance();
+						cal.set(Calendar.DATE, 1);
+						
+						
+						String hotelname = req.getParameter("hotelname");
+						String syear = req.getParameter("year");
+						String smonth = req.getParameter("month");
+
+						int year = cal.get(Calendar.YEAR);
+						if(util.nvl(syear) == false){	// 파라미터로 넘어온 데이터가 있을 시
+							year = Integer.parseInt(syear);
+						}
+
+						int month = cal.get(Calendar.MONTH) + 1;
+						if(util.nvl(smonth) == false){
+							month = Integer.parseInt(smonth);
+						}
+
+						if(month < 1){
+							month = 12;
+							year--;
+						}
+
+						if(month > 12){
+							month = 1;
+							year++;
+						}
+
+						cal.set(year, month - 1, 1);	// 연월일 셋팅완료
+
+						int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+					
+
+						ReserveService Rservice = ReserveService.getInstance();
+
+						List<ReserveDto> list = Rservice.getCalendarList(hotelname, year + util.two(month + ""));
+
+					
+						
+						req.setAttribute("hotelname", hotelname);
+						req.setAttribute("cal", cal);
+						req.setAttribute("dayOfWeek", dayOfWeek);
+						req.setAttribute("year", year);
+						req.setAttribute("month", month);
+
+
+						req.setAttribute("list", list);
+
+						String id = req.getParameter("id");
+					
 
 			dispatch("reserveupdateaf.jsp", req, resp);
 		}

@@ -37,12 +37,22 @@ System.out.println("day : " +day);
  
  
  
+%> 
+
+<%!
  
- 
- 
- 
- 
-%>     
+	public static String updatego(String id, String checkin, String checkout,String hotelname){
+		String s = "";
+		
+		s += String.format("<a href='%s?command=%s&hotelname=%s&year=%d&month=%d&day=%d'>", 
+							"ReserveControl","reservedetail",hotelname, year, month, day);
+		s += String.format("%2d", day);
+		s += "</a>";
+
+		return s;
+	}
+%>
+    
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -109,11 +119,7 @@ for(int i = 0;i < list.size(); i++ ){
 			<form action="ReserveControl" method="post">
 				<input type="hidden" name="command" value="reserveupdate">
 				<input type="hidden" name="seq" value="<%=dto.getSeq() %>">
-			
 				<input type="hidden" name="hotelname" value="<%=hotelname %>">
-				<input type="hidden" name="hotelname" value="<%=hotelname %>">
-				<input type="hidden" name="hotelname" value="<%=hotelname %>">
-			
 				<input type="hidden" name="id" value="<%=dto.getId() %>">
 					
 			

@@ -1,35 +1,39 @@
-<%@page import="model.reserve.ReserveManager"%>
-<%@page import="model.reserve.ReserveService"%>
-<%@page import="control.ReserveControl"%>
-<%@page import="dto.ReserveDto"%>
-<%@page import="java.util.Calendar"%>
-<%@page import="java.util.List"%>
+
 <%@page import="dto.MemberDto"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="dto.util"%>
+<%@page import="java.util.List"%>
+<%@page import="dto.ReserveDto"%>
+<%@page import="dto.MemberDto"%>
+
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
 <%
 request.setCharacterEncoding("utf-8");
-%>   
+%>  
 
 <%
 MemberDto memdto = (MemberDto)session.getAttribute("login");
 
-%>     
+List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
+String hotelname = (String)request.getAttribute("hotelname");
+
+/* List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("reserveList");
+ */
+
+String id = request.getParameter("id");
+%>       
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>reserveupdateAf.jsp</title>
+<title>calupdateAf.jsp</title>
 </head>
 <body>
-
-<form action="MemberControl">
-	<input type="hidden" name="command" value="logout.jsp">
-	<input type="submit" value="로그아웃"> 
-</form>
 
 <%!
 public String two(String msg){
@@ -51,19 +55,12 @@ String min = request.getParameter("min");
 
 String rdate = year + two(month) + two(day) + two(hour) + two(min);
 
-String regdate = year + two(month) + two(day) + two(hour) + two(min);
+iCalendar dao = CalendarDao.getInstance();
 
-String checkin = request.getParameter("checkin");
-String checkout = request.getParameter("checkout");
-String requestt = request.getParameter("request");
-
-ReserveService resservice = ReserveService.getInstance();
-
-boolean isS = resservice.reserveUpdate(seq, checkin, checkout, requestt);
-
+boolean isS = dao.updateCalendar(new CalendarDto(seq, "", title, content, rdate, ""));
 
 // String urlDetail = String.format("%s?seq=%d", "caldetail.jsp", seq);
-String urllist = String.format("%s?year=%s&month=%s", "reserve.jsp", year, month);
+String urllist = String.format("%s?year=%s&month=%s", "calendar.jsp", year, month);
 
 if(isS){	
 	%>

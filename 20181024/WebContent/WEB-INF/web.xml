@@ -20,7 +20,14 @@
     <welcome-file>mainBbs.jsp</welcome-file>
     <welcome-file>mypage.jsp</welcome-file>
     <welcome-file>logout.jsp</welcome-file>
+    <welcome-file>reserve.jsp</welcome-file>
+    <welcome-file>reservedel.jsp</welcome-file>
+    <welcome-file>reservelist.jsp</welcome-file>
     <welcome-file>reserveupdate.jsp</welcome-file>
+    <welcome-file>reserveupdateaf.jsp</welcome-file>
+    <welcome-file>reservewrite.jsp</welcome-file>
+    <welcome-file>reservewriteAf.jsp</welcome-file>
+    
   </welcome-file-list>
   <servlet>
     <servlet-name>MemberControl</servlet-name>

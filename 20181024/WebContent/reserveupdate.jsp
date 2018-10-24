@@ -1,183 +1,188 @@
-<%@page import="java.util.Calendar"%>
-<%@page import="dto.ReserveDto"%>
-<%@page import="java.util.List"%>
+
+
 <%@page import="dto.MemberDto"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="dto.util"%>
+<%@page import="java.util.List"%>
+<%@page import="dto.ReserveDto"%>
+<%@page import="dto.MemberDto"%>
+
+<%@page import="java.util.Calendar"%>
+<%@page import="java.sql.Timestamp"%>
+<%@page import="java.text.SimpleDateFormat"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-
+    
 <%
 request.setCharacterEncoding("utf-8");
-%>   
+%>  
 
 <%
 MemberDto memdto = (MemberDto)session.getAttribute("login");
 
 List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
+String hotelname = (String)request.getAttribute("hotelname");
 
 /* List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("reserveList");
  */
 
+String id = request.getParameter("id");
  
-MemberDto user= (MemberDto)session.getAttribute("login");
-
-String id = memdto.getId();
-String hotelname = request.getParameter("hotelname");
-
+ 
+ System.out.println("reserveupdate.jsp로 들어왔음");
+ 
 %>     
+
+
+
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>reservewrite.jsp</title>
-
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
-
+<title>reserveupdate</title>
 </head>
 <body>
 
-<form action="MemberControl">
-	<input type="hidden" name="command" value="logout.jsp">
-	<input type="submit" value="로그아웃"> 
-</form>
+<%!
+public String toDates(String mdate){
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
+	
+	String s = mdate.substring(0, 4) + "-" 	// yyyy
+			+ mdate.substring(4, 6) + "-"	// MM
+			+ mdate.substring(6, 8) + " " 	// dd
+			+ mdate.substring(8, 10) + ":"	// hh
+			+ mdate.substring(10, 12) + ":00"; 
+	Timestamp d = Timestamp.valueOf(s);
+	
+	return sdf.format(d);	
+}
 
-<h3>일정 쓰기</h3>
-
-<%
-
-
-
-String syear = request.getParameter("year");
-String smonth = request.getParameter("month");
-String sday = request.getParameter("day");
-
-
-String shotelname = request.getParameter("hotelname");
-
-Calendar cal = Calendar.getInstance();
-
-int tyear = cal.get(Calendar.YEAR);
-int tmonth = cal.get(Calendar.MONTH) + 1; 
-int tday = cal.get(Calendar.DATE);
-int thour = cal.get(Calendar.HOUR_OF_DAY);
-int tmin = cal.get(Calendar.MINUTE);
-
-
-
-System.out.println("memdto.getid :" + memdto.getId());
-
+public String toOne(String msg){	// 08 -> 8
+	return msg.charAt(0)=='0'?msg.charAt(1) + "": msg.trim();
+}
 
 %>
 
+<%
+Calendar cal = Calendar.getInstance();
+int tyear = cal.get(Calendar.YEAR);
+
+String sseq = request.getParameter("seq");
+int seq = Integer.parseInt(sseq);
+
+/* String year = dto.getRdate().substring(0, 4);
+String month = toOne(dto.getRdate().substring(4, 6));
+String day = toOne(dto.getRdate().substring(6, 8));
+String hour = toOne(dto.getRdate().substring(8, 10));
+String min = toOne(dto.getRdate().substring(10, 12));
+ */
+%>
+
+
+<h1>일정 수정</h1>
+<hr>
+
 <div align="center">
 
-<form action="reserveupdateaf.jsp" method="post">
+
+<form action="calupdateAf.jsp" method="post">
 
 <table border="1">
 <col width="200"><col width="500">
 
 <tr>
-	<td>아이디</td>
+	<td>아이디<input type="hidden" name="seq" value="<%=dto.getSeq() %>">
+	</td>
 	<td>
-		<%=memdto.getId()%>
-		<input type="hidden" name="id" value="<%=memdto.getId() %>">
+		<input type="text" name="id" value="<%=dto.getId() %>" readonly="readonly">
 	</td>
 </tr> 
 
-
 <tr>
-	<td>호텔이름</td>
+	<td>제목</td>
 	<td>
-		<input type="text" size="60" name="hotelname" value="<%=hotelname%>" readonly="readonly">
+		<input type="text" size="60" name="title" value="<%=dto.getTitle() %>">
 	</td>
 </tr>
 
 <tr>
 	<td>일정</td>
 	<td>
-		<select name="year1">
-		<%
-			for(int i = tyear - 5; i < tyear + 6; i++){
-				%>
-				<option <%=syear.equals(i + "")?"selected='selected'":"" %>
-					value="<%=i %>"><%=i %></option>
-				<%
-			}		
-		%>		
-		</select>년
-		
-		<select name="month1">
-		<%
-			for(int i = 1; i <= 12; i++){
-				%>
-				<option <%=smonth.equals(i + "")?"selected='selected'":"" %>
-					value="<%=i %>"><%=i %></option>
-				<%
-			}		
-		%>		
-		</select>월
-		
-		<select name="day1">
-		<%
-			for(int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
-				%>
-				<option <%=sday.equals(i + "")?"selected='selected'":"" %>
-					value="<%=i %>"><%=i %></option>
-				<%
-			}		
-		%>		
-		</select>일
-		
-		<input type="text" value="~" size="4" readonly="readonly">
-		
-		<select name="year2">
-		<%
-			for(int i = tyear - 5; i < tyear + 6; i++){
-				%>
-				<option <%=syear.equals(i + "")?"selected='selected'":"" %>
-					value="<%=i %>"><%=i %></option>
-				<%
-			}		
-		%>		
-		</select>년
-		
-		<select name="month2">
-		<%
-			for(int i = 1; i <= 12; i++){
-				%>
-				<option <%=smonth.equals(i + "")?"selected='selected'":"" %>
-					value="<%=i %>"><%=i %></option>
-				<%
-			}		
-		%>		
-		</select>월
-		
-		<select name="day2">
-		<%
-			for(int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
-				%>
-				<option <%=sday.equals(i + "")?"selected='selected'":"" %>
-					value="<%=i %>"><%=i %></option>
-				<%
-			}		
-		%>		
-		</select>일
 	
+	<select name="year">
+	<%
+	for(int i = tyear - 5;i < tyear + 6; i++){
+		%>
+		<option <%=year.equals(i + "")?"selected='selected'":"" %> 
+			value="<%=i %>"><%=i %></option>		
+		<%	
+	}	
+	%>	
+	</select>년	
+	
+	<select name="month">
+	<%
+	for(int i = 1;i <= 12; i++){
+		%>
+		<option <%=month.equals(i + "")?"selected='selected'":"" %> 
+			value="<%=i %>"><%=i %></option>		
+		<%	
+	}	
+	%>	
+	</select>월
+	
+	<select name="day">
+	<%
+	for(int i = 1;i <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
+		%>
+		<option <%=day.equals(i + "")?"selected='selected'":"" %> 
+			value="<%=i %>"><%=i %></option>		
+		<%	
+	}	
+	%>	
+	</select>일
+	
+	<select name="hour">
+	<%
+	for(int i = 0;i < 24; i++){
+		%>
+		<option <%=(hour + "").equals(i + "")?"selected='selected'":"" %> 
+			value="<%=i %>"><%=i %></option>		
+		<%	
+	}	
+	%>	
+	</select>시
+	
+	<select name="min">
+	<%
+	for(int i = 0;i < 60; i++){
+		%>
+		<option <%=(min + "").equals(i + "")?"selected='selected'":"" %> 
+			value="<%=i %>"><%=i %></option>		
+		<%	
+	}	
+	%>	
+	</select>분
+	
+	</td>
 </tr>
 
 <tr>
-	<td>요청사항</td>
+	<td>내용</td>
 	<td>
-		<textarea rows="20" cols="60" name="request1"></textarea>
+		<textarea rows="20" cols="60" name="content"><%=dto.getContent() %> </textarea>
 	</td>
 </tr>
 
 <tr>
 	<td colspan="2">
-		<input type="submit" value="예약하기">
+		<input type="button" value="수정" onclick="modify()">
 	</td>
 </tr>
+
 
 </table>
 
@@ -185,6 +190,17 @@ System.out.println("memdto.getid :" + memdto.getId());
 
 </div>
 
+<script type="text/javascript">
+function modify() {
+	var f = document.forms[0];
+	f.submit();
+}
+
+</script>
+
+
+
+<a href="index.jsp">일정보기</a>
 
 </body>
 </html>
