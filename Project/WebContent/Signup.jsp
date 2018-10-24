@@ -26,51 +26,43 @@
 				<span class="number">1</span>기본정보
 			</legend>
 
-			<label for="user_id">ID:</label> 
-				<input type="text" id="id"
-				name="id" required value="User_ID"
+			<label for="user_id">ID:</label> <input type="text" id="id" name="id"
+				required value="User_ID"
 				onBlur="if(this.value=='')this.value='User_ID'"
-				onFocus="if(this.value=='User_ID')this.value='' "> 
-				<tr>
+				onFocus="if(this.value=='User_ID')this.value='' ">
+			<tr>
 				<td>
-				<!-- id체크 -->
-				<p id="idcheck" style="font-size: 10px"></p>
-				<input type="button" id="btn" required value="id확인">
+					<!-- id체크 -->
+					<p id="idcheck" style="font-size: 10px"></p> <input type="button"
+					id="btn" required value="id확인">
 				</td>
-				</tr>				
-				
-				<label for="password">password:</label> <input
-				type="password" id="pwd" name="pwd" 
-				required value="Password" onBlur="if(this.value=='')this.value='Password'"
-				onFocus="if(this.value=='Password')this.value='' "> 
-				
-				<label
-				for="name">Name:</label> <input type="name" id="name"
-				name="name" required value="Name"
-				onBlur="if(this.value=='')this.value='Name'"
-				onFocus="if(this.value=='Name')this.value='' "> 
-				
-				<label
+			</tr>
+
+			<label for="password">password:</label> <input type="password"
+				id="pwd" name="pwd" required value="Password"
+				onBlur="if(this.value=='')this.value='Password'"
+				onFocus="if(this.value=='Password')this.value='' "> <label
+				for="name">Name:</label> <input type="name" id="name" name="name"
+				required value="Name" onBlur="if(this.value=='')this.value='Name'"
+				onFocus="if(this.value=='Name')this.value='' "> <label
 				for="mail">Email:</label> <input type="email" id="email"
-				name="email" required  value="E-mail"
+				name="email" required value="E-mail"
 				onBlur="if(this.value=='')this.value='E-mail'"
-				onFocus="if(this.value=='E-mail')this.value='' "> 
-				
-				<label
+				onFocus="if(this.value=='E-mail')this.value='' "> <label
 				for="phone">Phone:</label> <input type="text" id="phone"
-				name="phone" required  value="Phone"
+				name="phone" required value="Phone"
 				onBlur="if(this.value=='')this.value='Phone'"
 				onFocus="if(this.value=='Phone')this.value='' ">
-			
-	
-			
-	
-	 
-			 <button type="submit" name = "command" id = "SignupAf" value = "회원가입">회원가입</button> 
-			 <br>
-			 			</form>	
-		<!--  id체크   -->
-			<script type="text/javascript">
+
+
+
+
+
+			<button type="submit" name="command" id="SignupAf" value="회원가입">회원가입</button>
+			<br>
+	</form>
+	<!--  id체크   -->
+	<script type="text/javascript">
 					$(function () {	
 						$("#btn").click(function () {	
 						

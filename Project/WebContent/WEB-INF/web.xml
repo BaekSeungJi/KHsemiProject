@@ -22,7 +22,21 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
 <welcome-file>ad_admin.jsp</welcome-file>
 <welcome-file>mainBbs.jsp</welcome-file>
 <welcome-file>mypage.jsp</welcome-file>
+<welcome-file>profileedit.jsp</welcome-file>
+<welcome-file>profileeditaf.jsp</welcome-file>
+<welcome-file>reserve.jsp</welcome-file>
+<welcome-file>reservedel.jsp</welcome-file>
+<welcome-file>reservedetail.jsp</welcome-file>
+<welcome-file>reservelist.jsp</welcome-file>
+<welcome-file>reserveupdate.jsp</welcome-file>
+<welcome-file>reserveupdateaf.jsp</welcome-file>
+<welcome-file>reservewrite.jsp</welcome-file>
+<welcome-file>reservewriteAf.jsp</welcome-file>
+<welcome-file>review.jsp</welcome-file>
 <welcome-file>logout.jsp</welcome-file>
+
+
+
  </welcome-file-list>
 
   <servlet>

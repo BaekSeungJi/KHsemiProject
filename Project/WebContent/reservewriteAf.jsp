@@ -7,11 +7,11 @@
 <%@page import="dto.MemberDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
 <%
 request.setCharacterEncoding("utf-8");
-%>   
+%>
 
 <%
 MemberDto memdto = (MemberDto)session.getAttribute("login");
@@ -22,14 +22,14 @@ Object ologin = session.getAttribute("login");
 
 List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 
-%>     
+%>
 
 <%!
 public String two(String msg){
 	return msg.trim().length()<2?"0"+msg:msg.trim();
 }
 %>
-    
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -38,12 +38,12 @@ public String two(String msg){
 </head>
 <body>
 
-<form action="MemberControl">
-	<input type="hidden" name="command" value="logout.jsp">
-	<input type="submit" value="로그아웃"> 
-</form>
+	<form action="MemberControl">
+		<input type="hidden" name="command" value="logout.jsp"> <input
+			type="submit" value="로그아웃">
+	</form>
 
-<%
+	<%
 String id = request.getParameter("id");
 String hotelname = request.getParameter("hotelname");
 String request1 = request.getParameter("request1");
@@ -83,10 +83,10 @@ if(isS){
 	alert("일정이 추가되지 않았습니다");
 	location.href="index.jsp";	
 	</script>
-<%
+	<%
 }
 %>
-	
+
 
 </body>
 </html>

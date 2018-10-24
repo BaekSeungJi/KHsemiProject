@@ -6,11 +6,11 @@
 <%@page import="dto.MemberDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
 <%
 request.setCharacterEncoding("utf-8");
-%>   
+%>
 
 <%
 MemberDto memdto = (MemberDto)session.getAttribute("login");
@@ -21,7 +21,7 @@ Object ologin = session.getAttribute("login");
 
 List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 
-%>     
+%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -31,12 +31,12 @@ List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 </head>
 <body>
 
-<form action="MemberControl">
-	<input type="hidden" name="command" value="logout.jsp">
-	<input type="submit" value="로그아웃"> 
-</form>
+	<form action="MemberControl">
+		<input type="hidden" name="command" value="logout.jsp"> <input
+			type="submit" value="로그아웃">
+	</form>
 
-<%!
+	<%!
 public String toOne(String msg){	// 08 -> 8
 	return msg.charAt(0)=='0'?msg.charAt(1) + "": msg.trim();
 }
@@ -46,7 +46,7 @@ public String two(String msg){		// 8 -> 08
 }
 %>
 
-<%
+	<%
 int seq = Integer.parseInt(request.getParameter("seq"));
 
 ReserveService reservice = ReserveService.getInstance();
@@ -67,7 +67,7 @@ if(isS){
 	<script type="text/javascript">
 	alert("성공적으로 삭제 되었습니다");
 	location.href="<%=url %>";
-	</script>	
+	</script>
 	<%
 }else{	
 	%>

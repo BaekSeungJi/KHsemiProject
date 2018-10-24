@@ -3,17 +3,17 @@
 <%@page import="model.member.MemberManager"%>
 <%@page import="model.member.iMemberManager"%>
 <%@page import="dto.MemberDto"%>
-<%@page import="control.MemberControl" %>
+<%@page import="control.MemberControl"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
 <%
 request.setCharacterEncoding("utf-8");
 %>
 
-     
-    
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,7 +21,7 @@ request.setCharacterEncoding("utf-8");
 <title>SignupAf.jsp</title>
 </head>
 <body>
-<%
+	<%
 MemberDto dto = (MemberDto)request.getAttribute("dto");
 
 String id = dto.getId();
@@ -32,8 +32,8 @@ String phone = dto.getPhone();
 int blacklist = dto.getBlacklist();
 int auth = dto.getAuth();
 
-%> 
-<%
+%>
+	<%
 MemberService service = MemberService.getInstance();
 
 boolean isS = service.manager.addMember(new MemberDto(id, pwd, name, email, phone, blacklist, auth));
@@ -44,7 +44,7 @@ if (isS == false){
 	alert("다시 가입해 주십시오");
 	location.href = "Signup.jsp";
 	</script>
-<%
+	<%
 }
 else if(isS==true && id !="User_ID" && pwd!="Password" && name!="Name" && email!="E-mail" && phone!="Phone"){
 %>
@@ -52,14 +52,14 @@ else if(isS==true && id !="User_ID" && pwd!="Password" && name!="Name" && email!
 	alert("성공적으로 가입하셨습니다");
 	location.href = "loginview.jsp";
 	</script>
-<%
+	<%
 }else{
 %>
 	<script type="text/javascript">
 	alert("다시 가입해 주십시오");
 	location.href = "Signup.jsp";
 	</script>
-<%
+	<%
 }
 %>
 

@@ -9,13 +9,13 @@
 <%@page import="java.io.IOException"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
 <%
 String file = request.getParameter("fileload");
 System.out.println("file:" + file);
-%>    
-    
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,7 +24,7 @@ System.out.println("file:" + file);
 </head>
 <body>
 
-<%!
+	<%!
 public String processUploadFile(FileItem fileItem, String dir, JspWriter out) 
 											throws IOException{
 	String f = fileItem.getName();
@@ -59,7 +59,7 @@ public String processUploadFile(FileItem fileItem, String dir, JspWriter out)
 }
 %>
 
-<%
+	<%
 /*
 주의점
 	한글파일 : 사용자제
@@ -134,7 +134,7 @@ if(isMultipart){
 
 
 %>
-<script type="text/javascript">
+	<script type="text/javascript">
 
 	location.href = "PdsControl?command=ad_pdsupdate&seq=<%=seq%>&id=<%=id%>&title=<%=title%>&content=<%=content%>&filename=<%=filename%>";	
 </script>
