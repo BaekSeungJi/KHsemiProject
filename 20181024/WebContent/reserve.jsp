@@ -112,7 +112,7 @@ String id = request.getParameter("id");
 	<input type="submit" value="로그아웃"> 
 </form>
 
-<h2>달력</h2>
+<h2>예약</h2>
 
 <%
 

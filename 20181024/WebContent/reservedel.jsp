@@ -21,6 +21,9 @@ Object ologin = session.getAttribute("login");
 
 List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 
+String hotelname = (String)request.getAttribute("hotelname");
+
+
 %>     
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -53,14 +56,17 @@ ReserveService reservice = ReserveService.getInstance();
 
 ReserveDto reservedto = reservice.getDay(seq);
 
-boolean isS = reservice.ad_reservedelete(seq);
+boolean isS = reservice.reservedelete(seq);
 
 String year = reservedto.getRegdate().substring(0, 4);	// 년도
 String month = toOne(reservedto.getRegdate().substring(4, 6));	// 월
 String day = toOne(reservedto.getRegdate().substring(6, 8));		// 일
 
-String url = String.format("%s?year=%s&month=%s&day=%s", 
-							"reserve.jsp", year, month, day);
+String url = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
+		+ "<img src='image/left.gif'></a>", 
+		"ReserveControl","reserve", year, month, hotelname);
+
+System.out.println("url : " + url);
 
 if(isS){
 	%>

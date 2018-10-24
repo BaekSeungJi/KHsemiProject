@@ -15,12 +15,6 @@ request.setCharacterEncoding("utf-8");
 
 <%
 MemberDto memdto = (MemberDto)session.getAttribute("login");
-session.setAttribute("login", memdto);
-session.setMaxInactiveInterval(30*60);
-
-Object ologin = session.getAttribute("login");
-
-List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
 
 %>     
     

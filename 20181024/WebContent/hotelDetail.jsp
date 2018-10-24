@@ -277,9 +277,8 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 	   
 	   $(document).on("click", ".button", function () {
 		   alert("예약페이지로 넘어갑니다");
-
-		   location.href="ReserveControl?command=reserve&hotelname=<%=hotelname%>&id=<%=id%>&seq=<%=seq%>";
-	   });
+			location.href="ReserveControl?command=reserve&hotelname=<%=hotelname%>&id=<%=id%>";
+		});
 	});
    </script>
    <%

@@ -20,20 +20,14 @@ request.setCharacterEncoding("utf-8");
 
 <%
 MemberDto memdto = (MemberDto)session.getAttribute("login");
-session.setAttribute("login", memdto);
-session.setMaxInactiveInterval(30*60);
 
-Object ologin = session.getAttribute("login");
-
-List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
-
-%>     
+%>       
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>calupdate</title>
+<title>reserveupdate</title>
 </head>
 <body>
 
@@ -71,7 +65,6 @@ int seq = Integer.parseInt(sseq);
 
 ReserveService reservice = ReserveService.getInstance();
 
-/* CalendarDto dto = dao.getDay(seq); */
 ReserveDto reservedto = reservice.getDay(seq);
 
 String year = reservedto.getRegdate().substring(0, 4);
