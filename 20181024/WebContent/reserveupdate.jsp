@@ -13,6 +13,17 @@ request.setCharacterEncoding("utf-8");
 <%
 MemberDto memdto = (MemberDto)session.getAttribute("login");
 
+List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("list");
+
+/* List<ReserveDto> list = (List<ReserveDto>)request.getAttribute("reserveList");
+ */
+
+ 
+MemberDto user= (MemberDto)session.getAttribute("login");
+
+String id = memdto.getId();
+String hotelname = request.getParameter("hotelname");
+
 %>     
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -34,16 +45,15 @@ MemberDto memdto = (MemberDto)session.getAttribute("login");
 <h3>일정 쓰기</h3>
 
 <%
-String id = request.getParameter("id");
-session.setAttribute("login", memdto);
-session.setMaxInactiveInterval(30*60);
-
-String year = request.getParameter("year");
-String month = request.getParameter("month");
-String day = request.getParameter("day");
 
 
-String hotelname = request.getParameter("hotelname");
+
+String syear = request.getParameter("year");
+String smonth = request.getParameter("month");
+String sday = request.getParameter("day");
+
+
+String shotelname = request.getParameter("hotelname");
 
 Calendar cal = Calendar.getInstance();
 
@@ -53,6 +63,8 @@ int tday = cal.get(Calendar.DATE);
 int thour = cal.get(Calendar.HOUR_OF_DAY);
 int tmin = cal.get(Calendar.MINUTE);
 
+
+
 System.out.println("memdto.getid :" + memdto.getId());
 
 
@@ -60,7 +72,7 @@ System.out.println("memdto.getid :" + memdto.getId());
 
 <div align="center">
 
-<form action="reservewriteAf.jsp" method="post">
+<form action="reserveupdateaf.jsp" method="post">
 
 <table border="1">
 <col width="200"><col width="500">
@@ -87,7 +99,7 @@ System.out.println("memdto.getid :" + memdto.getId());
 		<%
 			for(int i = tyear - 5; i < tyear + 6; i++){
 				%>
-				<option <%=year.equals(i + "")?"selected='selected'":"" %>
+				<option <%=syear.equals(i + "")?"selected='selected'":"" %>
 					value="<%=i %>"><%=i %></option>
 				<%
 			}		
@@ -98,7 +110,7 @@ System.out.println("memdto.getid :" + memdto.getId());
 		<%
 			for(int i = 1; i <= 12; i++){
 				%>
-				<option <%=month.equals(i + "")?"selected='selected'":"" %>
+				<option <%=smonth.equals(i + "")?"selected='selected'":"" %>
 					value="<%=i %>"><%=i %></option>
 				<%
 			}		
@@ -109,7 +121,7 @@ System.out.println("memdto.getid :" + memdto.getId());
 		<%
 			for(int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
 				%>
-				<option <%=day.equals(i + "")?"selected='selected'":"" %>
+				<option <%=sday.equals(i + "")?"selected='selected'":"" %>
 					value="<%=i %>"><%=i %></option>
 				<%
 			}		
@@ -122,7 +134,7 @@ System.out.println("memdto.getid :" + memdto.getId());
 		<%
 			for(int i = tyear - 5; i < tyear + 6; i++){
 				%>
-				<option <%=year.equals(i + "")?"selected='selected'":"" %>
+				<option <%=syear.equals(i + "")?"selected='selected'":"" %>
 					value="<%=i %>"><%=i %></option>
 				<%
 			}		
@@ -133,7 +145,7 @@ System.out.println("memdto.getid :" + memdto.getId());
 		<%
 			for(int i = 1; i <= 12; i++){
 				%>
-				<option <%=month.equals(i + "")?"selected='selected'":"" %>
+				<option <%=smonth.equals(i + "")?"selected='selected'":"" %>
 					value="<%=i %>"><%=i %></option>
 				<%
 			}		
@@ -144,7 +156,7 @@ System.out.println("memdto.getid :" + memdto.getId());
 		<%
 			for(int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
 				%>
-				<option <%=day.equals(i + "")?"selected='selected'":"" %>
+				<option <%=sday.equals(i + "")?"selected='selected'":"" %>
 					value="<%=i %>"><%=i %></option>
 				<%
 			}		

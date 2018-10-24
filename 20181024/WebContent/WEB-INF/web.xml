@@ -20,6 +20,7 @@
     <welcome-file>mainBbs.jsp</welcome-file>
     <welcome-file>mypage.jsp</welcome-file>
     <welcome-file>logout.jsp</welcome-file>
+    <welcome-file>reserveupdate.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
     <servlet-name>MemberControl</servlet-name>

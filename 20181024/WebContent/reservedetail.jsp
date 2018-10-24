@@ -109,7 +109,14 @@ for(int i = 0;i < list.size(); i++ ){
 			<form action="ReserveControl" method="post">
 				<input type="hidden" name="command" value="reserveupdate">
 				<input type="hidden" name="seq" value="<%=dto.getSeq() %>">
+			
 				<input type="hidden" name="hotelname" value="<%=hotelname %>">
+				<input type="hidden" name="hotelname" value="<%=hotelname %>">
+				<input type="hidden" name="hotelname" value="<%=hotelname %>">
+			
+				<input type="hidden" name="id" value="<%=dto.getId() %>">
+					
+			
 				<input type="submit" value="일정수정">
 			</form>
 		</td>
