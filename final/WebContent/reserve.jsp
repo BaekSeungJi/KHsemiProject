@@ -114,6 +114,9 @@ System.out.println("seq = " + seq);
 
 <a class="btn" href="logout.jsp" title="Logout">Logout</a>
 
+<a class="btn" href="index.jsp" title="main">main</a>
+
+
 <h2>예약</h2>
 
 <%

@@ -29,19 +29,18 @@ if(ologin == null){	// 로그인 정보가 안넘어왔을때. 혹은 기간이 
 	location.href="loginview.jsp";
 	</script>
 	<%
-	return;
+}else{
+	mem = (MemberDto)ologin;
 }
-
-mem = (MemberDto)ologin;
 %>
 
 
 	<%
 		// 마이페이지 예약내역에서 여기에 넘겨줘야할 값.(seq, hotelname, checkin, checkout 총 4개 값 넘겨받기.)
 		String seq = request.getParameter("seq");
-	/* String hotelname = request.getParameter("hotelname"); */
-	String checkin = request.getParameter("checkin");
-	String checkout = request.getParameter("checkout");
+		String hotelname = request.getParameter("hotelname"); 
+		String checkin = request.getParameter("checkin");
+		String checkout = request.getParameter("checkout");
 	%>
 
 	<!-- 리뷰페이지 : 마이페이지 예약내역에서 '리뷰쓰기'버튼을 클릭하면 여기로 들어온다. -->
@@ -70,7 +69,7 @@ mem = (MemberDto)ologin;
 			</div>
 			<div class="telephone">
 				<label for="name"></label> <input type="text" name="hotel"
-					value="호텔이름" readonly="readonly">
+					value="<%=hotelname %>" readonly="readonly">
 			</div>
 			<div class="telephone">
 				<label for="name"></label> <input type="text"
@@ -107,29 +106,25 @@ mem = (MemberDto)ologin;
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
-
 					$("#send_button").click(
 							function() {
 								var title = $("#title_input").val();
 								var score = $("#score_input").val();
 								var content = $("#message_input").val();
-
 								//alert("title = " + title + " score = " + score + " content = " + content);
-
 								if (title == null || title == ""
 										|| score == null || score == ""
 										|| content == null || content == "") {
 									alert("빈칸이 있습니다. 모든 칸을 전부 입력해주세요.");
 								} else {
+									alert("리뷰를 작성해 주셔서 감사합니다!");
 									$("#contact_form").submit();
 								}
 							});
-
 					$("#back_button").click(function() {
-						alert("뒤로가기");
+						//alert("뒤로가기");
 						location.href = "mypage.jsp";
 					});
-
 				});
 	</script>
 

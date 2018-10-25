@@ -79,6 +79,8 @@ public String whour(int Auth){
 
 <a class="btn" href="logout.jsp" title="Logout">Logout</a>
 
+<a class="btn" href="index.jsp" title="main">main</a>
+
 <section>
   <!--for demo wrap-->
   <h1>나의 프로필</h1>
@@ -159,7 +161,7 @@ public String whour(int Auth){
         <%if(dto.getDel()==1){ %>
         <td>취소된 예약입니다</td>
         <%}else{ %>
-        <td><input type="button" value="리뷰쓰기" onclick="location.href='review.jsp&seq=<%=dto.getSeq() %>&checkin=<%=dto.getCheckin() %>&checkout=<%=dto.getCheckout()%>'"></td>
+        <td><input type="button" value="리뷰쓰기" onclick="location.href='review.jsp?seq=<%=dto.getSeq() %>&checkin=<%=dto.getCheckin() %>&checkout=<%=dto.getCheckout()%>'"></td>
     	<%} %>
         </tr>
        <%} %>

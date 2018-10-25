@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import db.DBClose;
@@ -305,6 +306,13 @@ public class ReserveManager implements iReserveManager {
 			System.out.println("2/6 S reserve");
 			System.out.println("checkin :" + checkin);
 			System.out.println("checkout :" + checkout);
+			
+			
+			Calendar cal = Calendar.getInstance();
+			int todaydate = cal.get(cal.DATE);
+	
+			if(Integer.parseInt(checkout)-Integer.parseInt(checkin)>=0)
+			if(Integer.parseInt(checkin.substring(6, 8))-todaydate>=0)
 
 			count = psmt.executeUpdate();
 			System.out.println("3/6 S reserve");
@@ -346,6 +354,13 @@ public class ReserveManager implements iReserveManager {
 
 			System.out.println("3/6 S updateBbs");
 
+			
+			Calendar cal = Calendar.getInstance();
+			int todaydate = cal.get(cal.DATE);
+	
+			if(Integer.parseInt(checkout)-Integer.parseInt(checkin)>=0)
+			if(Integer.parseInt(checkin.substring(6, 8))-todaydate>=0)
+			
 			count = psmt.executeUpdate();
 			System.out.println("4/6 S updateBbs");
 
