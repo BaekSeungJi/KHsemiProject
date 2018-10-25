@@ -47,7 +47,7 @@ System.out.println("toID = " + toID);
 				},
 				success : function (result) {
 					if(result == 1){	// 입력 성공
-						autoClosingAlert('#successMessage', 2000);	// successMessage를 2초동안 보여줘라
+						autoClosingAlert('#successMessage', 2000);	// successMessage를 2초동안 보여줌.
 					}else if(result == -1){	// 입력 실패
 						autoClosingAlert('#dangerMessage', 2000);
 					}else{	// 데이터베이스 오류 발생
