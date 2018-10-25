@@ -15,17 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberManager implements iMemberManager {
-
-	private static MemberManager memberManager = new MemberManager();
-
+	
 	public MemberManager() {
 		DBConnection.initConnect();
 	}
-
-	public static MemberManager getInstance() {
-		return memberManager;
-	}
-
 
 
 	@Override
