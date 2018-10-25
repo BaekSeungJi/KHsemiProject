@@ -384,8 +384,6 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 							</ul> -->
 							
 							<table id="hotelListTable" style="margin-left: 7%; margin-top: -1%;">
-							
-								
 							</table>
 							
 						</div>
