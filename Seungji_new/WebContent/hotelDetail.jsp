@@ -300,6 +300,7 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 <!-- 맨 위 이미지 / 탭부분 -->
 <div class="wrapper">	
 	<a class="btn" href="loginview.jsp" title="Login" id="loginBtn">Login</a>
+	<a class="btn" href="index.jsp" title="Home" id="homeBtn">Home</a>
 	<a class="btn" href="logout.jsp" title="Logout" id="logoutBtn">Logout</a>
 	<div id="banner" class="container"><img src="<%=image %>" width="1200" height="500" alt="" /></div>
 	<div id="header-wrapper" style="background-color: #FA8072">
@@ -356,6 +357,7 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 	</div>
 	<div id="addressMapHere"></div>
 </div>
+
 	
 	</div>
 </div>
