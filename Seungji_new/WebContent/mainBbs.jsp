@@ -335,13 +335,15 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 				<%}else if(mem.getAuth() == 3){ %>
 					<ul>
 						<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
+						<li><a href="chatBox.jsp">일대일 채팅</a></li>
 						<li><a href="mypage.jsp">마이페이지</a></li>	
 						<li><a href="logout.jsp">로그아웃</a></li>
 					</ul>
 				<%}else if(mem.getAuth() == 1 || mem.getAuth() == 2){ %>
 					<ul>
 						<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
-						<li><a href="start.jsp">관리자 모드</a></li>	
+						<li><a href="chatBox.jsp">일대일 채팅</a></li>
+						<li><a href="start.jsp">관리자 모드</a></li>
 						<li><a href="logout.jsp">로그아웃</a></li>
 					</ul>
 				<%} %>
