@@ -90,5 +90,14 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
   </servlet-mapping>
   
   
+      <servlet>
+  	<servlet-name>filedown</servlet-name>
+  	<servlet-class>dto.FileDownloader</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>filedown</servlet-name>
+  	<url-pattern>/filedown</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
 

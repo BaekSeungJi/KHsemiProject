@@ -315,9 +315,44 @@ public class MemberControl extends HttpServlet {
 		dispatch("profileeditaf.jsp", req, resp);
 	}
 	
+else if(command.equals("ad_memberDeleteGo")) {
+		
 
+		String findWord = req.getParameter("txt");
+		String choice = req.getParameter("sel");
+		
+
+		if(choice == null || choice.equals("")){
+			choice = "";	
+		}
+
+		if(findWord == null){
+			findWord = "";
+		}
 		
 		
+		MemberService service = MemberService.getInstance();
+		
+		List<MemberDto> list = service.ad_memlist(findWord, choice);
+		
+		
+		req.setAttribute("list", list);
+		
+		dispatch("ad_memberDelete.jsp", req, resp);
+	}
+		
+	else if(command.equals("memberblack")) {
+	String id = req.getParameter("id");
+	
+	MemberService service = MemberService.getInstance();
+
+	boolean b = service.ad_memDel(id);
+	
+	
+	
+	dispatch("MemberControl?command=ad_memberDeleteGo", req, resp);
+
+}
 		
 	}
 

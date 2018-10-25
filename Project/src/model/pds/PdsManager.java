@@ -191,6 +191,12 @@ public class PdsManager implements iPdsManager {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("3/6 writePds Success");
 			
+			
+			System.out.println(pds.getId());
+			System.out.println(pds.getTitle());
+			System.out.println(pds.getContent());
+			System.out.println(pds.getFilename());
+			
 			psmt.setString(1, pds.getId());
 			psmt.setString(2, pds.getTitle());
 			psmt.setString(3, pds.getContent());

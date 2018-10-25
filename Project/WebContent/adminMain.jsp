@@ -265,29 +265,25 @@
 						</div>
 					</div>
 
-					<div class="row">
-						<div class="col-md-6 col-lg-12">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h3 class="panel-title">
-										매출 현황
-										<ul class="rad-panel-action">
-											<li><i class="fa fa-chevron-down"></i></li>
-											<li><i class="fa fa-rotate-right"></i></li>
-											<li><i class="fa fa-cog"></i>
-											<li><i class="fa fa-close"></i></li>
-										</ul>
-									</h3>
-								</div>
-								<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6 col-lg-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+									매출 현황
+									<ul class="rad-panel-action">
+										<li><i class="fa fa-chevron-down"></i></li>
+									</ul>
+								</h3>
+							</div>
+							<div class="panel-body">
 
-									<div id="container2"
-										style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+								<div id="container2"
+									style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-								</div>
 							</div>
 						</div>
-
+					</div>
 
 					</div>
 				</div>
@@ -334,20 +330,19 @@ Highcharts.chart('container', {
 </script>
 
 
-
-	<script type="text/javascript">
-
-
-Highcharts.chart('container2', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: '월별 매출'
-    },
-    subtitle: {
-        text: '<%=hotelname%>
-		'
+<script type="text/javascript">
+		Highcharts
+				.chart(
+						'container2',
+						{
+							chart : {
+								type : 'column'
+							},
+							title : {
+								text : '월별 매출'
+							},
+							subtitle : {
+								text : '히든베이호텔'
 							},
 							xAxis : {
 								categories : [ 'Jan', 'Feb', 'Mar', 'Apr',

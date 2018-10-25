@@ -41,6 +41,9 @@ public interface iMemberManager {
 	
 	public List<ReserveDto> reserveList(String id);
 	
+
+	public List<MemberDto> ad_memlist(String sWord,String selected);	
 	
+	public boolean ad_memDel(String id);
 	
 }

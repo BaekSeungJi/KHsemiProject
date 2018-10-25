@@ -645,6 +645,102 @@ public class MemberManager implements iMemberManager {
 	
 	
 	
+	@Override
+	public List<MemberDto> ad_memlist(String sWord,String selected) {
+		List<MemberDto> list = new ArrayList<>();
+		
+		// 검색어
+		String Word = "";
+		if(selected.equals("이름")) {	
+			Word = " WHERE  name LIKE '%" + sWord.trim() + "%'";
+		}else if(selected.equals("아이디")) {	
+			Word = " WHERE id='" + sWord.trim() + "' ";
+		}
+		
+		String sql = " SELECT  *  FROM member "
+				 + Word;
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 memlist Success");
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 memlist Success");
+		
+			
+			
+			
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 memlist Success");
+			
+			
+			while(rs.next()){			
+				
+				System.out.println("4/6 memlist Success");
+				
+			
+				String id = rs.getString(1);
+				String pwd = rs.getString(2);
+				String name = rs.getString(3);
+				String email = rs.getString(4);
+				String phone = rs.getString(5);
+				int blacklist = rs.getInt(6);
+				int auth = rs.getInt(7);
+				
+				MemberDto dto  = new MemberDto(id, pwd, name, email, phone, blacklist, auth);
+				
+				
+				list.add(dto);
+				System.out.println(dto.getId());
+				
+			}
+		} catch (Exception e1) {
+			System.out.println("ad_GetHotelmember Fail");
+			e1.printStackTrace();
+			
+		}	finally{			
+			DBClose.close(psmt, conn, rs);			
+		}
+		
+		return list;
+	}
+
+	@Override
+	public boolean ad_memDel(String id) {
+		String sql = " UPDATE member SET " + "blacklist = 1 " + " WHERE id=? ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+
+		try {
+			conn = DBConnection.getConnection();
+
+			System.out.println("2/6  ad_memDel update");
+
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			
+
+			System.out.println("3/6  ad_memDel update");
+
+			count = psmt.executeUpdate();
+			System.out.println("4/6 ad_memDel update");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+			System.out.println("5/6 ad_memDel update");
+		}
+
+		return count > 0 ? true : false;
+	}
+
 	
 	
 	

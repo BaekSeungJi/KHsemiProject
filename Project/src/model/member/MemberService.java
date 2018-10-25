@@ -62,6 +62,16 @@ public class MemberService {
 				return manager.login(id);
 			}
 
-
+			// admin 전체 회원 가져오기 
+			public List<MemberDto> ad_memlist(String sWord,String selected) {
+				
+				return manager.ad_memlist(sWord, selected);
+			}
+						
+			// admin 회원 블랙 리스트 등록 
+			public boolean ad_memDel(String id) {
+				return manager.ad_memDel(id);
+							
+				}
 	
 }
