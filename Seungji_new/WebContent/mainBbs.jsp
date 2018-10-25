@@ -178,7 +178,7 @@ ul.style2 li{
 									'</ul>' +
 								'</td>' +
 								'<td width="40%">' +
-									'<img alt="" src="' + IMAGE + '" width="100%" height="120px" style="margin-top: 40px">' +
+									'<img alt="" src="./hotelImage/' + IMAGE + '" width="100%" height="120px" style="margin-top: 40px">' +
 								'</td>' +
 							'</tr>'
 					);
