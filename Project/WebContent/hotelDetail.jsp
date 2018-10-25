@@ -3,54 +3,50 @@
 <%@page import="java.util.List"%>
 <%@page import="dto.HotelDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 
+<%
+String seq = request.getParameter("seq");
+String id = request.getParameter("id");
+String hotelname = request.getParameter("hotelname");
+String region = request.getParameter("region");
+String maxpeople = request.getParameter("maxpeople");
+String price = request.getParameter("price");
+String hotelphone = request.getParameter("hotelphone");
+String readcount = request.getParameter("readcount");
+String image = request.getParameter("image");
 
+System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
 
+%>
+  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<%
-	String seq = request.getParameter("seq");
-	String id = request.getParameter("id");
-	String hotelname = request.getParameter("hotelname");
-	String region = request.getParameter("region");
-	String maxpeople = request.getParameter("maxpeople");
-	String price = request.getParameter("price");
-	String hotelphone = request.getParameter("hotelphone");
-	String readcount = request.getParameter("readcount");
-	String image = request.getParameter("image");
-	System.out.println("디테일페이지 호텔이름 넘어온것 = " + image);
-%>
+
 
 <title>Insert title here</title>
-<link
-	href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900|Quicksand:400,700|Questrial"
-	rel="stylesheet" />
-<link href="./css/default.css" rel="stylesheet" type="text/css"
-	media="all" />
-<link href="./css/fonts.css" rel="stylesheet" type="text/css"
-	media="all" />
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900|Quicksand:400,700|Questrial" rel="stylesheet" />
+<link href="css/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=916ea874e228791dbf525372ff0244e5&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=916ea874e228791dbf525372ff0244e5&libraries=services"></script>
 
 
 <style type="text/css">
 /* 로그인, 로그아웃 버튼용 */
 a.btn {
-	font-size: 50px;
+	font-size : 50px;
 	color: black;
 	padding: 10px;
-	border: 1px solid rgba(255, 255, 255, 0.5);
+	border: 1px solid rgba(255,255,255,0.5);
 	-webkit-transition: all 0.2s;
 	-moz-transition: all 0.2s;
 	transition: all 0.2s;
 }
-
 a.btn:hover {
 	background: #fa8072;
 	border: 1px solid #fa8072;
@@ -84,7 +80,7 @@ a.btn:hover {
 				type : "post",
 				data : {
 					command : "detail",
-					seq : <%=seq%>
+					seq : <%=seq %>
 				},
 				success : function(data){
 					if(data == "") return;
@@ -92,9 +88,9 @@ a.btn:hover {
 					// DESCRIPTION, READCOUNT, REGDATE 중에서 description만 찾아와서 뿌리기(find('태그이름') 사용)
 					$("#hotel_description").html($("#hotel_description").html(data).find('description').text());
 					//$("#hotel_description").html(data).find('description').text();
-					// READCOUNT, REGDATE 도 뿌려주기
+					// READCOUNT, REGDATE 도 뿌려주기 추가해야함!!!!!!!!!!!
 					$("#hotelRegDate").html("호텔 등록일 : " + $("#hotelRegDate").html(data).find('regdate').text());
-              		$("#hotelReadCount").html("조회수 : " + $("#hotelReadCount").html(data).find('readcount').text());
+					$("#hotelReadCount").html("조회수 : " + $("#hotelReadCount").html(data).find('readcount').text());
 					
 					// 기타 디테일들. 태그를 함께 생성하며 웹에 띄워주기
 					$("#three-column").append(
@@ -102,23 +98,23 @@ a.btn:hover {
 								'<div class="title">' + 
 									'<h2>가격</h2>' + 
 								'</div>' + 
-								'<p>' + <%=price%> + '원</p>' + 
+								'<p>' + <%=price %> + '원</p>' + 
 								<%-- '<a href="reservewrite.jsp?seq='+<%=seq%>+'" class="button">예약하기</a></div>' + --%>
-								'<a href="#" class="button">예약하기</a></div>' +
+								'<a href="#" class="button" id="btn_reserve1">예약하기</a></div>' +
 										
 							'<div class="tbox">' + 
 							'<div class="title">' + 
 								'<h2>최대인원</h2>' + 
 							'</div>' + 
-							'<p>' + <%=maxpeople%> + '인</p>' + 
-						'<a href="#" class="button">예약하기</a></div>' +
+							'<p>' + <%=maxpeople %> + '인</p>' + 
+						'<a href="#" class="button" id="btn_reserve2">예약하기</a></div>' +
 						
 						'<div class="tbox">' + 
 						'<div class="title">' + 
 							'<h2>호텔 매니저</h2>' + 
 						'</div>' + 
-						'<p><%=id%>님</p>' +
-						'<a href="NewFile.jsp" class="button" id="chat">상담하기</a></div>'
+						'<p><%=id %>님</p>' +
+						'<a href="#" class="button" id="btn_chat">상담하기</a></div>'
 						);
 				},
 				error : function(){
@@ -156,7 +152,7 @@ a.btn:hover {
 		// 호텔 리뷰 가져오는 함수
 		function getReview() {
 			
-			var hotelname = "<%=hotelname%>";
+			var hotelname = "<%=hotelname %>";
 			
 			$.ajax({
 				url : "ReviewControl",
@@ -235,7 +231,7 @@ a.btn:hover {
 		
 		
 		function getAddressMap() {
-			var address = "<%=region%>";
+			var address = "<%=region %>";
 			
 			$.ajax({
 				url : "detailMap.jsp",
@@ -254,154 +250,149 @@ a.btn:hover {
 		
 	});
 </script>
-
-
 </head>
 <body>
 
 
-	<!-- 로그인여부 확인 / 로그인한 사람의 정보 가져오기. -->
-	<%
-		Object ologin = session.getAttribute("login");
-		MemberDto mem = null;
-		if (ologin == null) { // 로그인 정보가 안넘어왔을때. 혹은 기간이 만료했을때(로그인하고 한참 지남)
-	%>
-	<script type="text/javascript">
+<!-- 로그인여부 확인 / 로그인한 사람의 정보 가져오기. -->
+<%
+Object ologin = session.getAttribute("login");
+MemberDto mem = null;
+if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간이 만료했을때(로그인하고 한참 지남)
+   %>
+   <script type="text/javascript">
    $(document).ready(function () {
 	   $("#logoutBtn").hide();
 	   $("#loginBtn").show();
 	   
 	   $(document).on("click", ".button", function () {
 			alert("로그인 후 이용가능합니다. 로그인해주세요.");
-			/* $(".class").attr("href", "#"); */
 		});
 	});
    </script>
-	<%
-		} else {
-			mem = (MemberDto) ologin;
-	%>
-	<script type="text/javascript">
+   <%
+}else{
+   mem = (MemberDto)ologin;
+   %>
+   	<script type="text/javascript">
    	$(document).ready(function () {
    		$("#loginBtn").hide();
    		$("#logoutBtn").show();
 	   
-	   $(document).on("click", ".button", function () {
+		$(document).on("click", "#btn_reserve1", function () {
 		   alert("예약페이지로 넘어갑니다");
-			location.href="ReserveControl?command=reserve&hotelname=<%=hotelname%>&id=<%=id%>";
-			
-			<%-- "reserve.jsp?seq=<%=seq%>"; --%>
+		   location.href="ReserveControl?command=reserve&hotelname=<%=hotelname%>&id=<%=id%>&seq=<%=seq%>";
+		});
+		$(document).on("click", "#btn_reserve2", function () {
+			   alert("예약페이지로 넘어갑니다");
+			   location.href="ReserveControl?command=reserve&hotelname=<%=hotelname%>&id=<%=id%>&seq=<%=seq%>";
+		});
+		$(document).on("click", "#btn_chat", function () {
+			   alert("1대1 상담페이지로 넘어갑니다");
+			   location.href="chat.jsp?toID=<%=id%>";
 		});
 	});
    </script>
-	<%
-		}
-		;
-	%>
+   <%
+};
+%>
 
-	<!-- 맨 위 이미지 / 탭부분 -->
-	<div class="wrapper">
-		<a class="btn" href="loginview.jsp" title="Login" id="loginBtn">Login</a>
-		<a class="btn" href="logout.jsp" title="Logout" id="logoutBtn">Logout</a>
-		<div id="banner" class="container">
-			<img src="<%=image%>" width="1200" height="500" alt="" />
+<!-- 맨 위 이미지 / 탭부분 -->
+<div class="wrapper">	
+	<a class="btn" href="loginview.jsp" title="Login" id="loginBtn">Login</a>
+	<a class="btn" href="index.jsp" title="Home" id="homeBtn">Home</a>
+	<a class="btn" href="logout.jsp" title="Logout" id="logoutBtn">Logout</a>
+	<div id="banner" class="container"><img src="./hotelImage/<%=image %>" width="1200" height="500" alt="" /></div>
+	<div id="header-wrapper" style="background-color: #FA8072">
+	<div id="header" class="container">
+		<div id="logo">
+			<h1><a href="#"><%=hotelname %></a></h1>
+			<h4 id="hotelRegDate"></h4>
+			<h4 id="hotelReadCount"></h4>
 		</div>
-		<div id="header-wrapper" style="background-color: #FA8072">
-			<div id="header" class="container">
-				<div id="logo">
-					<h1>
-						<a href="#"><%=hotelname%></a>
-					</h1>
-					<h4 id="hotelRegDate"></h4>
-					<h4 id="hotelReadCount"></h4>
-				</div>
-				<div id="menu">
-					<ul>
-						<li class="active" id="tap1"><a accesskey="1" title="호텔정보"
-							id="btn_detail">호텔정보</a></li>
-						<li id="tap2"><a accesskey="2" title="사용자 후기" id="btn_review">사용자
-								후기</a></li>
-						<li id="tap3"><a accesskey="3" title="오시는 길" id="btn_place">오시는
-								길</a></li>
-					</ul>
-				</div>
-			</div>
+		<div id="menu">
+			<ul>
+				<li class="active" id="tap1"><a accesskey="1" title="호텔정보" id="btn_detail">호텔정보</a></li>
+				<li id="tap2"><a accesskey="2" title="사용자 후기" id="btn_review">사용자 후기</a></li>
+				<li id="tap3"><a accesskey="3" title="오시는 길" id="btn_place">오시는 길</a></li>
+			</ul>
 		</div>
 	</div>
+</div>
+</div>
 
-	<div id="centerAgain"></div>
+<div id="centerAgain"></div>
 
-	<!-- 중간 콘텐츠 부분(핵심) -->
-	<div class="wrapper" id="centerContents">
+<!-- 중간 콘텐츠 부분(핵심) -->
+<div class="wrapper" id="centerContents">
 
-		<div class="title" id="detailDiv">
-			<div id="welcome" class="container">
-				<h2>Welcome to our hotel</h2>
-			</div>
-		</div>
-		<div id="three-column" class="container">
-			<div>
-				<span id="hotel_description" class="arrow-down"></span>
-			</div>
-			<!-- ajax를 통해 이부분에 호텔정보가 출력됨. -->
-
-			<!-- '사용자 후기' 탭 상단노출 -->
-			<div id="reviewDiv">
-				<div class="title">
-					<div id="welcome" class="container">
-						<h2>우리 호텔을 다녀간 사람들의 리뷰를 확인하세요!</h2>
-					</div>
-				</div>
-				<div id="three-column" class="container"></div>
-			</div>
-
-			<!-- '오시는 길' 탭 상단노출 -->
-			<div id="addressDiv">
-				<div class="title">
-					<div id="welcome" class="container">
-						<h2>저희 호텔은 이곳에 위치해 있습니다!</h2>
-					</div>
-				</div>
-				<div id="three-column" class="container"></div>
-				<div id="addressMapHere"></div>
-			</div>
-
+<div class="title" id="detailDiv">
+<div id="welcome" class="container">
+	  <h2>Welcome to our hotel</h2>
 		</div>
 	</div>
+	<div id="three-column" class="container">
+		<div><span id="hotel_description" class="arrow-down"></span></div>
+		<!-- ajax를 통해 이부분에 호텔정보가 출력됨. -->
 
-
-	<!-- 페이지 하단 주소 / 번호 / 이메일 나오는 부분 -->
-	<div id="footer">
-		<div class="container">
-			<div class="fbox1">
-				<span class="icon icon-map-marker"></span> <span><strong><%=region%></strong></span>
-			</div>
-			<div class="fbox1">
-				<span class="icon icon-phone"></span> <span><strong>
-						Hotel phone: <%=hotelphone%>
-				</strong></span>
-			</div>
-			<div class="fbox1">
-				<span class="icon icon-envelope"></span> <span>businessname@business.com</span>
-				<!-- 관리자 이메일을 받아와야 하는데... -->
-			</div>
+<!-- '사용자 후기' 탭 상단노출 -->
+<div id="reviewDiv">
+	<div class="title">
+	<div id="welcome" class="container">
+	  <h2>우리 호텔을 다녀간 사람들의 리뷰를 확인하세요!</h2>
 		</div>
 	</div>
-	<!-- 맨 밑 배너. 기능은 거의 없고, 그냥 뷰 이쁘게 해줄라고 넣음.. -->
-	<div id="copyright">
-		<p>
-			&copy; Untitled. All rights reserved. | Design by <a
-				href="http://www.iei.or.kr/main/main.kh" rel="nofollow"
-				target="_blank">KH CLASS_3 semi project 6조</a>.
-		</p>
-		<ul class="contact">
-			<li><a href="#" class="icon icon-twitter"><span>Twitter</span></a></li>
-			<li><a href="#" class="icon icon-facebook"><span></span></a></li>
-			<li><a href="#" class="icon icon-dribbble"><span>Pinterest</span></a></li>
-			<li><a href="#" class="icon icon-tumblr"><span>Google+</span></a></li>
-			<li><a href="#" class="icon icon-rss"><span>Pinterest</span></a></li>
-		</ul>
+	<div id="three-column" class="container">
 	</div>
+</div>
+
+<!-- '오시는 길' 탭 상단노출 -->
+<div id="addressDiv">
+	<div class="title">
+	<div id="welcome" class="container">
+	  <h2>저희 호텔은 이곳에 위치해 있습니다!</h2>
+		</div>
+	</div>
+	<div id="three-column" class="container">
+	</div>
+	<div id="addressMapHere"></div>
+</div>
+
+	
+	</div>
+</div>
+
+
+<!-- 페이지 하단 주소 / 번호 / 이메일 나오는 부분 -->
+<div id="footer">
+	<div class="container">
+		<div class="fbox1">
+		<span class="icon icon-map-marker"></span>
+			<span><strong><%=region %></strong></span>
+		</div>
+		<div class="fbox1">
+			<span class="icon icon-phone"></span>
+			<span><strong>
+				Hotel phone: <%=hotelphone %> 
+			</strong></span>
+		</div>
+		<div class="fbox1">
+			<span class="icon icon-envelope"></span>
+			<span>businessname@business.com</span>	<!-- 관리자 이메일을 받아와야 하는데... -->
+		</div>
+	</div>
+</div>
+<!-- 맨 밑 배너. 기능은 거의 없고, 그냥 뷰 이쁘게 해줄라고 넣음.. -->
+<div id="copyright">
+	<p>&copy; Untitled. All rights reserved. | Design by <a href="http://www.iei.or.kr/main/main.kh" rel="nofollow" target="_blank">KH CLASS_3 semi project 6조</a>.</p>
+	<ul class="contact">
+		<li><a href="#" class="icon icon-twitter"><span>Twitter</span></a></li>
+		<li><a href="#" class="icon icon-facebook"><span></span></a></li>
+		<li><a href="#" class="icon icon-dribbble"><span>Pinterest</span></a></li>
+		<li><a href="#" class="icon icon-tumblr"><span>Google+</span></a></li>
+		<li><a href="#" class="icon icon-rss"><span>Pinterest</span></a></li>
+	</ul>
+</div>
 
 </body>
 </html>

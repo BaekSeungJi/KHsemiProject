@@ -99,5 +99,14 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
   	<url-pattern>/filedown</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>ChatControl</servlet-name>
+  	<servlet-class>control.ChatControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ChatControl</servlet-name>
+  	<url-pattern>/ChatControl</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
 
