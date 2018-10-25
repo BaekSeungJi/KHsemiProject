@@ -266,7 +266,7 @@ ul.style2 li{
 					
 					// 요일 구하기
 					var date = new Date( $("#date2").datepicker({dateFormat:'yy/mm/dd'}).val() );
-		//			alert("this : "+date.getDay() );	// 0(일요일)~6(토요일)
+					//alert("this : "+date.getDay() );	// 0(일요일)~6(토요일)
 					
 					var week = new Array("일", "월", "화", "수", "목", "금", "토");
 					$("#date2").append( week[ date.getDay() ] );
