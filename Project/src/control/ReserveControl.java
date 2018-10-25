@@ -1,6 +1,8 @@
 package control;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +14,7 @@ import javax.swing.JOptionPane;
 
 import dto.MemberDto;
 import dto.ReserveDto;
+import dto.util;
 import model.hotel.HotelService;
 import model.member.MemberService;
 import model.reserve.ReserveService;
@@ -49,65 +52,152 @@ public class ReserveControl extends HttpServlet {
 
 
 		if(command.equals("reserve")) {
-			String id = req.getParameter("id");
+			
+			System.out.println(req.getParameter("hotelname"));
+			
+			
+			
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.DATE, 1);
+			
+			
+			String hotelname = req.getParameter("hotelname");
+			String syear = req.getParameter("year");
+			String smonth = req.getParameter("month");
 
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
+			int year = cal.get(Calendar.YEAR);
+			if(util.nvl(syear) == false){	// 파라미터로 넘어온 데이터가 있을 시
+				year = Integer.parseInt(syear);
+			}
 
+			int month = cal.get(Calendar.MONTH) + 1;
+			if(util.nvl(smonth) == false){
+				month = Integer.parseInt(smonth);
+			}
 
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
-			List<ReserveDto> list = resservice.getreserveList(id);
+			if(month < 1){
+				month = 12;
+				year--;
+			}
 
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());					
-			}	
+			if(month > 12){
+				month = 1;
+				year++;
+			}
+
+			cal.set(year, month - 1, 1);	// 연월일 셋팅완료
+
+			int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+		
+
+			ReserveService Rservice = ReserveService.getInstance();
+
+			List<ReserveDto> list = Rservice.getCalendarList(hotelname, year + util.two(month + ""));
+
+		
+			
+			req.setAttribute("hotelname", hotelname);
+			req.setAttribute("cal", cal);
+			req.setAttribute("dayOfWeek", dayOfWeek);
+			req.setAttribute("year", year);
+			req.setAttribute("month", month);
+
 
 			req.setAttribute("list", list);
 
+			String id = req.getParameter("id");
+		
 			dispatch("reserve.jsp", req, resp);
 
 		}
 
 		else if(command.equals("reservedel")) {
+			PrintWriter out = resp.getWriter();
+
 			String id = req.getParameter("id");
+			
+			
+			System.out.print("delete들옴");
+			int seq = Integer.parseInt(req.getParameter("seq")); 
+			String hotelname = req.getParameter("hotelname");
+			ReserveService service = ReserveService.getInstance();
 
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
+			boolean b = service.reservedelete(seq);
 
+		
+			
+			if(b == true) {
 
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
+				System.out.println("삭제완료");
+				out.println("alert('삭제 완료되었습니다');");
+				resp.sendRedirect("index.jsp");
+			}else {
 
-			List<ReserveDto> list = resservice.getreserveList(id);
-
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());					
-			}	
-
-			req.setAttribute("list", list);
-
-			dispatch("reservedel.jsp", req, resp);
+				out.println("alert('삭제 실패하였습니다');");
+				
+				System.out.println("삭제실패");
+				resp.sendRedirect("index.jsp");
+				
+			}
 		}
 
 		else if(command.equals("reservedetail")) {
+
+			System.out.println(req.getParameter("hotelname"));
+			
 			String id = req.getParameter("id");
+			
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.DATE, 1);
+			
+			
+			String hotelname = req.getParameter("hotelname");
+			String syear = req.getParameter("year");
+			String smonth = req.getParameter("month");
 
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
+			int year = cal.get(Calendar.YEAR);
+			if(util.nvl(syear) == false){	// 파라미터로 넘어온 데이터가 있을 시
+				year = Integer.parseInt(syear);
+			}
 
+			int month = cal.get(Calendar.MONTH) + 1;
+			if(util.nvl(smonth) == false){
+				month = Integer.parseInt(smonth);
+			}
 
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
+			if(month < 1){
+				month = 12;
+				year--;
+			}
 
-			List<ReserveDto> list = resservice.getreserveList(id);
+			if(month > 12){
+				month = 1;
+				year++;
+			}
 
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());					
-			}	
+			cal.set(year, month - 1, 1);	// 연월일 셋팅완료
+
+			int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+		
+
+			ReserveService Rservice = ReserveService.getInstance();
+
+			List<ReserveDto> list = Rservice.getCalendarList(hotelname, year + util.two(month + ""));
+
+		
+			
+			req.setAttribute("hotelname", hotelname);
+			req.setAttribute("cal", cal);
+			req.setAttribute("dayOfWeek", dayOfWeek);
+			req.setAttribute("year", year);
+			req.setAttribute("month", month);
+
 
 			req.setAttribute("list", list);
 
+		
 			dispatch("reservedetail.jsp", req, resp);
 		}
 
@@ -133,45 +223,126 @@ public class ReserveControl extends HttpServlet {
 		}
 
 		else if(command.equals("reserveupdate")) {
-			String id = req.getParameter("id");
+			
+			System.out.println("reserveupdate 진입");
+			System.out.println(req.getParameter("hotelname"));
+			
+			
+			
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.DATE, 1);
+			
+			
+			String hotelname = req.getParameter("hotelname");
+			String syear = req.getParameter("year");
+			String smonth = req.getParameter("month");
 
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
+			int year = cal.get(Calendar.YEAR);
+			if(util.nvl(syear) == false){	// 파라미터로 넘어온 데이터가 있을 시
+				year = Integer.parseInt(syear);
+			}
 
+			int month = cal.get(Calendar.MONTH) + 1;
+			if(util.nvl(smonth) == false){
+				month = Integer.parseInt(smonth);
+			}
 
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
+			if(month < 1){
+				month = 12;
+				year--;
+			}
 
-			List<ReserveDto> list = resservice.getreserveList(id);
+			if(month > 12){
+				month = 1;
+				year++;
+			}
 
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());					
-			}	
+			cal.set(year, month - 1, 1);	// 연월일 셋팅완료
+
+			int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+		
+
+			ReserveService Rservice = ReserveService.getInstance();
+
+			List<ReserveDto> list = Rservice.getCalendarList(hotelname, year + util.two(month + ""));
+
+		
+			
+			req.setAttribute("hotelname", hotelname);
+			req.setAttribute("cal", cal);
+			req.setAttribute("dayOfWeek", dayOfWeek);
+			req.setAttribute("year", year);
+			req.setAttribute("month", month);
+
 
 			req.setAttribute("list", list);
 
+			String id = req.getParameter("id");
+		
+			
 			dispatch("reserveupdate.jsp", req, resp);
 		}
 
 		else if(command.equals("reserveupdateaf")) {
-			String id = req.getParameter("id");
+			System.out.println("reserveupdateaf 진입");
+			System.out.println(req.getParameter("hotelname"));
+						
+						
+						
+						Calendar cal = Calendar.getInstance();
+						cal.set(Calendar.DATE, 1);
+						
+						
+						String hotelname = req.getParameter("hotelname");
+						String syear = req.getParameter("year");
+						String smonth = req.getParameter("month");
 
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
+						int year = cal.get(Calendar.YEAR);
+						if(util.nvl(syear) == false){	// 파라미터로 넘어온 데이터가 있을 시
+							year = Integer.parseInt(syear);
+						}
+
+						int month = cal.get(Calendar.MONTH) + 1;
+						if(util.nvl(smonth) == false){
+							month = Integer.parseInt(smonth);
+						}
+
+						if(month < 1){
+							month = 12;
+							year--;
+						}
+
+						if(month > 12){
+							month = 1;
+							year++;
+						}
+
+						cal.set(year, month - 1, 1);	// 연월일 셋팅완료
+
+						int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+					
+
+						ReserveService Rservice = ReserveService.getInstance();
+
+						List<ReserveDto> list = Rservice.getCalendarList(hotelname, year + util.two(month + ""));
+
+					
+						
+						req.setAttribute("hotelname", hotelname);
+						req.setAttribute("cal", cal);
+						req.setAttribute("dayOfWeek", dayOfWeek);
+						req.setAttribute("year", year);
+						req.setAttribute("month", month);
 
 
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
+						req.setAttribute("list", list);
 
-			List<ReserveDto> list = resservice.getreserveList(id);
+						String id = req.getParameter("id");
+					
 
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());					
-			}	
-
-			req.setAttribute("list", list);
-
-			dispatch("reserveupdate.jsp", req, resp);
+			dispatch("reserveupdateaf.jsp", req, resp);
 		}
 
 		else if(command.equals("reservewrite")) {
@@ -216,209 +387,7 @@ public class ReserveControl extends HttpServlet {
 			dispatch("reservewriteAf.jsp", req, resp);
 		}
 
-		//////////////////////
-		else if(command.equals("reservedel")) {
-			String id = req.getParameter("id");
 
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
-
-
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
-
-			List<ReserveDto> list = resservice.getreserveList(id);
-
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());					
-			}	
-
-			req.setAttribute("list", list);
-
-			dispatch("reservedel.jsp", req, resp);
-		}
-
-		else if(command.equals("reservedetail")) {
-			String id = req.getParameter("id");
-
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
-
-
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
-
-			List<ReserveDto> list = resservice.getreserveList(id);
-
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());					
-			}	
-
-			req.setAttribute("list", list);
-
-			dispatch("reservedetail.jsp", req, resp);
-		}
-
-		else if(command.equals("reservelist")) {
-			String id = req.getParameter("id");
-
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
-
-
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
-
-			List<ReserveDto> list = resservice.getreserveList(id);
-
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());					
-			}	
-
-			req.setAttribute("list", list);
-
-			dispatch("reservelist.jsp", req, resp);
-		}
-
-		else if(command.equals("reserveupdate")) {
-			String id = req.getParameter("id");
-
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
-
-
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
-
-			List<ReserveDto> list = resservice.getreserveList(id);
-
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());					
-			}	
-
-			req.setAttribute("list", list);
-
-			dispatch("reserveupdate.jsp", req, resp);
-		}
-
-		else if(command.equals("reserveupdateaf")) {
-			String id = req.getParameter("id");
-
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
-
-
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
-
-			List<ReserveDto> list = resservice.getreserveList(id);
-
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());					
-			}	
-
-			req.setAttribute("list", list);
-
-			dispatch("reserveupdate.jsp", req, resp);
-		}
-
-		else if(command.equals("reservewrite")) {
-			String id = req.getParameter("id");
-
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
-
-
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
-
-			List<ReserveDto> list = resservice.getreserveList(id);
-
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());					
-			}	
-
-			req.setAttribute("list", list);
-
-			dispatch("reservewrite.jsp", req, resp);
-		}
-
-		else if(command.equals("reservewriteAf")) {
-			String id = req.getParameter("id");
-
-			MemberService memservice = MemberService.getInstance();
-			ReserveService resservice = ReserveService.getInstance();
-			HotelService hotelServicervice = HotelService.getInstance();
-
-
-			MemberDto dto = new MemberDto(id, null, null, null, null, 0, 3);
-
-			List<ReserveDto> list = resservice.getreserveList(id);
-
-			for(ReserveDto reservedto : list){
-				System.out.println(reservedto.toString());					
-			}	
-
-			req.setAttribute("list", list);
-
-			dispatch("reservewriteAf.jsp", req, resp);
-		}
-
-		// 관리자_리뷰삭제
-				else if(command.equals("ad_reserveDelete")) {
-
-				
-					
-					int seq = Integer.parseInt(req.getParameter("seq"));
-					
-					String id = req.getParameter("id");
-					
-					ReserveService service = ReserveService.getInstance();
-					
-					boolean b = service.ad_reservedelete(seq);
-					
-					if(b == true) {
-					
-						
-						resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
-					}else {
-				
-						
-						resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
-					}
-				}
-				
-				// 관리자 예약 수정
-				else if(command.equals("ad_reserveUpdate")) {
-
-				
-					
-					int seq = Integer.parseInt(req.getParameter("seq"));	
-					String id = req.getParameter("id");
-					String checkin = req.getParameter("checkin");
-					String checkout = req.getParameter("checkout");
-					String request = req.getParameter("request");
-				
-					System.out.println("리저브테스트id"+id);
-					System.out.println("리저브테스트realdate:"+checkin);
-					System.out.println("리저브테스트request:"+request);
-					
-					
-					ReserveService service = ReserveService.getInstance();
-					
-					boolean b = service.ad_reserveUpdate(seq, checkin,checkout, request);
-					
-					if(b == true) {
-						
-						resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
-					}else {
-						
-						resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
-					}
-				}
-		
-		
-		
 	}
 
 

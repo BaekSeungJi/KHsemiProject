@@ -288,7 +288,9 @@ a.btn:hover {
 	   
 	   $(document).on("click", ".button", function () {
 		   alert("예약페이지로 넘어갑니다");
-			location.href="reservewrite.jsp?seq=<%=seq%>";
+			location.href="ReserveControl?command=reserve&hotelname=<%=hotelname%>&id=<%=id%>";
+			
+			<%-- "reserve.jsp?seq=<%=seq%>"; --%>
 		});
 	});
    </script>

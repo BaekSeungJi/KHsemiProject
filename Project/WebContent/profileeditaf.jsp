@@ -8,9 +8,9 @@
 
 <%
 request.setCharacterEncoding("utf-8");
-%>
+%>  
 
-
+    
 <%
 MemberService service = MemberService.getInstance();
 
@@ -44,10 +44,10 @@ session.setMaxInactiveInterval(30*60);
 <title>profileeditaf.jsp</title>
 </head>
 <body>
-	<form action="MemberControl">
-		<input type="hidden" name="command" value="logout.jsp"> <input
-			type="submit" value="로그아웃">
-	</form>
+<form action="MemberControl">
+	<input type="hidden" name="command" value="logout.jsp">
+	<input type="submit" value="로그아웃"> 
+</form>
 
 	<%
 		boolean isS = service.profileedit(id, pwd, name, email, phone);
