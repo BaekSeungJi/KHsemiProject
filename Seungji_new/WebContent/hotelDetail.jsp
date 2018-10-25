@@ -100,21 +100,21 @@ a.btn:hover {
 								'</div>' + 
 								'<p>' + <%=price %> + '원</p>' + 
 								<%-- '<a href="reservewrite.jsp?seq='+<%=seq%>+'" class="button">예약하기</a></div>' + --%>
-								'<a href="#" class="button">예약하기</a></div>' +
+								'<a href="#" class="button" id="btn_reserve1">예약하기</a></div>' +
 										
 							'<div class="tbox">' + 
 							'<div class="title">' + 
 								'<h2>최대인원</h2>' + 
 							'</div>' + 
 							'<p>' + <%=maxpeople %> + '인</p>' + 
-						'<a href="#" class="button">예약하기</a></div>' +
+						'<a href="#" class="button" id="btn_reserve2">예약하기</a></div>' +
 						
 						'<div class="tbox">' + 
 						'<div class="title">' + 
 							'<h2>호텔 매니저</h2>' + 
 						'</div>' + 
 						'<p><%=id %>님</p>' +
-						'<a href="NewFile.jsp" class="button" id="chat">상담하기</a></div>'
+						'<a href="#" class="button" id="btn_chat">상담하기</a></div>'
 						);
 				},
 				error : function(){
@@ -267,7 +267,6 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 	   
 	   $(document).on("click", ".button", function () {
 			alert("로그인 후 이용가능합니다. 로그인해주세요.");
-			/* $(".class").attr("href", "#"); */
 		});
 	});
    </script>
@@ -280,9 +279,17 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
    		$("#loginBtn").hide();
    		$("#logoutBtn").show();
 	   
-	   $(document).on("click", ".button", function () {
+		$(document).on("click", "#btn_reserve1", function () {
 		   alert("예약페이지로 넘어갑니다");
 		   location.href="ReserveControl?command=reserve&hotelname=<%=hotelname%>&id=<%=id%>&seq=<%=seq%>";
+		});
+		$(document).on("click", "#btn_reserve2", function () {
+			   alert("예약페이지로 넘어갑니다");
+			   location.href="ReserveControl?command=reserve&hotelname=<%=hotelname%>&id=<%=id%>&seq=<%=seq%>";
+		});
+		$(document).on("click", "#btn_chat", function () {
+			   alert("1대1 상담페이지로 넘어갑니다");
+			   location.href="chat.jsp?toID=<%=id%>";
 		});
 	});
    </script>

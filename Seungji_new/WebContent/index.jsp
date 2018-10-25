@@ -49,6 +49,9 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 				          <a class="btn" href="start.jsp" title="Management">Management</a>
 				        </li>
 				        <li>
+				          <a class="btn" href="chatBox.jsp" title="Chatting">Chatting</a>
+				        </li>
+				        <li>
 				          <a class="btn" href="logout.jsp" title="Logout">Logout</a>
 				        </li>
 					</ul>
@@ -56,6 +59,9 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 					<ul>
 						<li>
 				          <a class="btn" href="mypage.jsp" title="My Page">My Page</a>
+				        </li>
+				        <li>
+				          <a class="btn" href="chatBox.jsp" title="Chatting">Chatting</a>
 				        </li>
 				        <li>
 				          <a class="btn" href="logout.jsp" title="Logout">Logout</a>

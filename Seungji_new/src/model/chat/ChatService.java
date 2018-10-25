@@ -25,10 +25,6 @@ public class ChatService {
 		return manager.getChatListByID(fromID, toID, seq);
 	}
 	
-	public ArrayList<ChatDto> getChatListByRecent(String fromID, String toID, int number){
-		return manager.getChatListByRecent(fromID, toID, number);
-	}
-	
 	public int submit(String fromID, String toID, String chatContent) {
 		return manager.submit(fromID, toID, chatContent);
 	}

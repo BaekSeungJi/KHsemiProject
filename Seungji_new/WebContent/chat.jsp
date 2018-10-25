@@ -1,10 +1,18 @@
+<%@page import="dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
     
 <%
-String userID = "hotel1";
+Object ologin = session.getAttribute("login");
+MemberDto mem = null;
+if(ologin != null){
+	mem = (MemberDto)ologin;
+}
+String userID = mem.getId();
 String toID = request.getParameter("toID");
+System.out.println("userID = " + userID);
+System.out.println("toID = " + toID);
 %>
 <!DOCTYPE html>
 <html>
@@ -112,30 +120,27 @@ String toID = request.getParameter("toID");
 		// 3초에 한번씩 채팅창 목록 자동업뎃
 		function getInfiniteChat() {
 			setInterval(function () {
-				chatListFunction(lastID);
+				chatListFunction('0');
 			}, 3000);
 		}
 	</script>
 <body>
 
-<!-- <nav class="navbar navbar-default">
+
+<nav class="navbar navbar-default">
 	<div class="navbar-header">
-		<button type="button" class="navbar-toggle collapsed"
-			data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-			aria-expanded="false">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</button>
-		<a class="navbar-brand" href="index.jsp">실시간 회원제 채팅 서비스</a>
+			<a class="navbar-brand" href="#">실시간 회원제 채팅 서비스</a>
 	</div>
-	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		<ul class="nav navbar-nav">
-			<li class="active"><a href="index.jsp">메인</a>
-			<li class="active"><a href="box.jsp">메시지함<span id="unread" class="label label-info"></span></a>
-		</ul>
-	</div>
-</nav> -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a href="index.jsp">Home</a>
+				<li><a href="chatBox.jsp">메시지함</a>
+				<li><a href="mypage.jsp">마이페이지</a>
+				<li><a href="logout.jsp">로그아웃</a>
+			</ul>
+			
+		</div>
+</nav>
 
 <div class="container">
 	<div class="container bootstrap snippet">

@@ -76,64 +76,6 @@ public class ChatManager implements iChatManager {
 		
 	}
 	
-	// 최근 채팅리스트만 가져오기
-	@Override
-	public ArrayList<ChatDto> getChatListByRecent(String fromID, String toID, int number) {
-		
-		ArrayList<ChatDto> chatList = null;
-		
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		
-		String sql = " SELECT * FROM CHAT "
-				+ " WHERE ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) "
-				+ " AND SEQ > (SELECT MAX(SEQ) - ? FROM CHAT) ORDER BY chatTime";
-		
-		try {
-			
-			conn = DBConnection.getConnection();
-			System.out.println("1/6 getChatListByID Success");
-			
-			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 getChatListByID Success");
-			
-			psmt.setString(1, fromID);
-			psmt.setString(2, toID);
-			psmt.setString(3, toID);
-			psmt.setString(4, fromID);
-			psmt.setInt(5, number);
-			System.out.println("3/6 getChatListByID Success");
-			
-			rs = psmt.executeQuery();
-			System.out.println("4/6 getChatListByID Success");
-			chatList = new ArrayList<ChatDto>();
-			
-			while(rs.next()) {
-				ChatDto chat = new ChatDto();
-				chat.setSeq(rs.getInt("seq"));
-				chat.setFromID(rs.getString("fromId").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
-				chat.setToID(rs.getString("toId").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
-				chat.setChatContent(rs.getString("chatContent").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
-				int chattime = Integer.parseInt(rs.getString("chatTime").substring(11, 13));
-				String timeType = "오전";
-				if(chattime > 12) {
-					timeType = "오후";
-					chattime -= 12;
-				}
-				chat.setChatTime(rs.getString("chatTime").substring(0, 11) + " " + timeType + " " + chattime + " : " + rs.getString("chatTime").substring(14, 16) + "");
-				chatList.add(chat);
-			}
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-			System.out.println("getChatListByID Fail");
-		} finally {
-			DBClose.close(psmt, conn, rs);
-		}
-		
-		return chatList;
-	}
 
 	
 	// 채팅입력
