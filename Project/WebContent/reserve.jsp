@@ -25,15 +25,20 @@ String hotelname = (String)request.getAttribute("hotelname");
  */
 
 String id = request.getParameter("id");
+ 
+ 
+int seq = Integer.parseInt(request.getParameter("seq")); 
+System.out.println("seq = " + seq);
+ 
 %>    
     
  <%!
  
-	public static String callist(int year, int month, int day,String hotelname){
+	public static String callist(int year, int month, int day,String hotelname, int seq){
 		String s = "";
 		
-		s += String.format("<a href='%s?command=%s&hotelname=%s&year=%d&month=%d&day=%d'>", 
-							"ReserveControl","reservedetail",hotelname, year, month, day);
+		s += String.format("<a href='%s?command=%s&hotelname=%s&year=%d&month=%d&day=%d&seq=%d'>", 
+							"ReserveControl","reservedetail",hotelname, year, month, day,seq);
 		s += String.format("%2d", day);
 		s += "</a>";
 
@@ -41,13 +46,13 @@ String id = request.getParameter("id");
 	}
  
 //일정을 기입하기 위해서 pen이미지를 클릭하면, calwrite.jsp로 이동
-	public static String showPen(int year, int month, int day,String hotelname){
+	public static String showPen(int year, int month, int day,String hotelname, int seq){
 		String s = "";
 		String url = "reservewrite.jsp";
 		String image = "<img src='./image/pen.gif'>";
 		
-		s = String.format("<a href='%s?year=%d&month=%d&day=%d&hotelname=%s'>%s</a>", 
-								url, year, month, day, hotelname,image);
+		s = String.format("<a href='%s?year=%d&month=%d&day=%d&hotelname=%s&day=%d'>%s</a>", 
+								url, year, month, day, hotelname,seq,image);
 		return s;
 	}
 
@@ -107,10 +112,10 @@ String id = request.getParameter("id");
 </head>
 <body>
 
-<form action="MemberControl">
-	<input type="hidden" name="command" value="logout">
-	<input type="submit" value="로그아웃"> 
-</form>
+<a class="btn" href="logout.jsp" title="Logout">Logout</a>
+
+<a class="btn" href="index.jsp" title="main">main</a>
+
 
 <h2>예약</h2>
 
@@ -122,24 +127,24 @@ int month = (int)request.getAttribute("month");
 
 Calendar cal = (Calendar)request.getAttribute("cal");
 // <<
-String pp = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
+String pp = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s&seq=%d'>"
 							+ "<img src='image/left.gif'></a>", 
-								"ReserveControl","reserve", year-1, month,hotelname);
+								"ReserveControl","reserve", year-1, month,hotelname,seq);
 
 // <
-String p = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
+String p = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s&seq=%d'>"
 							+ "<img src='image/prec.gif'></a>", 
-							"ReserveControl","reserve", year, month-1,hotelname);
+							"ReserveControl","reserve", year, month-1,hotelname,seq);
 
 // >
-String n = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
+String n = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s&seq=%d'>"
 							+ "<img src='image/next.gif'></a>", 
-							"ReserveControl","reserve", year, month+1,hotelname);
+							"ReserveControl","reserve", year, month+1,hotelname,seq);
 
 // >>
-String nn = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
+String nn = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s&seq=%d'>"
 							+ "<img src='image/last.gif'></a>", 
-							"ReserveControl","reserve", year+1, month,hotelname);
+							"ReserveControl","reserve", year+1, month,hotelname,seq);
 
  
 %>
@@ -187,7 +192,7 @@ for(int i = 1;i < dayOfWeek; i++){
 int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 for(int i = 1;i <= lastDay; i++){
 	%>
-	<td><%=callist(year, month, i, hotelname) %>&nbsp;<%=showPen(year, month, i,hotelname) %>	
+	<td><%=callist(year, month, i, hotelname,seq) %>&nbsp;<%=showPen(year, month, i,hotelname,seq) %>	
 		<%=makeTable(year, month, i, list)%>
 	</td>
 	<%

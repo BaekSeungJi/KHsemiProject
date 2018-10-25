@@ -51,10 +51,12 @@ public class ReserveControl extends HttpServlet {
 
 
 
-		if(command.equals("reserve")) {
+if(command.equals("reserve")) {
 			
 			System.out.println(req.getParameter("hotelname"));
 			
+			int seq = Integer.parseInt(req.getParameter("seq")); 
+			System.out.println("seq = " + seq);
 			
 			
 			Calendar cal = Calendar.getInstance();

@@ -34,15 +34,13 @@ public String two(String msg){
 </head>
 <body>
 
-<form action="MemberControl">
-	<input type="hidden" name="command" value="logout.jsp">
-	<input type="submit" value="로그아웃"> 
-</form>
+
 
 <%
 String id = request.getParameter("id");
 String hotelname = request.getParameter("hotelname");
-String request1 = request.getParameter("request1");
+String request1 = request.getParameter("request");
+
 System.out.println("호텔이름체크:"+hotelname);
 String year1 = request.getParameter("year1");
 String month1 = request.getParameter("month1");
@@ -71,14 +69,14 @@ int seq = Integer.parseInt(request.getParameter("seq"));
 if(isS){
 	%>
 	<script type="text/javascript">
-	alert("성공적으로 일정을 추가하였습니다");
+	alert("수정 완료");
 	location.href="index.jsp";	
 	</script>
 	<%
 }else{	
 %>
 	<script type="text/javascript">
-	alert("일정이 추가되지 않았습니다");
+	alert("수정 실패");
 	location.href="index.jsp";	
 	</script>
 <%

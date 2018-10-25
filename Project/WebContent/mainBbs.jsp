@@ -266,7 +266,7 @@ ul.style2 li{
 					
 					// 요일 구하기
 					var date = new Date( $("#date2").datepicker({dateFormat:'yy/mm/dd'}).val() );
-					//alert("this : "+date.getDay() );	// 0(일요일)~6(토요일)
+		//			alert("this : "+date.getDay() );	// 0(일요일)~6(토요일)
 					
 					var week = new Array("일", "월", "화", "수", "목", "금", "토");
 					$("#date2").append( week[ date.getDay() ] );
@@ -336,7 +336,7 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 					<ul>
 						<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
 						<li><a href="chatBox.jsp">일대일 채팅</a></li>
-						<li><a href="mypage.jsp">마이페이지</a></li>	
+						<li><a href="MemberControl?command=mypage&id=<%=mem.getId()%>">마이페이지</a></li>	
 						<li><a href="logout.jsp">로그아웃</a></li>
 					</ul>
 				<%}else if(mem.getAuth() == 1 || mem.getAuth() == 2){ %>
@@ -384,6 +384,8 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 							</ul> -->
 							
 							<table id="hotelListTable" style="margin-left: 7%; margin-top: -1%;">
+							
+								
 							</table>
 							
 						</div>

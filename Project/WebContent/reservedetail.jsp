@@ -62,10 +62,7 @@ System.out.println("day : " +day);
 </head>
 <body>
 
-<form action="MemberControl">
-	<input type="hidden" name="command" value="logout.jsp">
-	<input type="submit" value="로그아웃"> 
-</form>
+<a class="btn" href="logout.jsp" title="Logout">Logout</a>
 
 <%!
 
@@ -116,34 +113,28 @@ for(int i = 0;i < list.size(); i++ ){
 			<%=dto.getRequest() %>		
 		</td>
 		<td>
-			<form action="ReserveControl" method="post">
-				<input type="hidden" name="command" value="reserveupdate">
-				<input type="hidden" name="seq" value="<%=dto.getSeq() %>">
-				<input type="hidden" name="hotelname" value="<%=hotelname %>">
-				<input type="hidden" name="id" value="<%=dto.getId() %>">
-					
-			
-				<input type="submit" value="일정수정">
-			</form>
-		</td>
-		<td>
 			<form action="reserveupdate.jsp" method="post">
 				<input type="hidden" name="command" value="reservedel">
 				<input type="hidden" name="seq" value="<%=dto.getSeq() %>">
 				
+				<input type="hidden" name="hotelname" value="<%=hotelname %>">
+				
 				<input type="hidden" name="id" value="<%=dto.getId() %>">
-				<input type="hidden" name="request1 " value="<%=dto.getRequest() %>">
-				<input type="hidden" name="year1" value="<%=dto.getCheckin().substring(1, 4) %>">
-				<input type="hidden" name="month1" value="<%=dto.getCheckin().substring(5, 6) %>">
-				<input type="hidden" name="day1 " value="<%=dto.getCheckin().substring(7,8) %>">
+				
+				<input type="hidden" name="request" value="<%=dto.getRequest() %>">
+			
+				<input type="hidden" name="checkin" value="<%=dto.getCheckin() %>">
+				<input type="hidden" name="checkout" value="<%=dto.getCheckout() %>">
 				
 				
-				<input type="hidden" name="year2" value="<%=dto.getCheckout().substring(1, 4) %>">
-				<input type="hidden" name="month2" value="<%=dto.getCheckout().substring(5, 6) %>">
-				<input type="hidden" name="day2 " value="<%=dto.getCheckout().substring(7,8) %>">
+				<input type="submit" value="일정수정">
+			</form>
+		</td>
+		<td>
+			<form action="reservedel.jsp" method="post">
+				<input type="hidden" name="command" value="reservedel">
+				<input type="hidden" name="seq" value="<%=dto.getSeq() %>">
 				
-				<input type="hidden" name="checkin " value="<%=dto.getCheckin() %>">
-				<input type="hidden" name="checkout " value="<%=dto.getCheckout() %>">
 				
 				
 				<input type="submit" value="일정삭제">

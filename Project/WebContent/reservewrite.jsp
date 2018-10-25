@@ -26,10 +26,9 @@ MemberDto memdto = (MemberDto)session.getAttribute("login");
 </head>
 <body>
 
-<form action="MemberControl">
-	<input type="hidden" name="command" value="logout.jsp">
-	<input type="submit" value="로그아웃"> 
-</form>
+<a class="btn" href="logout.jsp" title="Logout">Logout</a>
+
+
 
 <h3>일정 쓰기</h3>
 

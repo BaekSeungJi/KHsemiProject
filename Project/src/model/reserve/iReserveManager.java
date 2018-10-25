@@ -13,6 +13,8 @@ public interface iReserveManager {
 	
 	public List<ReserveDto> getCalendarList(String hotelname, String yyyyMM);
 	
+	public List<ReserveDto> getCalendarList(String hotelname, String yyyyMM, int seq);
+	
 	public List<ReserveDto> getReserve(String hotelname);
 	
 	public List<ReserveDto> getlist(String hotelname, String yyyymmdd);

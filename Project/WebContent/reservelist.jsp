@@ -79,10 +79,7 @@ for(int i = 0;i < list.size(); i++){
 </head>
 <body>
 
-<form action="MemberControl">
-	<input type="hidden" name="command" value="logout.jsp">
-	<input type="submit" value="로그아웃"> 
-</form>
+<a class="btn" href="logout.jsp" title="Logout">Logout</a>
 
 <h2><%=year %>년 <%=month %>월 <%=day %>일 일정</h2>
 

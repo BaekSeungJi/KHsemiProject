@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import db.DBClose;
@@ -305,6 +306,13 @@ public class ReserveManager implements iReserveManager {
 			System.out.println("2/6 S reserve");
 			System.out.println("checkin :" + checkin);
 			System.out.println("checkout :" + checkout);
+			
+			
+			Calendar cal = Calendar.getInstance();
+			int todaydate = cal.get(cal.DATE);
+	
+			if(Integer.parseInt(checkout)-Integer.parseInt(checkin)>=0)
+			if(Integer.parseInt(checkin.substring(6, 8))-todaydate>=0)
 
 			count = psmt.executeUpdate();
 			System.out.println("3/6 S reserve");
@@ -346,6 +354,13 @@ public class ReserveManager implements iReserveManager {
 
 			System.out.println("3/6 S updateBbs");
 
+			
+			Calendar cal = Calendar.getInstance();
+			int todaydate = cal.get(cal.DATE);
+	
+			if(Integer.parseInt(checkout)-Integer.parseInt(checkin)>=0)
+			if(Integer.parseInt(checkin.substring(6, 8))-todaydate>=0)
+			
 			count = psmt.executeUpdate();
 			System.out.println("4/6 S updateBbs");
 
@@ -526,6 +541,66 @@ public class ReserveManager implements iReserveManager {
 		}		
 		
 		return count>0?true:false;
+	}
+
+	@Override
+	public List<ReserveDto> getCalendarList(String hotelname, String yyyyMM, int seq) {
+		String sql = " SELECT SEQ, ID, HOTELNAME, REQUEST, checkin,checkout, REGDATE, DEL "
+				+ " FROM ( "
+				+ " 	SELECT ROW_NUMBER() OVER(PARTITION BY SUBSTR(checkin, 1, 8) ORDER BY checkin ASC) RN, "
+				+ "				SEQ, ID, HOTELNAME, REQUEST, checkin,checkout, REGDATE, DEL "
+				+ "		FROM reserve "
+				+ "		WHERE HOTELNAME=? AND SUBSTR(checkin, 1, 6)=?) "
+				+ "  WHERE RN BETWEEN 1 AND 5 "
+				+ " and del = 0 ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		System.out.println(hotelname.trim());
+		System.out.println(yyyyMM.trim());
+
+		List<ReserveDto> list = new ArrayList<ReserveDto>();
+
+		ReserveDto dto = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getCalendarList Success");
+
+			psmt = conn.prepareStatement(sql);
+
+			psmt.setString(1, hotelname.trim());
+			psmt.setString(2, yyyyMM.trim());
+			System.out.println("2/6 getCalendarList Success");
+
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getCalendarList Success");
+
+			while(rs.next()) {
+				dto = new ReserveDto();
+				dto.setSeq(rs.getInt(1));
+				dto.setId(rs.getString(2));
+				dto.setHotelname(rs.getString(3));
+				dto.setRequest(rs.getString(4));
+				dto.setCheckin(rs.getString(5));
+				dto.setCheckout(rs.getString(6));
+				dto.setRegdate(rs.getString(7));
+				dto.setDel(rs.getInt(8));
+				list.add(dto);			
+
+
+			}
+			System.out.println("4/6 getCalendarList Success");
+
+		} catch (Exception e) {
+			System.out.println("getCalendarList Fail");
+		} finally {			
+			DBClose.close(psmt, conn, rs);			
+		}
+
+		return list;
 	}
 	
 	

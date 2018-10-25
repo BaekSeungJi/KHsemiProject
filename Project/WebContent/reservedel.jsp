@@ -34,10 +34,7 @@ String hotelname = (String)request.getAttribute("hotelname");
 </head>
 <body>
 
-<form action="MemberControl">
-	<input type="hidden" name="command" value="logout.jsp">
-	<input type="submit" value="로그아웃"> 
-</form>
+<a class="btn" href="logout.jsp" title="Logout">Logout</a>
 
 <%!
 public String toOne(String msg){	// 08 -> 8
@@ -58,28 +55,19 @@ ReserveDto reservedto = reservice.getDay(seq);
 
 boolean isS = reservice.reservedelete(seq);
 
-String year = reservedto.getRegdate().substring(0, 4);	// 년도
-String month = toOne(reservedto.getRegdate().substring(4, 6));	// 월
-String day = toOne(reservedto.getRegdate().substring(6, 8));		// 일
-
-String url = String.format("<a href='%s?command=%s&year=%d&month=%d&hotelname=%s'>"
-		+ "<img src='image/left.gif'></a>", 
-		"ReserveControl","reserve", year, month, hotelname);
-
-System.out.println("url : " + url);
 
 if(isS){
 	%>
 	<script type="text/javascript">
 	alert("성공적으로 삭제 되었습니다");
-	location.href="<%=url %>";
+	location.href="index.jsp";
 	</script>	
 	<%
 }else{	
 	%>
 	<script type="text/javascript">
 	alert("삭제하지 못했습니다");
-	location.href="<%=url %>";
+	location.href="index.jsp";
 	</script>
 	<%
 }	

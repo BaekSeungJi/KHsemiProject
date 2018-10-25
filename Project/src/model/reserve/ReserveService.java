@@ -33,6 +33,11 @@ public class ReserveService {
 				return manager.getCalendarList(hotelname, yyyyMM);
 			}
 
+	//영훈 겟캘린더
+	public List<ReserveDto> getCalendarList(String hotelname, String yyyyMM, int seq){
+						return manager.getCalendarList(hotelname, yyyyMM, seq);
+					}			
+			
 	//admin 해당호텔의 예약 전체 가져오기
 			public List<ReserveDto> getReserve(String hotelname) {
 				return manager.getReserve(hotelname);

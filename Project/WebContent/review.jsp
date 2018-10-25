@@ -19,26 +19,28 @@
 	<!-- 아직 다른 뷰와 연결을 안해서 이 로그인여부 확인 부분은 나중에 병합하면서 주석풀고 적용하기. -->
 
 	<!-- 로그인여부 확인 / 로그인한 사람의 정보 가져오기. -->
-	<%--
+	<%
 Object ologin = session.getAttribute("login");
 MemberDto mem = null;
 if(ologin == null){	// 로그인 정보가 안넘어왔을때. 혹은 기간이 만료했을때(로그인하고 한참 지남)
-	--%>
-	<!-- <script type="text/javascript">
+	%>
+	<script type="text/javascript">
 	alert("로그인해 주십시오");
 	location.href="loginview.jsp";
-	</script> -->
-	<%--
-	return;
+	</script>
+	<%
+}else{
+	mem = (MemberDto)ologin;
 }
-
-mem = (MemberDto)ologin;
---%>
+%>
 
 
 	<%
 		// 마이페이지 예약내역에서 여기에 넘겨줘야할 값.(seq, hotelname, checkin, checkout 총 4개 값 넘겨받기.)
 		String seq = request.getParameter("seq");
+		String hotelname = request.getParameter("hotelname"); 
+		String checkin = request.getParameter("checkin");
+		String checkout = request.getParameter("checkout");
 	%>
 
 	<!-- 리뷰페이지 : 마이페이지 예약내역에서 '리뷰쓰기'버튼을 클릭하면 여기로 들어온다. -->
@@ -59,15 +61,15 @@ mem = (MemberDto)ologin;
 			<!-- 리뷰에 input할때 num을 이 seq로 설정해야함. 꼭필요! -->
 			<div class="name">
 				<label for="name"></label> <input type="text" name="name"
-					value="mem.getId()" readonly="readonly">
+					value="<%=mem.getId() %>" readonly="readonly">
 			</div>
 			<div class="email">
 				<label for="email"></label> <input type="email" name="date"
-					value="숙박일 - 마이페이지에서 넘겨받자" readonly="readonly">
+					value="<%=checkin %> ~ <%=checkout %>" readonly="readonly">
 			</div>
 			<div class="telephone">
 				<label for="name"></label> <input type="text" name="hotel"
-					value="호텔이름 - 마이페이지에서 넘겨받자" readonly="readonly">
+					value="<%=hotelname %>" readonly="readonly">
 			</div>
 			<div class="telephone">
 				<label for="name"></label> <input type="text"
@@ -104,29 +106,25 @@ mem = (MemberDto)ologin;
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
-
 					$("#send_button").click(
 							function() {
 								var title = $("#title_input").val();
 								var score = $("#score_input").val();
 								var content = $("#message_input").val();
-
 								//alert("title = " + title + " score = " + score + " content = " + content);
-
 								if (title == null || title == ""
 										|| score == null || score == ""
 										|| content == null || content == "") {
 									alert("빈칸이 있습니다. 모든 칸을 전부 입력해주세요.");
 								} else {
+									alert("리뷰를 작성해 주셔서 감사합니다!");
 									$("#contact_form").submit();
 								}
 							});
-
 					$("#back_button").click(function() {
-						alert("뒤로가기");
+						//alert("뒤로가기");
 						location.href = "mypage.jsp";
 					});
-
 				});
 	</script>
 
