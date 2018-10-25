@@ -1,5 +1,7 @@
 package dto;
 
+import java.io.Serializable;
+
 /*
 DROP TABLE CHAT
 CASCADE CONSTRAINTS;
@@ -25,7 +27,7 @@ ADD CONSTRAINT FK_CHAT_TOID FOREIGN KEY(TOID)
 REFERENCES MEMBER(ID);
  */
 
-public class ChatDto {
+public class ChatDto implements Serializable{
 	
 	private int seq;
 	private String fromID;
