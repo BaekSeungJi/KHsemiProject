@@ -178,7 +178,7 @@ ul.style2 li{
 									'</ul>' +
 								'</td>' +
 								'<td width="40%">' +
-									'<img alt="" src="./hotelImage/' + IMAGE + '" width="100%" height="120px" style="margin-top: 40px">' +
+									'<img alt="" src="./hotelImage/' + IMAGE + '" width="120%" height="25%">' +
 								'</td>' +
 							'</tr>'
 					);
@@ -196,7 +196,7 @@ ul.style2 li{
 								'</ul>' +
 							'</td>' +
 							'<td width="36%" height="100%">' +
-								'<img alt="" src="' + IMAGE + '" width="80%">' +
+								'<img alt="" src="./hotelImage/' + IMAGE + '" width="80%">' +
 							'</td>' +
 						'</tr>'
 							
@@ -288,7 +288,7 @@ ul.style2 li{
 				//console.log("스크롤 위치 = "+position);
 				$("#sidebox").stop().animate({"top":position+currentPosition+"px"},500); 
 				
-				if(position > 370){
+				if(position > 5000){
 					$("#sidebox").stop();
 				};
 			});
@@ -375,15 +375,7 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 					<div id="two-column" class="5grid">
 						<div class="row">
 							<h2>호텔 검색 결과</h2>
-							<!-- <div id="hotelImage"></div> -->
-							<!-- <ul class="style4" id="searchHotelList">
-								<li class="first">
-									<h3>Mauris vulputate dolor sit amet</h3>
-									<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum. </a></p>
-								</li>
-							</ul> -->
-							
-							<table id="hotelListTable" style="margin-left: 7%; margin-top: -1%;">
+							<table id="hotelListTable" style="margin-left: 7%; ">
 							
 								
 							</table>
@@ -427,7 +419,7 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 									<input type="text" class="date" id="date2" placeholder="체크아웃" size="8px"></p>
 						</li>
 					</ul>
-					<p><a href="#" class="button" id="btn_search"><span>Search More</span></a></p>
+					<p><a href="#" class="button" id="btn_search"><span>Search Hotel</span></a></p>
 				</section>
 				</div>
 
@@ -445,6 +437,7 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 			Design by <a href="http://www.iei.or.kr/main/main.kh" target="_blank">KH CLASS_3 semi project 6조</a>
 		</div>
 	</div>
+	
 
 		
 </body>
