@@ -38,8 +38,7 @@ if(mem != null && !mem.getPwd().equals("")){
 			session.setMaxInactiveInterval(30 * 60);
 	%>
 	<script type="text/javascript">
-	alert("<%=mem.getId()%> 님의 pwd는 :<%=mem.getPwd()%>
-		입니다.");
+	alert("<%=mem.getId()%> 님의 pwd는 :<%=mem.getPwd()%>	입니다.");
 		location.href = "loginview.jsp";
 	</script>
 

@@ -28,8 +28,7 @@
 			session.setMaxInactiveInterval(30 * 60);
 	%>
 	<script type="text/javascript">
-	alert("귀하의 ID는 : <%=mem.getId()%>
-		입니다.");
+	alert("귀하의 ID는 : <%=mem.getId()%>입니다.");
 		location.href = "loginview.jsp";
 	</script>
 	<%
