@@ -59,6 +59,8 @@ public class ChatControl extends HttpServlet {
 			if(fromID == null || fromID.equals("") || toID == null || toID.equals("")
 					|| listType == null || listType.equals("")) {
 				resp.getWriter().write("");
+			} else if(listType.equals("ten")) {
+				resp.getWriter().write(getTen(URLDecoder.decode(fromID, "UTF-8"), URLDecoder.decode(toID, "UTF-8")));
 			} else {
 				try {
 					resp.getWriter().write(getID(URLDecoder.decode(fromID, "UTF-8"), URLDecoder.decode(toID, "UTF-8"), listType));
@@ -83,6 +85,25 @@ public class ChatControl extends HttpServlet {
 			}
 		}
 		
+		
+	}
+	
+	public String getTen(String fromID, String toID) {
+		StringBuffer result = new StringBuffer("");
+		result.append("{\"result\":[");
+		
+		ChatService service = ChatService.getInstance();
+		ArrayList<ChatDto> chatList = service.getChatListByRecent(fromID, toID, 10);
+		if(chatList.size() == 0) return "";
+		for (int i = 0; i < chatList.size(); i++) {
+			result.append("[{\"value\": \"" + chatList.get(i).getFromID() + "\"},");
+			result.append("{\"value\": \"" + chatList.get(i).getToID() + "\"},");
+			result.append("{\"value\": \"" + chatList.get(i).getChatContent() + "\"},");
+			result.append("{\"value\": \"" + chatList.get(i).getChatTime() + "\"}");
+			if(i != chatList.size() -1 ) result.append(",");
+		}
+		result.append("], \"last\":\"" + chatList.get(chatList.size() - 1).getSeq() + "\"}");
+		return result.toString();
 		
 	}
 	
