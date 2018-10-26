@@ -80,7 +80,7 @@ String userID = mem.getId();
 			<ul class="nav navbar-nav">
 				<li><a href="index.jsp">Home</a>
 				<li class="active"><a href="chatBox.jsp">메시지함</a>
-				<li><a href="mypage.jsp">마이페이지</a>
+				<li><a href="MemberControl?command=mypage&id=<%=mem.getId()%>">마이페이지</a>
 				<li><a href="logout.jsp">로그아웃</a>
 			</ul>
 			
