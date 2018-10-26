@@ -120,7 +120,7 @@ System.out.println("toID = " + toID);
 		// 3초에 한번씩 채팅창 목록 자동업뎃
 		function getInfiniteChat() {
 			setInterval(function () {
-				chatListFunction('0');
+				chatListFunction(lastID);
 			}, 3000);
 		}
 	</script>
