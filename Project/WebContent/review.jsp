@@ -123,7 +123,7 @@ if(ologin == null){	// 로그인 정보가 안넘어왔을때. 혹은 기간이 
 							});
 					$("#back_button").click(function() {
 						//alert("뒤로가기");
-						location.href = "mypage.jsp";
+						location.href = "MemberControl?command=mypage&id=<%=mem.getId()%>";
 					});
 				});
 	</script>

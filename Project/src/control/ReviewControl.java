@@ -70,7 +70,24 @@ public class ReviewControl extends HttpServlet {
 			
 			dispatch("index.jsp", req, resp);
 		}
-		
+		else  if(command.equals("ad_reviewDelete")) {
+			
+			   int seq = Integer.parseInt(req.getParameter("seq"));
+			   
+			   String id = req.getParameter("id");
+			  
+			   ReviewService service = ReviewService.getInstance();
+			   
+			   boolean b = service.reviewdelete(seq);
+			 
+			   if(b == true) {
+			
+			    resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
+			   }else {
+			   
+			    resp.sendRedirect("MemberControl?command=ad_member_detail&id="+id);
+			   }
+			  }
 	}
 	
 	// 위에서 서비스를 통해 받아온 리뷰 리스트를 json파일로 만들어주는 함수.

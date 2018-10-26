@@ -481,7 +481,7 @@ public class MemberManager implements iMemberManager {
 			
 			count = psmt.executeUpdate();
 			System.out.println("4/6 ad_MemberUpdate");
-			
+			System.out.println(count);
 		} catch (Exception e) {			
 			e.printStackTrace();
 		} finally{

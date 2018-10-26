@@ -187,7 +187,7 @@
 								%>
 								<div style="float: left;">
 									<form action="MemberControl">
-										<table>
+										<table style="margin-bottom: 100px">
 											<col width="80">
 											<tr height="40">
 												<td><input type="hidden" value="ad_memberUpdate"
@@ -225,11 +225,12 @@
 													name="phone"></td>
 											</tr>
 
-											<tr height="10">
-												<td></td>
-												<td align="right"><input type="submit" value="수정">
-												</td>
-											</tr>
+										<tr>
+										
+										<td></td>
+										<td></td>
+										
+										</tr>
 
 
 										</table>

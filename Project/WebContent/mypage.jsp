@@ -161,7 +161,7 @@ public String whour(int Auth){
         <%if(dto.getDel()==1){ %>
         <td>취소된 예약입니다</td>
         <%}else{ %>
-        <td><input type="button" value="리뷰쓰기" onclick="location.href='review.jsp?seq=<%=dto.getSeq() %>&checkin=<%=dto.getCheckin() %>&checkout=<%=dto.getCheckout()%>'"></td>
+        <td><input type="button" value="리뷰쓰기" onclick="location.href='review.jsp?seq=<%=dto.getSeq() %>&hotelname=<%=dto.getHotelname() %>&checkin=<%=dto.getCheckin() %>&checkout=<%=dto.getCheckout()%>'"></td>
     	<%} %>
         </tr>
        <%} %>

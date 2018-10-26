@@ -222,7 +222,7 @@ public class MemberControl extends HttpServlet {
 		
 		
 		else if(command.equals("ad_memberUpdate")) {
-			
+			System.out.println("들어옴~~~~~");
 			String id = req.getParameter("id");
 			String pw = req.getParameter("pw");
 			String name = req.getParameter("name");
@@ -232,28 +232,19 @@ public class MemberControl extends HttpServlet {
 			MemberService service = MemberService.getInstance();
 			
 			boolean b = service.ad_MemberUpdate(id, pw, name, email, phone);
-			PrintWriter out = resp.getWriter();
+			
 			if(b == true) {
 			
 		
-				out.println("alert('수정 완료되었습니다');");
 				
 				resp.sendRedirect("MemberControl?command=ad_admin&id="+id);
 			}else {
-				out.println("alert('수정 실패하였습니다');");
+		
 				resp.sendRedirect("MemberControl?command=ad_admin&id="+id);
 			}
 			
 		}
-		else if(command.equals("ad_memberUpdate")) {
-			int seq = Integer.parseInt(req.getParameter("req"));
-			String request = req.getParameter("request");
-			String realdate = req.getParameter("realdate");
-			String id = req.getParameter("id");
-			
-			
-		
-		}
+	
 		
 		
 		else if(command.equals("profileeditaf")) {

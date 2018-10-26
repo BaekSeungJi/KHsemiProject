@@ -46,7 +46,7 @@ if(ologin == null){   // 로그인 정보가 안넘어왔을때. 혹은 기간�
 				<%}else if(mem.getAuth() == 1 || mem.getAuth() == 2){ %>
 					<ul>
 						<li>
-				          <a class="btn" href="start.jsp" title="Management">Management</a>
+				          <a class="btn" href="MemberControl?command=ad_admin" title="Management">Management</a>
 				        </li>
 				        <li>
 				          <a class="btn" href="chatBox.jsp" title="Chatting">Chatting</a>

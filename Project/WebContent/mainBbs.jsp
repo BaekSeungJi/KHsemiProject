@@ -131,7 +131,7 @@ ul.style2 li{
 					},
 					success : function(data){
 						if(data == "") return;
-						alert("검색 통신성공!");
+						//alert("검색 통신성공!");
 						// alert(data);
 						// json형태로 파싱한 데이터의 result부분을 가져온다.
 						var parsed = JSON.parse(data);
