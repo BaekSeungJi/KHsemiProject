@@ -68,6 +68,8 @@ public class ReviewControl extends HttpServlet {
 			ReviewService service = ReviewService.getInstance();
 			service.addReview(inputDto);
 			
+			dispatch("index.jsp", req, resp);
+			
 		}
 		
 	}

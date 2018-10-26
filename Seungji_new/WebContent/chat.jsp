@@ -121,6 +121,7 @@ System.out.println("toID = " + toID);
 		function getInfiniteChat() {
 			setInterval(function () {
 				chatListFunction(lastID);
+				chatListFunction('ten');
 			}, 3000);
 		}
 	</script>
